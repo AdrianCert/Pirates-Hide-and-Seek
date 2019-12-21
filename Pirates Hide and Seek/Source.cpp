@@ -14,7 +14,7 @@ int main()
 			if (event.type == sf::Event::Closed)
 				window.close();
 		}
-		//y2
+    //Y2
 		window.clear();
 		window.draw(shape);
 		window.display();
