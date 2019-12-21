@@ -14,8 +14,7 @@ int main()
 			if (event.type == sf::Event::Closed)
 				window.close();
 		}
-		//acest proiect va fi cel mai bun din lume
-
+    //Y2
 		window.clear();
 		window.draw(shape);
 		window.display();
