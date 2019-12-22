@@ -6,10 +6,17 @@ using namespace sf;
 
 int main()
 {
-	String s = "sd";
-	int gameWidth = 800;
-	int gameHeight = 600;
-	RenderWindow window(VideoMode(200, 200), "SFML works!");
+	int gameWidth, gameHeight, gameSSyle;
+	std::string gameName;
+	dictionaty* configuration = new dictionaty();
+	if (!configuration->ReadConfiguration("Resource/ConfigureFile.txt")) return EXIT_FAILURE;
+	if (!configuration->GetParm("gameWidth", gameWidth)
+		|| !configuration->GetParm("gameHeight", gameHeight)
+		|| !configuration->GetParm("gameName", gameName)
+		|| !configuration->GetParm("gameSSyle", gameSSyle)) 
+		return EXIT_FAILURE;
+
+	RenderWindow window(VideoMode(gameWidth, gameHeight), gameName,gameSSyle);
 	CircleShape shape(100.f);
 	shape.setFillColor(Color::Green);
 
