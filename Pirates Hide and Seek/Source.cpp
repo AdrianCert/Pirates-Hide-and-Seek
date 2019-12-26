@@ -8,7 +8,7 @@ using namespace sf;
 
 int main()
 {
-	String s = "sd";
+	
 	int gameWidth = 800;
 	int gameHeight = 600;
 	RenderWindow window(VideoMode(200, 200), "SFML works!");
