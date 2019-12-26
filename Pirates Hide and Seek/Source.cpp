@@ -27,8 +27,7 @@ int main()
 			}
 
 		}
-		//acest proiect va fi cel mai bun din lume
-		Menu();
+    //Y2
 		window.clear();
 		window.draw(shape);
 		window.display();
