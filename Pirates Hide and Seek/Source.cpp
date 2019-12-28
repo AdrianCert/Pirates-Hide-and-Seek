@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <sstream>
 #include "Configuration.h"
 #include "menu.h"
 
@@ -16,6 +17,9 @@ int main()
 		|| !configuration->GetParm("gameSSyle", gameSSyle)) 
 		return EXIT_FAILURE;
 
+	std::stringstream sri;
+	VariableName(sri, gameSSyle);
+	std::cout << sri.str();
 	RenderWindow window(VideoMode(gameWidth, gameHeight), gameName,gameSSyle);
 	CircleShape shape(100.f);
 	shape.setFillColor(Color::Green);

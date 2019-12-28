@@ -12,7 +12,7 @@ struct key
 	key *Next = 0;
 };
 
-class dictionaty
+struct dictionaty
 {
 private:
 	key* head, * tail;
