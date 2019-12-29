@@ -1,4 +1,4 @@
-gameWidth 800
-gameHeight 600
+gameWidth 1920
+gameHeight 1080
 gameName Connect-The-Temple
 gameSSyle 8
