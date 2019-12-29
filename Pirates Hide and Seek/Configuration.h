@@ -5,25 +5,29 @@
 #ifndef CONFIGURATION_H
 #define CONFIGURATION_H
 
-struct key
-{
-	std::string Left;
-	std::string Right;
-	key *Next = 0;
-};
+namespace cfg {
 
-class dictionaty
-{
-private:
-	key* head, * tail;
-public:
-	dictionaty();
-	void add(std::string left, std::string right);
-	bool ReadConfiguration(std::string filename);
-	bool WriteConfiguration(std::string filename);
-	bool GetParm(std::string s, std::string& result);
-	bool GetParm(std::string s, int &result);
-};
+	struct key
+	{
+		std::string Left;
+		std::string Right;
+		key *Next = 0;
+	};
+
+	struct dictionaty
+	{
+		key* head = 0;
+		key* tail = 0;
+	};
+
+	void add(dictionaty* configuration, std::string left, std::string right);
+	bool ReadConfiguration(dictionaty* configuration, std::string filename);
+	bool WriteConfiguration(dictionaty* configuration, std::string filename);
+	bool GetParm(dictionaty* configuration, std::string s, std::string& result);
+	bool GetParm(dictionaty* configuration, std::string s, int &result);
+	bool SetParm(dictionaty* configuration, std::string s, int result);
+	bool SetParm(dictionaty* configuration, std::string s, std::string result);
+}
 #endif
 
 #define VariableName(stream,variable) stream<<#variable
