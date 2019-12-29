@@ -9,14 +9,18 @@ int main()
 {
 	int gameWidth, gameHeight, gameSSyle;
 	std::string gameName;
-	dictionaty* configuration = new dictionaty();
-	if (!configuration->ReadConfiguration("Resource/ConfigureFile.txt")) return EXIT_FAILURE;
-	if (!configuration->GetParm("gameWidth", gameWidth)
-		|| !configuration->GetParm("gameHeight", gameHeight)
-		|| !configuration->GetParm("gameName", gameName)
-		|| !configuration->GetParm("gameSSyle", gameSSyle)) 
+	cfg::dictionaty* configuration = new cfg::dictionaty();
+	if (!ReadConfiguration(configuration, "Resource/ConfigureFile.txt")) return EXIT_FAILURE;
+	if (!GetParm(configuration, "gameWidth", gameWidth)
+		|| !GetParm(configuration, "gameHeight", gameHeight)
+		|| !GetParm(configuration, "gameName", gameName)
+		|| !GetParm(configuration, "gameSSyle", gameSSyle))
 		return EXIT_FAILURE;
-
+	/* Explemple of overwriting pharms * /
+	cfg::SetParm(configuration, "gameWidth", VideoMode::getDesktopMode().width);
+	cfg::SetParm(configuration, "gameHeight", VideoMode::getDesktopMode().height);
+	cfg::WriteConfiguration(configuration, "Resource/ConfigureFile.txt");
+	/**/
 	std::stringstream sri;
 	VariableName(sri, gameSSyle);
 	std::cout << sri.str();
