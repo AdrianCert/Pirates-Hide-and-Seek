@@ -131,12 +131,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Configuration.cpp" />
+    <ClCompile Include="Intro.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Configuration.h" />
     <ClInclude Include="GameVariable.h" />
+    <ClInclude Include="Intro.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Source.h" />
   </ItemGroup>

@@ -18,7 +18,7 @@ int main()
 
 	SceneManager* sceneManager = new SceneManager();
 	sceneManager->RenderWindow = &window;
-	sceneManager->CurentFrame = GameEnum::GameFrame::Menu;
+	sceneManager->CurentFrame = GameEnum::GameFrame::Intro;
 	sceneManager->Configurator = configuration;
 	
 	while (window.isOpen())
@@ -27,6 +27,7 @@ int main()
 		{
 		case GameEnum::GameFrame::Intro:
 			//code for Intro
+			Intro(sceneManager);
 			break;
 		case GameEnum::GameFrame::Menu:
 			Menu(sceneManager);
