@@ -23,20 +23,19 @@ int main()
 	
 	while (window.isOpen())
 	{
+		bool gameContinue = false;
 		switch (sceneManager->CurentFrame)
 		{
 		case GameEnum::GameFrame::Intro:
-			//code for Intro
-			Intro(sceneManager);
+			gameContinue = Intro(sceneManager);
 			break;
 		case GameEnum::GameFrame::Menu:
-			Menu(sceneManager);
+			gameContinue = Menu(sceneManager);
 			break;
 		case GameEnum::GameFrame::Game:
-			//code for Intro
+			gameContinue = Game(sceneManager);
 			break;
 		case GameEnum::GameFrame::Option:
-			//code for Intro
 			break;
 		case GameEnum::GameFrame::Exit:
 			window.close();
@@ -44,6 +43,7 @@ int main()
 		default:
 			break;
 		}
+		if(!gameContinue) sceneManager->CurentFrame = GameEnum::GameFrame::Exit;
 	}
 
 	return EXIT_SUCCESS;

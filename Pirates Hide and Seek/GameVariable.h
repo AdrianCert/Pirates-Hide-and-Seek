@@ -12,6 +12,17 @@ namespace GameEnum {
 		Option,
 		Exit
 	};
+
+	enum Figures {
+		PirateShip,
+		ExploratorShip,
+		RobbedShip,
+		Treasure,
+		Island,
+		Castle,
+		Octoped,
+		Shipwrecked
+	};
 }
 
 struct SceneManager

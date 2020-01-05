@@ -32,7 +32,7 @@ bool Menu(SceneManager* sceneManager) {
 	exit.setTexture(&menuButton);
 
 	//fereastra meniu este deschisa
-	while (sceneManager->RenderWindow->isOpen())
+	while (sceneManager->CurentFrame == GameEnum::GameFrame::Menu)
 	{
 		Event event;
 		while (sceneManager->RenderWindow->pollEvent(event))
@@ -45,8 +45,13 @@ bool Menu(SceneManager* sceneManager) {
 				break;
 			case Event::KeyPressed:
 				//inchidere fereastra daca se apasa ESC
+				if (event.key.code == Keyboard::Enter) {
+					sceneManager->CurentFrame = GameEnum::GameFrame::Game;
+					break;
+				}
+
 				if (event.key.code == Keyboard::Escape)
-					sceneManager->RenderWindow->close();
+					sceneManager->CurentFrame = GameEnum::GameFrame::Exit;
 				else
 					//fullscreen -> windowed
 					if (event.key.code == Keyboard::F10)
