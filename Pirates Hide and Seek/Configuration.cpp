@@ -73,6 +73,21 @@ namespace cfg {
 		}while(ok);
 		return false;
 	}
+	// The funtion return right element in confifiguration
+	// If the key don't exist than will return the key serched
+	std::string GetElement(dictionaty* configuration, std::string s) {
+		key* tmp = configuration->head;
+		bool ok = true;
+		do {
+			if (s == tmp->Left) {
+					return tmp->Right;
+			}
+			if (tmp->Next == NULL)
+				ok = false;
+			tmp = tmp->Next;
+		} while (ok);
+		return s;
+	}
 
 	// Overwriting the key "s" with result in confifiguration
 	// If the key don't exist than will return false

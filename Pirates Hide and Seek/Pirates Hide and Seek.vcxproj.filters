@@ -24,6 +24,12 @@
     <ClCompile Include="Configuration.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Intro.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Configuration.h">
@@ -38,5 +44,33 @@
     <ClInclude Include="GameVariable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Intro.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Resource\ConfigureFile.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resource\_board.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\_board_cov.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\_board_items.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\_board_islace.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\_board_mark.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

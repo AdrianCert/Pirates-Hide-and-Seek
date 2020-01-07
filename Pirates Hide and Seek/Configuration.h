@@ -26,6 +26,7 @@ namespace cfg {
 	bool GetParm(dictionaty* configuration, std::string s, std::string& result);
 	bool GetParm(dictionaty* configuration, std::string s, int &result);
 	bool SetParm(dictionaty* configuration, std::string s, int result);
+	std::string GetElement(dictionaty* configuration, std::string s);
 	bool SetParm(dictionaty* configuration, std::string s, std::string result);
 }
 #endif

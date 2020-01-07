@@ -131,14 +131,28 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Configuration.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Intro.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Configuration.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="GameVariable.h" />
+    <ClInclude Include="Intro.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Source.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Resource\ConfigureFile.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resource\_board.png" />
+    <Image Include="Resource\_board_cov.png" />
+    <Image Include="Resource\_board_islace.png" />
+    <Image Include="Resource\_board_items.png" />
+    <Image Include="Resource\_board_mark.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
