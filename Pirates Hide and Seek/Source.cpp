@@ -1,9 +1,12 @@
 #include "Source.h"
+#include "Level.h"
 
 using namespace sf;
 
 int main()
 {
+	int v[] = { 1,0,3,2,1,0,3,2,1 };
+	llvl::coding_request(v);
 	int gameWidth, gameHeight, gameSSyle;
 	std::string gameName;
 	cfg::dictionaty* configuration = new cfg::dictionaty();

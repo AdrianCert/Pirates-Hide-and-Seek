@@ -133,6 +133,7 @@
     <ClCompile Include="Configuration.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Intro.cpp" />
+    <ClCompile Include="Level.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
