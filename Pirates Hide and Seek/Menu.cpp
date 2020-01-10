@@ -4,26 +4,6 @@
 
 using namespace sf;
 
-void resetOriginSprite(Sprite &sprite)
-{
-	sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
-}
-
-void resetOriginSprite(sf::RectangleShape& sprite)
-{
-
-}
-
-bool isHover(Sprite& sprite, Mouse& mouse)
-{
-	Vector2f mousePos;
-	mousePos.x = mouse.getPosition().x;
-	mousePos.y = mouse.getPosition().y;
-	if (sprite.getGlobalBounds().contains(mousePos))
-		return true;
-	return false;
-}
-
 bool Menu(SceneManager* sceneManager) {
 	
 	//creare fereastra meniu
@@ -33,21 +13,51 @@ bool Menu(SceneManager* sceneManager) {
 	latimew = sceneManager->RenderWindow->getSize().x;
 	inaltimew = sceneManager->RenderWindow->getSize().y;
 	
-	//incarcare texturi buton
+	Font font;
+
+	//incarcare textura butoane si font
 	Texture menuButton;
-	if (!menuButton.loadFromFile("Textures/butonjoc.png"))
+	if (!menuButton.loadFromFile("Textures/butonjoc.png") ||
+		!font.loadFromFile("Resource/fontTitlu.ttf"))
 		EXIT_FAILURE;
 
 	//declarare sprites
 	Sprite play(menuButton),
 		settings(menuButton),
 		exit(menuButton);
+	//declarare text
+	Text t_play,
+		t_settings,
+		t_exit;
+
+	//aplicare font text
+	t_play.setFont(font);
+	t_settings.setFont(font);
+	t_exit.setFont(font);
+
+	//text
+	t_play.setString("play");
+	t_settings.setString("settings");
+	t_exit.setString("exit");
+
+	//culoare text
+	t_play.setFillColor(Color::Black);
+	t_settings.setFillColor(Color::Black);
+	t_exit.setFillColor(Color::Black);
+
+	//marime font
+	t_play.setCharacterSize(75);
+	t_settings.setCharacterSize(75);
+	t_exit.setCharacterSize(75);
 		   
-	//resetare origine butoane
+	//resetare origine butoane si text
 	raportRez = inaltimew / latimew;
 	resetOriginSprite(play);
 	resetOriginSprite(settings);
 	resetOriginSprite(exit);
+	resOriginText(t_play);
+	resOriginText(t_settings);
+	resOriginText(t_exit);
 	
 	//modificare marime butoane
 	play.setScale(raportRez, raportRez );
@@ -59,7 +69,12 @@ bool Menu(SceneManager* sceneManager) {
 	play.setPosition(latimew / 2, inaltimew / 2 - 300 * raportRez);
 	settings.setPosition(latimew / 2, inaltimew / 2);
 	exit.setPosition(latimew / 2, inaltimew / 2 + 300 * raportRez);
-		
+	t_play.setPosition(latimew / 2, inaltimew / 2 - 300 * raportRez);
+	t_settings.setPosition(latimew / 2, inaltimew / 2);
+	t_exit.setPosition(latimew / 2, inaltimew / 2 + 300 * raportRez);
+
+
+
 	//fereastra meniu este deschisa
 	while (sceneManager->CurentFrame == GameEnum::GameFrame::Menu)
 	{
@@ -87,66 +102,27 @@ bool Menu(SceneManager* sceneManager) {
 			case Event::Closed:
 				sceneManager->RenderWindow->close();
 				break;
-			
 			case Event::KeyPressed:
-				//inchidere fereastra daca se apasa ESC
-				if (event.key.code == Keyboard::Escape)
+				switch (event.key.code)
+				{
+				case Keyboard::Escape:
 					sceneManager->CurentFrame = GameEnum::GameFrame::Exit;
-				else
-					//fullscreen -> windowed
-					if (event.key.code == Keyboard::F10 && ok==0)
-					{
-						sceneManager->RenderWindow->create(VideoMode(1280, 720), "Pirates Hide and Seek", Style::Close);
-
-						//resetare latime, inaltime si raport rezolutie
-						latimew = 1280;
-						inaltimew = 720;
-						raportRez = inaltimew / latimew;
-
-						//resetare marime sprite
-						play.setScale(raportRez, raportRez);
-						settings.setScale(raportRez, raportRez);
-						exit.setScale(raportRez, raportRez);
-
-						//resetare pozitie sprite
-						play.setPosition(latimew / 2, inaltimew / 2 - 300 * raportRez);
-						settings.setPosition(latimew / 2, inaltimew / 2);
-						exit.setPosition(latimew / 2, inaltimew / 2 + 300 * raportRez);
-
-						ok = 1;
-					}
-					else
-					//windowed -> fullscreen
-					if (event.key.code == Keyboard::F10 && ok==1)
-					{
-						sceneManager->RenderWindow->create(VideoMode(1920, 1080), "Pirates Hide and Seek", Style::Close | Style::Fullscreen);
-						
-						//resetare latime, inaltime si raport rezolutie
-						latimew = 1920;
-						inaltimew = 1080;
-						raportRez = inaltimew / latimew;
-
-						//resetare marime sprite
-						play.setScale(raportRez, raportRez);
-						settings.setScale(raportRez, raportRez);
-						exit.setScale(raportRez, raportRez);
-
-						//resetare pozitie sprite
-						play.setPosition(latimew / 2, inaltimew / 2 - 300 * raportRez);
-						settings.setPosition(latimew / 2, inaltimew / 2);
-						exit.setPosition(latimew / 2, inaltimew / 2 + 300 * raportRez);
-
-						ok = 0;
-					}
-
-			}
-			
+					break;
+				default:
+					break;
+				}
+			default:
+				break;
+			}			
 		}
 
 		sceneManager->RenderWindow->clear(Color(255, 204, 102)); //culoare funalului 		
 		sceneManager->RenderWindow->draw(play);
 		sceneManager->RenderWindow->draw(settings);
-		sceneManager->RenderWindow->draw(exit); 
+		sceneManager->RenderWindow->draw(exit);
+		sceneManager->RenderWindow->draw(t_play);
+		sceneManager->RenderWindow->draw(t_settings);
+		sceneManager->RenderWindow->draw(t_exit);
 		sceneManager->RenderWindow->display();
 		
 	}

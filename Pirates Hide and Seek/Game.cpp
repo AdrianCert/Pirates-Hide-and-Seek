@@ -1,10 +1,10 @@
 #include "Game.h"
-#include "Menu.h"
+#include "Source.h"
 using namespace sf;
 
 bool Game(SceneManager* sceneManager) {
 
-	
+	//declarare texturi
 	Texture t_Board,
 			t_PirateShip,
 			t_ExploratorShip,
@@ -14,6 +14,8 @@ bool Game(SceneManager* sceneManager) {
 			t_Castle,
 			t_Octoped,
 			t_Shipwrecked;
+
+	//incarcare texturi din fisiere
 	if (!t_Board.loadFromFile(			"Resource/_board.png") ||												 
 		!t_PirateShip.loadFromFile(		"Resource/_board_items.png", IntRect(0,0,130,130))		||				 
 		!t_ExploratorShip.loadFromFile(	"Resource/_board_items.png", IntRect(0,130,130,260))	||				 
@@ -28,27 +30,33 @@ bool Game(SceneManager* sceneManager) {
 	RectangleShape board(sf::Vector2f(sceneManager->RenderWindow->getSize().y * 0.8, sceneManager->RenderWindow->getSize().y * 0.8));
 	
 	Clock time;
-
+	Mouse mouse;
+	//asezare plansa joc
 	board.setOrigin(board.getSize().x/2, board.getSize().y / 2);
 	board.setPosition(sceneManager->RenderWindow->getSize().x/2, sceneManager->RenderWindow->getSize().y/2);
 	board.setTexture(&t_Board);
 
-	Mouse mouse;
-	Sprite shiot(t_PirateShip);
-	shiot.setScale(.75, .75);
-	shiot.setPosition(sceneManager->RenderWindow->getSize().x / 2, sceneManager->RenderWindow->getSize().y / 2);
-	
+	//incarcare font
+	sf::Font font;
+	if (!font.loadFromFile("Resource/fontTitlu.ttf"))
+		EXIT_FAILURE;
+
+	Text b_Back;
+	b_Back.setFont(font);
+	b_Back.setString("back");
+	b_Back.setCharacterSize(50);
+	b_Back.setFillColor(sf::Color::Black);
+	//resOriginText(b_Back);
+	b_Back.setPosition(10, 10);
+
+
 	while (sceneManager->CurentFrame == GameEnum::GameFrame::Game) {
 		Event event;
 		while (sceneManager->RenderWindow->pollEvent(event)) {
-			
-			if (isHover(shiot, mouse) &&
-				Mouse::isButtonPressed(sf::Mouse::Left))
-			{
+				
+			if (isHover(b_Back, mouse) && Mouse::isButtonPressed(Mouse::Left))
 				sceneManager->CurentFrame = GameEnum::GameFrame::Menu;
-				break;
-			}
-			
+
 			switch (event.type)
 			{
 			case Event::Closed:
@@ -60,14 +68,6 @@ bool Game(SceneManager* sceneManager) {
 				case Keyboard::Escape:
 					sceneManager->CurentFrame = GameEnum::GameFrame::Menu;
 					break;
-				case Keyboard::F10:
-					sceneManager->RenderWindow->create(VideoMode(std::stoi(cfg::GetElement(sceneManager->Configurator,"gameWidth")) - 500, std::stoi(cfg::GetElement(sceneManager->Configurator, "gameHeight")) - 500), "Pirates Hide and Seek", Style::Close);
-					return true;
-					break;
-				case Keyboard::F11:
-					sceneManager->RenderWindow->create(VideoMode(std::stoi(cfg::GetElement(sceneManager->Configurator, "gameWidth")), std::stoi(cfg::GetElement(sceneManager->Configurator, "gameHeight"))), "Pirates Hide and Seek", Style::Close | Style::Fullscreen);
-					return true;
-					break;
 				default:
 					break;
 				}
@@ -75,7 +75,7 @@ bool Game(SceneManager* sceneManager) {
 		}
 		sceneManager->RenderWindow->clear(Color(255, 204, 102));
 		sceneManager->RenderWindow->draw(board);
-		sceneManager->RenderWindow->draw(shiot);
+		sceneManager->RenderWindow->draw(b_Back);
 		sceneManager->RenderWindow->display();
 	}
 	//Saving before game leave
