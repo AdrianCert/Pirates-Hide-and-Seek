@@ -20,7 +20,7 @@ bool Intro(SceneManager* sceneManager) {
 	if (!font.loadFromFile("Resource/fontTitlu.ttf"))
 		EXIT_FAILURE;
 
-	while (time.getElapsedTime() <= sf::seconds(5.3))
+	while (time.getElapsedTime() <= sf::seconds(5))
 	{
 		//Titlu Joc
 		sf::Text titlu;
