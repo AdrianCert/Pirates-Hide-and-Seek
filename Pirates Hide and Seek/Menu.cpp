@@ -140,6 +140,7 @@ bool Menu(SceneManager* sceneManager) {
 					}
 
 			}
+			
 		}
 
 		sceneManager->RenderWindow->clear(Color(255, 204, 102)); //culoare funalului 		
@@ -147,6 +148,7 @@ bool Menu(SceneManager* sceneManager) {
 		sceneManager->RenderWindow->draw(settings);
 		sceneManager->RenderWindow->draw(exit); 
 		sceneManager->RenderWindow->display();
+		
 	}
 	return true;
 }

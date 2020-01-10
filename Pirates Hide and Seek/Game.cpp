@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Menu.h"
 using namespace sf;
 
 bool Game(SceneManager* sceneManager) {
@@ -25,19 +26,29 @@ bool Game(SceneManager* sceneManager) {
 		return false;
 
 	RectangleShape board(sf::Vector2f(sceneManager->RenderWindow->getSize().y * 0.8, sceneManager->RenderWindow->getSize().y * 0.8));
-	RectangleShape shiot(sf::Vector2f(130, 130));
+	
 	Clock time;
 
 	board.setOrigin(board.getSize().x/2, board.getSize().y / 2);
 	board.setPosition(sceneManager->RenderWindow->getSize().x/2, sceneManager->RenderWindow->getSize().y/2);
 	board.setTexture(&t_Board);
 
-
+	Mouse mouse;
+	Sprite shiot(t_PirateShip);
+	shiot.setScale(.75, .75);
 	shiot.setPosition(sceneManager->RenderWindow->getSize().x / 2, sceneManager->RenderWindow->getSize().y / 2);
-	shiot.setTexture(&t_PirateShip);
+	
 	while (sceneManager->CurentFrame == GameEnum::GameFrame::Game) {
 		Event event;
 		while (sceneManager->RenderWindow->pollEvent(event)) {
+			
+			if (isHover(shiot, mouse) &&
+				Mouse::isButtonPressed(sf::Mouse::Left))
+			{
+				sceneManager->CurentFrame = GameEnum::GameFrame::Menu;
+				break;
+			}
+			
 			switch (event.type)
 			{
 			case Event::Closed:
@@ -64,7 +75,7 @@ bool Game(SceneManager* sceneManager) {
 		}
 		sceneManager->RenderWindow->clear(Color(255, 204, 102));
 		sceneManager->RenderWindow->draw(board);
-		//sceneManager->RenderWindow->draw(shiot);
+		sceneManager->RenderWindow->draw(shiot);
 		sceneManager->RenderWindow->display();
 	}
 	//Saving before game leave
