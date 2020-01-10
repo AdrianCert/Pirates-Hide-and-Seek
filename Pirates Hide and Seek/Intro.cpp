@@ -2,20 +2,25 @@
 #include "Source.h"
 #include "menu.h"
 
+void resPozText(sf::Text &text)
+{
+	text.setOrigin(
+		text.getGlobalBounds().left + text.getGlobalBounds().width / 2,
+		text.getGlobalBounds().top + text.getGlobalBounds().height / 2);
+}
+
 bool Intro(SceneManager* sceneManager) {
 	
-	//Ascunde cursor
 	sceneManager->RenderWindow->setMouseCursorVisible(false);
 	float angle(0.f);
 	sf::Clock time;
 	sf::Vector2f scalable = sf::Vector2f(1,1);
 
-	//incarcare font
 	sf::Font font;
 	if (!font.loadFromFile("Resource/fontTitlu.ttf"))
 		EXIT_FAILURE;
 
-	while (time.getElapsedTime() <= sf::seconds(1))
+	while (time.getElapsedTime() <= sf::seconds(5.3))
 	{
 		//Titlu Joc
 		sf::Text titlu;
@@ -37,7 +42,6 @@ bool Intro(SceneManager* sceneManager) {
 		angle += 0.02f;
 		scalable.x += 0.006f;
 		scalable.y += 0.006f;
-		
 		sceneManager->RenderWindow->clear();
 		sceneManager->RenderWindow->draw(rectangle);
 		sceneManager->RenderWindow->draw(titlu);

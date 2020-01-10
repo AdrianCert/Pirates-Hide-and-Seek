@@ -4,6 +4,11 @@
 
 using namespace sf;
 
+void resetOriginSprite(Sprite &sprite)
+{
+	sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
+}
+
 bool Menu(SceneManager* sceneManager) {
 	
 	//creare fereastra meniu
@@ -16,10 +21,12 @@ bool Menu(SceneManager* sceneManager) {
 	Font font;
 
 	//incarcare textura butoane si font
-	Texture menuButton;
+	Texture menuButton, t_cursor;
 	if (!menuButton.loadFromFile("Textures/butonjoc.png") ||
-		!font.loadFromFile("Resource/fontTitlu.ttf"))
-		EXIT_FAILURE;
+	    !font.loadFromFile("Resource/fontTitlu.ttf"))
+      return false;
+	latimew = sceneManager->RenderWindow->getSize().x;
+	inaltimew = sceneManager->RenderWindow->getSize().y;
 
 	//declarare sprites
 	Sprite play(menuButton),
@@ -74,7 +81,8 @@ bool Menu(SceneManager* sceneManager) {
 	t_exit.setPosition(latimew / 2, inaltimew / 2 + 300 * raportRez);
 
 
-
+	
+	
 	//fereastra meniu este deschisa
 	while (sceneManager->CurentFrame == GameEnum::GameFrame::Menu)
 	{
@@ -102,6 +110,7 @@ bool Menu(SceneManager* sceneManager) {
 			case Event::Closed:
 				sceneManager->RenderWindow->close();
 				break;
+			
 			case Event::KeyPressed:
 				switch (event.key.code)
 				{

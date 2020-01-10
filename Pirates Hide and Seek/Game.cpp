@@ -4,8 +4,7 @@ using namespace sf;
 
 bool Game(SceneManager* sceneManager) {
 
-	//declarare texturi
-	Texture t_Board,
+  Texture t_Board,
 			t_PirateShip,
 			t_ExploratorShip,
 			t_RobbedShip,
@@ -15,7 +14,6 @@ bool Game(SceneManager* sceneManager) {
 			t_Octoped,
 			t_Shipwrecked;
 
-	//incarcare texturi din fisiere
 	if (!t_Board.loadFromFile(			"Resource/_board.png") ||												 
 		!t_PirateShip.loadFromFile(		"Resource/_board_items.png", IntRect(0,0,130,130))		||				 
 		!t_ExploratorShip.loadFromFile(	"Resource/_board_items.png", IntRect(0,130,130,260))	||				 
@@ -31,12 +29,11 @@ bool Game(SceneManager* sceneManager) {
 	
 	Clock time;
 	Mouse mouse;
-	//asezare plansa joc
-	board.setOrigin(board.getSize().x/2, board.getSize().y / 2);
+
+  board.setOrigin(board.getSize().x/2, board.getSize().y / 2);
 	board.setPosition(sceneManager->RenderWindow->getSize().x/2, sceneManager->RenderWindow->getSize().y/2);
 	board.setTexture(&t_Board);
 
-	//incarcare font
 	sf::Font font;
 	if (!font.loadFromFile("Resource/fontTitlu.ttf"))
 		EXIT_FAILURE;
