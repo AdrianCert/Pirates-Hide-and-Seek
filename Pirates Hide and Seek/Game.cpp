@@ -3,6 +3,7 @@ using namespace sf;
 
 bool Game(SceneManager* sceneManager) {
 
+	
 	Texture t_Board,
 			t_PirateShip,
 			t_ExploratorShip,
@@ -63,7 +64,7 @@ bool Game(SceneManager* sceneManager) {
 		}
 		sceneManager->RenderWindow->clear(Color(255, 204, 102));
 		sceneManager->RenderWindow->draw(board);
-		sceneManager->RenderWindow->draw(shiot);
+		//sceneManager->RenderWindow->draw(shiot);
 		sceneManager->RenderWindow->display();
 	}
 	//Saving before game leave

@@ -1,9 +1,13 @@
 #include "Source.h"
+#include "Level.h"
 
 using namespace sf;
 
 int main()
 {
+	int v[9] = { 4,0,0,0,0,0,0,0,4 };
+	int x = llvl::CodingRequest(v);
+	llvl::DecodeRequest(lvl::GetRequest(1), v);
 	int gameWidth, gameHeight, gameSSyle;
 	std::string gameName;
 	cfg::dictionaty* configuration = new cfg::dictionaty();
@@ -11,10 +15,16 @@ int main()
 	if (!GetParm(configuration, "gameWidth", gameWidth)
 		|| !GetParm(configuration, "gameHeight", gameHeight)
 		|| !GetParm(configuration, "gameName", gameName)
-		|| !GetParm(configuration, "gameSSyle", gameSSyle))
+		|| !GetParm(configuration, "gameSSyle", gameSSyle)
+		)
 		return EXIT_FAILURE;
 
-	RenderWindow window(VideoMode(gameWidth, gameHeight), gameName, gameSSyle);
+	sf::ContextSettings settings;
+	settings.antialiasingLevel = 8;
+
+	
+	
+	RenderWindow window(VideoMode(gameWidth, gameHeight), gameName, gameSSyle, settings);
 
 	SceneManager* sceneManager = new SceneManager();
 	sceneManager->RenderWindow = &window;
@@ -44,7 +54,10 @@ int main()
 			break;
 		}
 		if(!gameContinue) sceneManager->CurentFrame = GameEnum::GameFrame::Exit;
+		
 	}
+
+	
 
 	return EXIT_SUCCESS;
 }
