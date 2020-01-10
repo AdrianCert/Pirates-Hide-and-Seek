@@ -1,4 +1,5 @@
 #include "Menu.h"
+#include "Source.h"
 #include <SFML/Graphics.hpp>
 
 using namespace sf;
@@ -13,30 +14,57 @@ bool Menu(SceneManager* sceneManager) {
 	//creare fereastra meniu
 	//latimea si inaltimea ferestrei
 	float latimew, inaltimew, raportRez, ok=0;
+	Mouse mouse;
 	latimew = sceneManager->RenderWindow->getSize().x;
 	inaltimew = sceneManager->RenderWindow->getSize().y;
 	
-	//incarcare texturi buton
-	Texture menuButton,
-		t_cursor;
-	if (!menuButton.loadFromFile("Textures/butonjoc.png")
-		|| !t_cursor.loadFromFile("Resource/cursor.png"))
-		EXIT_FAILURE;
+	Font font;
+
+	//incarcare textura butoane si font
+	Texture menuButton, t_cursor;
+	if (!menuButton.loadFromFile("Textures/butonjoc.png") ||
+	    !font.loadFromFile("Resource/fontTitlu.ttf"))
+      return false;
+	latimew = sceneManager->RenderWindow->getSize().x;
+	inaltimew = sceneManager->RenderWindow->getSize().y;
 
 	//declarare sprites
 	Sprite play(menuButton),
-		   settings(menuButton),
-		   exit(menuButton),
-		   cursor(t_cursor);
-	
-	cursor.setScale(.1, .1);
-	cursor.setOrigin(100, 10);
+		settings(menuButton),
+		exit(menuButton);
+	//declarare text
+	Text t_play,
+		t_settings,
+		t_exit;
 
-	//resetare origine butoane
+	//aplicare font text
+	t_play.setFont(font);
+	t_settings.setFont(font);
+	t_exit.setFont(font);
+
+	//text
+	t_play.setString("play");
+	t_settings.setString("settings");
+	t_exit.setString("exit");
+
+	//culoare text
+	t_play.setFillColor(Color::Black);
+	t_settings.setFillColor(Color::Black);
+	t_exit.setFillColor(Color::Black);
+
+	//marime font
+	t_play.setCharacterSize(75);
+	t_settings.setCharacterSize(75);
+	t_exit.setCharacterSize(75);
+		   
+	//resetare origine butoane si text
 	raportRez = inaltimew / latimew;
 	resetOriginSprite(play);
 	resetOriginSprite(settings);
 	resetOriginSprite(exit);
+	resOriginText(t_play);
+	resOriginText(t_settings);
+	resOriginText(t_exit);
 	
 	//modificare marime butoane
 	play.setScale(raportRez, raportRez );
@@ -48,26 +76,31 @@ bool Menu(SceneManager* sceneManager) {
 	play.setPosition(latimew / 2, inaltimew / 2 - 300 * raportRez);
 	settings.setPosition(latimew / 2, inaltimew / 2);
 	exit.setPosition(latimew / 2, inaltimew / 2 + 300 * raportRez);
-	
+	t_play.setPosition(latimew / 2, inaltimew / 2 - 300 * raportRez);
+	t_settings.setPosition(latimew / 2, inaltimew / 2);
+	t_exit.setPosition(latimew / 2, inaltimew / 2 + 300 * raportRez);
+
 
 	
 	
 	//fereastra meniu este deschisa
 	while (sceneManager->CurentFrame == GameEnum::GameFrame::Menu)
 	{
-		cursor.setPosition(Mouse::getPosition().x, Mouse::getPosition().y);
+		
 		Event event;
 		while (sceneManager->RenderWindow->pollEvent(event))
-		{
-			Mouse mouse;
-			Vector2f mousePos;
-			mousePos.x = mouse.getPosition().x;
-			mousePos.y = mouse.getPosition().y;
-			
-			if (play.getGlobalBounds().contains(mousePos) &&
+		{						
+			if (isHover(play, mouse) &&
 				Mouse::isButtonPressed(sf::Mouse::Left))
 			{
 				sceneManager->CurentFrame = GameEnum::GameFrame::Game;
+				break;
+			}
+			else
+			if (isHover(exit, mouse) &&
+				Mouse::isButtonPressed(sf::Mouse::Left))
+			{
+				sceneManager->CurentFrame = GameEnum::GameFrame::Exit;
 				break;
 			}
 
@@ -79,33 +112,28 @@ bool Menu(SceneManager* sceneManager) {
 				break;
 			
 			case Event::KeyPressed:
-				//inchidere fereastra daca se apasa ESC
-				if (event.key.code == Keyboard::Escape)
+				switch (event.key.code)
+				{
+				case Keyboard::Escape:
 					sceneManager->CurentFrame = GameEnum::GameFrame::Exit;
-				else
-					//fullscreen -> windowed
-					if (event.key.code == Keyboard::F10 && ok==0)
-					{
-						sceneManager->RenderWindow->create(VideoMode(1366, 768), "Pirates Hide and Seek", Style::Close);	
-						ok = 1;
-					}
-					else
-					//windowed -> fullscreen
-					if (event.key.code == Keyboard::F10 && ok==1)
-					{
-						sceneManager->RenderWindow->create(VideoMode(1920, 1080), "Pirates Hide and Seek", Style::Close | Style::Fullscreen);
-						ok = 0;
-					}
-
-			}
+					break;
+				default:
+					break;
+				}
+			default:
+				break;
+			}			
 		}
 
 		sceneManager->RenderWindow->clear(Color(255, 204, 102)); //culoare funalului 		
 		sceneManager->RenderWindow->draw(play);
 		sceneManager->RenderWindow->draw(settings);
-		sceneManager->RenderWindow->draw(exit); 
-		sceneManager->RenderWindow->draw(cursor);
+		sceneManager->RenderWindow->draw(exit);
+		sceneManager->RenderWindow->draw(t_play);
+		sceneManager->RenderWindow->draw(t_settings);
+		sceneManager->RenderWindow->draw(t_exit);
 		sceneManager->RenderWindow->display();
+		
 	}
 	return true;
 }
