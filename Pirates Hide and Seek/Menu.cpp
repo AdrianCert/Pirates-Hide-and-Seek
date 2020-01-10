@@ -4,11 +4,6 @@
 
 using namespace sf;
 
-void resetOriginSprite(Sprite &sprite)
-{
-	sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
-}
-
 bool Menu(SceneManager* sceneManager) {
 	
 	//creare fereastra meniu

@@ -1,8 +1,4 @@
-#include "Helper.h"
-#include "Source.h"
-#include <SFML/Graphics.hpp>
-
-using namespace sf;
+#include "Helpers.h"
 
 //reseteaza originea unui sprite
 void resetOriginSprite(sf::Sprite& sprite)
@@ -55,4 +51,9 @@ bool isHover(sf::Text& text, sf::Mouse& mouse)
 	if (text.getGlobalBounds().contains(mousePos))
 		return true;
 	return false;
+}
+void DrowVector(SceneManager* sceneManager, sf::RectangleShape* Figures[], int FiguresCount) {
+	for (int i = 0; i < FiguresCount; i++) {
+		sceneManager->RenderWindow->draw(*Figures[i]);
+	}
 }
