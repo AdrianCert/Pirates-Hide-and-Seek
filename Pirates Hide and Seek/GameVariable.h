@@ -10,10 +10,12 @@ namespace GameEnum {
 		Menu,
 		Game,
 		Option,
-		Exit
+		Exit,
+		MaxFrame
 	};
 
 	enum Figures {
+		LandMark,
 		PirateShip,
 		ExploratorShip,
 		RobbedShip,
@@ -21,7 +23,8 @@ namespace GameEnum {
 		Island,
 		Castle,
 		Octoped,
-		Shipwrecked
+		Shipwrecked,//Naufragiat
+		COUNT
 	};
 }
 

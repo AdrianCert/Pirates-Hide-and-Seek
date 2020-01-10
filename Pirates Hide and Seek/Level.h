@@ -10,10 +10,11 @@ namespace llvl {
 		// Where each group of letter representing the count an element from GameEnum::Figures
 		// In that group of 3 bit abc or xxx:
 		//						xxx --> rotation of mark
-		//								00 : top
-		//								01 : right
-		//								10 : down
-		//								11 : left
+		//								000 : NOMARK
+		//								001 : top
+		//								010 : right
+		//								011 : down
+		//								100 : left
 		//						abc --> count of the item (figures) 
 		//								000 : 0
 		//								001 : 1
@@ -40,8 +41,29 @@ namespace llvl {
 		int Solution;
 	};
 
-	int coding_request(int* var);
-	void decode_request(int var, int* x);
+	int CodingRequest(int* var);
+	void DecodeRequest(int var, int* x);
+	int CodingSolution(int* var);
+	void DecodeSolution(int var, int* x);
+}
+
+namespace lvl {
+
+	struct Islace {
+		bool Relevant;
+		int Position : 2;
+		int Rotation : 2;
+		int Indetification;
+	};
+	struct Level
+	{
+		int Request[9];
+		Islace Solution[4];
+		Islace State[4];
+	};
+
+	bool LoadLevel(int requested_lvl, Level* played_lvl);
+	int GetRequest(int var);
 }
 
 #endif // !LEVEL_H
