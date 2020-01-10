@@ -17,7 +17,7 @@ bool Menu(SceneManager* sceneManager) {
 
 	//incarcare textura butoane si font
 	Texture menuButton, t_cursor;
-	if (!menuButton.loadFromFile("Textures/butonjoc.png") ||
+	if (!menuButton.loadFromFile("Resource/t_butonjoc.png") ||
 	    !font.loadFromFile("Resource/fontTitlu.ttf"))
       return false;
 	latimew = sceneManager->RenderWindow->getSize().x;
@@ -84,19 +84,15 @@ bool Menu(SceneManager* sceneManager) {
 		
 		Event event;
 		while (sceneManager->RenderWindow->pollEvent(event))
-		{						
-			if (isHover(play, mouse) &&
-				Mouse::isButtonPressed(sf::Mouse::Left))
-			{
-				sceneManager->CurentFrame = GameEnum::GameFrame::Game;
-				break;
-			}
-			else
-			if (isHover(exit, mouse) &&
-				Mouse::isButtonPressed(sf::Mouse::Left))
-			{
-				sceneManager->CurentFrame = GameEnum::GameFrame::Exit;
-				break;
+		{
+			// Logica butoanelor
+			if (Mouse::isButtonPressed(sf::Mouse::Left)) {
+				if (isHover(play, mouse)) 
+					sceneManager->CurentFrame = GameEnum::GameFrame::Game;
+				if (isHover(exit, mouse))
+					sceneManager->CurentFrame = GameEnum::GameFrame::Exit;
+				if(isHover(settings, mouse))
+					sceneManager->CurentFrame = GameEnum::GameFrame::Option;
 			}
 
 			switch (event.type)
@@ -111,6 +107,12 @@ bool Menu(SceneManager* sceneManager) {
 				{
 				case Keyboard::Escape:
 					sceneManager->CurentFrame = GameEnum::GameFrame::Exit;
+					break;
+				case Keyboard::Enter:
+					sceneManager->CurentFrame = GameEnum::GameFrame::Game;
+					break;
+				case Keyboard::O:
+					sceneManager->CurentFrame = GameEnum::GameFrame::Option;
 					break;
 				default:
 					break;

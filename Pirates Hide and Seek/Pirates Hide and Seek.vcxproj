@@ -152,11 +152,16 @@
     <Text Include="Resource\ConfigureFile.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Resource\_board.png" />
-    <Image Include="Resource\_board_cov.png" />
-    <Image Include="Resource\_board_islace.png" />
-    <Image Include="Resource\_board_items.png" />
-    <Image Include="Resource\_board_mark.png" />
+    <Image Include="Resource\t_board.png" />
+    <Image Include="Resource\t_board_cov.png" />
+    <Image Include="Resource\t_board_islace.png" />
+    <Image Include="Resource\t_board_items.png" />
+    <Image Include="Resource\t_board_mark.png" />
+    <Image Include="Resource\t_butonjoc.png" />
+    <Image Include="Resource\t_cursor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Resource\fontTitlu.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
