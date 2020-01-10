@@ -4,7 +4,8 @@ using namespace sf;
 
 bool Game(SceneManager* sceneManager) {
 
-  Texture t_Board,
+	Texture t_Board,
+			t_LandMark,
 			t_PirateShip,
 			t_ExploratorShip,
 			t_RobbedShip,
@@ -12,25 +13,53 @@ bool Game(SceneManager* sceneManager) {
 			t_Island,
 			t_Castle,
 			t_Octoped,
-			t_Shipwrecked;
+			t_Shipwrecked,
+			t_Islace_A,
+			t_Islace_B,
+			t_Islace_C,
+			t_Islace_D;
 
-	if (!t_Board.loadFromFile(			"Resource/_board.png") ||												 
-		!t_PirateShip.loadFromFile(		"Resource/_board_items.png", IntRect(0,0,130,130))		||				 
-		!t_ExploratorShip.loadFromFile(	"Resource/_board_items.png", IntRect(0,130,130,260))	||				 
-		!t_Octoped.loadFromFile(		"Resource/_board_items.png", IntRect(0,260,130,390))	||				 
-		!t_Island.loadFromFile(			"Resource/_board_items.png", IntRect(130,130,260,260))	||				 
-		!t_Castle.loadFromFile(			"Resource/_board_items.png", IntRect(130,260,260,390))	||				 
-		!t_Shipwrecked.loadFromFile(	"Resource/_board_items.png", IntRect(130,0,260,130))	||				 
-		!t_RobbedShip.loadFromFile(		"Resource/_board_items.png", IntRect(260,0,390,130))	||				 
-		!t_Treasure.loadFromFile(		"Resource/_board_items.png", IntRect(260,130,390,260))	)				 
+	if (!t_Board.loadFromFile(			"Resource/t_board.png")		||
+		!t_LandMark.loadFromFile(		"Resource/t_board_mark.png")	||
+		!t_PirateShip.loadFromFile(		"Resource/t_board_items.png", IntRect(0,0,130,130))			||				 
+		!t_ExploratorShip.loadFromFile(	"Resource/t_board_items.png", IntRect(0,130,130,260))		||				 
+		!t_Octoped.loadFromFile(		"Resource/t_board_items.png", IntRect(0,260,130,390))		||				 
+		!t_Island.loadFromFile(			"Resource/t_board_items.png", IntRect(130,130,260,260))		||				 
+		!t_Castle.loadFromFile(			"Resource/t_board_items.png", IntRect(130,260,260,390))		||				 
+		!t_Shipwrecked.loadFromFile(	"Resource/t_board_items.png", IntRect(130,0,260,130))		||				 
+		!t_RobbedShip.loadFromFile(		"Resource/t_board_items.png", IntRect(260,0,390,130))		||				 
+		!t_Treasure.loadFromFile(		"Resource/t_board_items.png", IntRect(260,130,390,260))		||				 
+		!t_Islace_A.loadFromFile(		"Resource/t_board_islace.png", IntRect(0,0,500,500))		||
+		!t_Islace_B.loadFromFile(		"Resource/t_board_islace.png", IntRect(500,0,1000,500))		||
+		!t_Islace_C.loadFromFile(		"Resource/t_board_islace.png", IntRect(0,500,500,1000))		||
+		!t_Islace_D.loadFromFile(		"Resource/t_board_islace.png", IntRect(500,500,1000,1000))	)				 
 		return false;
 
-	RectangleShape board(sf::Vector2f(sceneManager->RenderWindow->getSize().y * 0.8, sceneManager->RenderWindow->getSize().y * 0.8));
+	Vector2f size_window = Vector2f(sceneManager->RenderWindow->getSize().y * 0.8, sceneManager->RenderWindow->getSize().y * 0.8);
+	Vector2f size_islace = Vector2f(sceneManager->RenderWindow->getSize().y * 0.2, sceneManager->RenderWindow->getSize().y * 0.2);
+	Vector2f size_items = Vector2f(100, 100);
+
+	RectangleShape board(size_window);
+	RectangleShape LandMark(size_items);
+	RectangleShape PirateShip(size_items);
+	RectangleShape ExploratorShip(size_items);
+	RectangleShape RobbedShip(size_items);
+	RectangleShape Treasure(size_items);
+	RectangleShape Island(size_items);
+	RectangleShape Castle(size_items);
+	RectangleShape Octoped(size_items);
+	RectangleShape Shipwrecked(size_items);
+	
+	RectangleShape Islace_A(size_islace);
+	RectangleShape Islace_B(size_islace);
+	RectangleShape Islace_C(size_islace);
+	RectangleShape Islace_D(size_islace);
+
 	
 	Clock time;
 	Mouse mouse;
 
-  board.setOrigin(board.getSize().x/2, board.getSize().y / 2);
+	board.setOrigin(board.getSize().x/2, board.getSize().y / 2);
 	board.setPosition(sceneManager->RenderWindow->getSize().x/2, sceneManager->RenderWindow->getSize().y/2);
 	board.setTexture(&t_Board);
 
