@@ -1,5 +1,5 @@
 #include "Helpers.h"
-
+using namespace sf;
 //reseteaza originea unui sprite
 void resetOriginSprite(sf::Sprite& sprite)
 {

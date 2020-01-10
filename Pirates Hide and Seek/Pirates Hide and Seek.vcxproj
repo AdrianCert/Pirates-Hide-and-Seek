@@ -132,7 +132,7 @@
   <ItemGroup>
     <ClCompile Include="Configuration.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="Helpers\Helpers.cpp" />
+    <ClCompile Include="Helpers.cpp" />
     <ClCompile Include="Intro.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Menu.cpp" />
@@ -142,7 +142,7 @@
     <ClInclude Include="Configuration.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameVariable.h" />
-    <ClInclude Include="Helpers\Helpers.h" />
+    <ClInclude Include="Helpers.h" />
     <ClInclude Include="Intro.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="Menu.h" />
