@@ -29,6 +29,7 @@ bool Menu(SceneManager* sceneManager) {
 	//creare fereastra meniu
 	//latimea si inaltimea ferestrei
 	float latimew, inaltimew, raportRez, ok=0;
+	Mouse mouse;
 	latimew = sceneManager->RenderWindow->getSize().x;
 	inaltimew = sceneManager->RenderWindow->getSize().y;
 	
@@ -65,9 +66,7 @@ bool Menu(SceneManager* sceneManager) {
 		
 		Event event;
 		while (sceneManager->RenderWindow->pollEvent(event))
-		{
-			Mouse mouse;
-						
+		{						
 			if (isHover(play, mouse) &&
 				Mouse::isButtonPressed(sf::Mouse::Left))
 			{
