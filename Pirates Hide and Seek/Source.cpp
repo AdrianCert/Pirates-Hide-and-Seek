@@ -39,6 +39,9 @@ int main()
 		case GameEnum::GameFrame::Intro:
 			gameContinue = Intro(sceneManager);
 			break;
+		case GameEnum::GameFrame::GameSelection:
+			gameContinue = GameSelect(sceneManager);
+			break;
 		case GameEnum::GameFrame::Menu:
 			gameContinue = Menu(sceneManager);
 			break;

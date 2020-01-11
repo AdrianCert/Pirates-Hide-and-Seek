@@ -9,7 +9,7 @@ bool GameSelect(SceneManager* sceneManager) {
 
 	Texture t_button, t_cursor;
 	if (!t_button.loadFromFile(	"Resource/t_butonjoc.png")	||
-		!t_cursor.loadFromFile(	"Resource/t_curso.png")		||
+		!t_cursor.loadFromFile(	"Resource/t_cursor.png")	||
 		!font.loadFromFile		("Resource/fontTitlu.ttf")	)
 		return false;
 
