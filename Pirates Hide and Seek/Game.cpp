@@ -25,7 +25,6 @@ bool Game(SceneManager* sceneManager) {
 			t_Islace_D;
 	if (!t_Board.loadFromFile(			"Resource/t_board.png")		||
 		!t_LandMark.loadFromFile(		"Resource/t_board_mark.png")||
-		!t_BoardEmpty.loadFromFile(		"Resource/t_board_empy.png", IntRect(512,0,512,1024))		||				 
 		!t_PirateShip.loadFromFile(		"Resource/t_board_items.png", IntRect(0,0,130,130))			||				 
 		!t_ExploratorShip.loadFromFile(	"Resource/t_board_items.png", IntRect(0,130,130,130))		||				 
 		!t_Octoped.loadFromFile(		"Resource/t_board_items.png", IntRect(0,260,130,130))		||				 
@@ -67,7 +66,7 @@ bool Game(SceneManager* sceneManager) {
 	Text_Back.setPosition(10, 10);
 
 	lvl::Level* CurentLevel = new lvl::Level();
-	if (!lvl::LoadLevel(2, CurentLevel)) {
+	if (!lvl::LoadLevel(3, CurentLevel)) {
 		// Generate a new lvl
 		// or send home for chalange
 	}

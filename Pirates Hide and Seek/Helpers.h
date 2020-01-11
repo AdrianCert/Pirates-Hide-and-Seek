@@ -3,7 +3,9 @@
 #define HELPERS_H
 
 void DrowVector(SceneManager* sceneManager, sf::RectangleShape** Figures, int FiguresCount);
-
+void SetOriginCenter(sf::Sprite* sprite);
+void SetOriginCenter(sf::Text* text);
+void SetOriginCenter(sf::RectangleShape* shape);
 // resetarea origini
 void resetOriginSprite(sf::Sprite& sprite);
 void resetOriginSprite(sf::RectangleShape& shape);

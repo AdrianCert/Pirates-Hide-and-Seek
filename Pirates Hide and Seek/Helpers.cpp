@@ -57,3 +57,15 @@ void DrowVector(SceneManager* sceneManager, sf::RectangleShape** Figures, int Fi
 		sceneManager->RenderWindow->draw(*Figures[i]);
 	}
 }
+
+void SetOriginCenter(sf::Sprite* sprite) {
+		sprite->setOrigin(sprite->getGlobalBounds().width / 2, sprite->getGlobalBounds().height / 2);
+}
+
+void SetOriginCenter(sf::Text* text) {
+		text->setOrigin(text->getGlobalBounds().width / 2, text->getGlobalBounds().height / 2);
+}
+
+void SetOriginCenter(sf::RectangleShape* shape) {
+		shape->setOrigin(shape->getGlobalBounds().width / 2, shape->getGlobalBounds().height / 2);
+}

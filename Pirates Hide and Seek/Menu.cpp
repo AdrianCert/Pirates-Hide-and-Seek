@@ -88,7 +88,7 @@ bool Menu(SceneManager* sceneManager) {
 			// Logica butoanelor
 			if (Mouse::isButtonPressed(sf::Mouse::Left)) {
 				if (isHover(play, mouse)) 
-					sceneManager->CurentFrame = GameEnum::GameFrame::Game;
+					sceneManager->CurentFrame = GameEnum::GameFrame::GameSelection;
 				if (isHover(exit, mouse))
 					sceneManager->CurentFrame = GameEnum::GameFrame::Exit;
 				if(isHover(settings, mouse))
@@ -109,7 +109,7 @@ bool Menu(SceneManager* sceneManager) {
 					sceneManager->CurentFrame = GameEnum::GameFrame::Exit;
 					break;
 				case Keyboard::Enter:
-					sceneManager->CurentFrame = GameEnum::GameFrame::Game;
+					sceneManager->CurentFrame = GameEnum::GameFrame::GameSelection;
 					break;
 				case Keyboard::O:
 					sceneManager->CurentFrame = GameEnum::GameFrame::Option;
