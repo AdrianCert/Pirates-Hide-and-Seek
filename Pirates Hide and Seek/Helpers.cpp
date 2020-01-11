@@ -52,7 +52,7 @@ bool isHover(sf::Text& text, sf::Mouse& mouse)
 		return true;
 	return false;
 }
-void DrowVector(SceneManager* sceneManager, sf::RectangleShape* Figures[], int FiguresCount) {
+void DrowVector(SceneManager* sceneManager, sf::RectangleShape** Figures, int FiguresCount) {
 	for (int i = 0; i < FiguresCount; i++) {
 		sceneManager->RenderWindow->draw(*Figures[i]);
 	}

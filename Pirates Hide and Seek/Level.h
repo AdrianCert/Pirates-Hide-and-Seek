@@ -53,17 +53,24 @@ namespace lvl {
 		bool Relevant;
 		int Position : 2;
 		int Rotation : 2;
-		int Indetification;
+	};
+	struct State {
+		Islace A;
+		Islace B;
+		Islace C;
+		Islace D;
 	};
 	struct Level
 	{
 		int Request[9];
-		Islace Solution[4];
-		Islace State[4];
+		State Solution;
+		State Stash;
 	};
 
 	bool LoadLevel(int requested_lvl, Level* played_lvl);
 	int GetRequest(int var);
+	// Graphish Helper Funtion
+	int GetCountDrowedFigures(Level* curentLVL);
 }
 
 #endif // !LEVEL_H

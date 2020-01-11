@@ -2,7 +2,7 @@
 #ifndef HELPERS_H
 #define HELPERS_H
 
-void DrowVector(SceneManager* sceneManager, sf::RectangleShape* Figures[], int FiguresCount);
+void DrowVector(SceneManager* sceneManager, sf::RectangleShape** Figures, int FiguresCount);
 
 // resetarea origini
 void resetOriginSprite(sf::Sprite& sprite);

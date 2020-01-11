@@ -39,6 +39,24 @@ namespace lvl {
 
 	bool LoadLevel(int requested_lvl, Level* played_lvl) {
 		int Request = GetRequest(requested_lvl);
+		int Solution[] = { 0,0,0,0 };
+		llvl::DecodeRequest(Request, played_lvl->Request);
+		llvl::DecodeSolution(Request, Solution);
+		played_lvl->Solution.A.Relevant = (bool)Solution[0] & 32;
+		played_lvl->Solution.A.Position = Solution[0] & 12;
+		played_lvl->Solution.A.Rotation = Solution[0] & 3;
+
+		played_lvl->Solution.B.Relevant = (bool)Solution[0] & 32;
+		played_lvl->Solution.B.Position = Solution[0] & 12;
+		played_lvl->Solution.B.Rotation = Solution[0] & 3;
+
+		played_lvl->Solution.C.Relevant = (bool)Solution[0] & 32;
+		played_lvl->Solution.C.Position = Solution[0] & 12;
+		played_lvl->Solution.C.Rotation = Solution[0] & 3;
+
+		played_lvl->Solution.D.Relevant = (bool)Solution[0] & 32;
+		played_lvl->Solution.D.Position = Solution[0] & 12;
+		played_lvl->Solution.D.Rotation = Solution[0] & 3;
 		return true;
 	}
 	bool LoadLevelSeed(int seed, int* n) {
@@ -50,5 +68,23 @@ namespace lvl {
 		if (var > CountLVL)
 			return -1;
 		return StorageLVL[var - 1];
+	}
+	// temporary storage
+	int GetSolutuon(int var) {
+		int StorageLVL[] = { 33,	16388,	258,	67108868 };
+		int CountLVL = (int) sizeof(StorageLVL) / sizeof(int);
+		if (var > CountLVL)
+			return -1;
+		return StorageLVL[var - 1];
+	}
+	///////////////////////////////////////////////////////////////////////////////////////////////////
+	/// Funtion dedicated for drow request lvl                                                      ///
+	///////////////////////////////////////////////////////////////////////////////////////////////////
+	int GetCountDrowedFigures(Level* curentLVL) {
+		int suma = curentLVL->Request[0] == 0 ? 0 : 1;
+		for (int i = 1; i < 9; i++) {
+			suma += curentLVL->Request[i];
+		}
+		return suma;
 	}
 }
