@@ -30,7 +30,10 @@
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Helper.cpp">
+    <ClCompile Include="Level.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Helpers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -41,19 +44,22 @@
     <ClInclude Include="Source.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Menu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameVariable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Intro.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Helper.h">
+    <ClInclude Include="Level.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameVariable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -63,20 +69,31 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Resource\_board.png">
+    <Image Include="Resource\t_board.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Resource\_board_cov.png">
+    <Image Include="Resource\t_board_cov.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Resource\_board_items.png">
+    <Image Include="Resource\t_board_islace.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Resource\_board_islace.png">
+    <Image Include="Resource\t_board_items.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Resource\_board_mark.png">
+    <Image Include="Resource\t_board_mark.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Resource\t_butonjoc.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\t_cursor.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Resource\fontTitlu.ttf">
+      <Filter>Resource Files</Filter>
+    </Font>
   </ItemGroup>
 </Project>

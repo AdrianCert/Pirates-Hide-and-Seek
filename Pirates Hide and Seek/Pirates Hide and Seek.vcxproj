@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -79,7 +79,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)\External\SFML\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <AdditionalLibraryDirectories>$(SolutionDir)\External\SFML\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics-d.lib;sfml-audio-d.lib;sfml-network-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-main-d.lib</AdditionalDependencies>
     </Link>
@@ -101,13 +101,13 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)\External\SFML\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SFML_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)\External\SFML\lib</AdditionalLibraryDirectories>
@@ -132,8 +132,9 @@
   <ItemGroup>
     <ClCompile Include="Configuration.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="Helper.cpp" />
+    <ClCompile Include="Helpers.cpp" />
     <ClCompile Include="Intro.cpp" />
+    <ClCompile Include="Level.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
@@ -141,8 +142,9 @@
     <ClInclude Include="Configuration.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameVariable.h" />
-    <ClInclude Include="Helper.h" />
+    <ClInclude Include="Helpers.h" />
     <ClInclude Include="Intro.h" />
+    <ClInclude Include="Level.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Source.h" />
   </ItemGroup>
@@ -150,11 +152,16 @@
     <Text Include="Resource\ConfigureFile.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Resource\_board.png" />
-    <Image Include="Resource\_board_cov.png" />
-    <Image Include="Resource\_board_islace.png" />
-    <Image Include="Resource\_board_items.png" />
-    <Image Include="Resource\_board_mark.png" />
+    <Image Include="Resource\t_board.png" />
+    <Image Include="Resource\t_board_cov.png" />
+    <Image Include="Resource\t_board_islace.png" />
+    <Image Include="Resource\t_board_items.png" />
+    <Image Include="Resource\t_board_mark.png" />
+    <Image Include="Resource\t_butonjoc.png" />
+    <Image Include="Resource\t_cursor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Resource\fontTitlu.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -5,4 +5,3 @@
 #include "Intro.h"
 #include "Game.h"
 #include "GameVariable.h"
-#include "Helper.h"
