@@ -5,7 +5,12 @@ bool GameSelect(SceneManager* sceneManager) {
 	Mouse mouse;
 	Font font;
 	Vector2u SizeWindow  = sceneManager->RenderWindow->getSize();
-	float Ratio = SizeWindow.y / SizeWindow.x;
+	float SizeWindowX = sceneManager->RenderWindow->getSize().x;
+	float SizeWindowY = sceneManager->RenderWindow->getSize().y;
+
+	float Ratio = SizeWindowY / SizeWindowX;
+		//SizeWindow.y / SizeWindow.x;
+		//(float)sceneManager->RenderWindow->getSize().y / (float)sceneManager->RenderWindow->getSize().x;
 
 	Texture t_button, t_cursor;
 	if (!t_button.loadFromFile(	"Resource/t_butonjoc.png")	||
@@ -21,35 +26,39 @@ bool GameSelect(SceneManager* sceneManager) {
 			T_ContinueGame,
 			T_CustomGame;
 
+	SetOriginCenter(&B_NewGame);
+	SetOriginCenter(&B_ContinueGame);
+	SetOriginCenter(&B_CustomGame);
+
 	T_NewGame.setFont(font);
 	T_NewGame.setString("New Game");
 	T_NewGame.setFillColor(Color::Black);
-	T_NewGame.setCharacterSize(75);
-	T_NewGame.setScale(Ratio, Ratio);
+	T_NewGame.setCharacterSize(46);
+	//T_NewGame.setScale(Ratio, Ratio);
+	B_NewGame.setScale(Ratio, Ratio);
+	SetOriginCenter(&T_NewGame);
 	T_NewGame.setPosition(SizeWindow.x / 2, SizeWindow.y / 2 - 300 * Ratio);
 	B_NewGame.setPosition(SizeWindow.x / 2, SizeWindow.y / 2 - 300 * Ratio);
-	SetOriginCenter(&T_NewGame);
-	SetOriginCenter(&B_NewGame);
 
 	T_ContinueGame.setFont(font);
 	T_ContinueGame.setString("Continue Game");
 	T_ContinueGame.setFillColor(Color::Black);
-	T_ContinueGame.setCharacterSize(75);
-	T_ContinueGame.setScale(Ratio, Ratio);
+	T_ContinueGame.setCharacterSize(46);
+	//T_ContinueGame.setScale(Ratio, Ratio);
+	B_ContinueGame.setScale(Ratio, Ratio);
+	SetOriginCenter(&T_ContinueGame);
 	T_ContinueGame.setPosition(SizeWindow.x / 2, SizeWindow.y / 2 );
 	B_ContinueGame.setPosition(SizeWindow.x / 2, SizeWindow.y / 2 );
-	SetOriginCenter(&T_ContinueGame);
-	SetOriginCenter(&B_ContinueGame);
 
 	T_CustomGame.setFont(font);
 	T_CustomGame.setString("Quick Game");
 	T_CustomGame.setFillColor(Color::Black);
-	T_CustomGame.setCharacterSize(75);
-	T_CustomGame.setScale(Ratio, Ratio);
+	T_CustomGame.setCharacterSize(46);
+	//T_CustomGame.setScale(Ratio, Ratio);
+	B_CustomGame.setScale(Ratio, Ratio);
+	SetOriginCenter(&T_CustomGame);
 	T_CustomGame.setPosition(SizeWindow.x / 2, SizeWindow.y / 2 + 300 * Ratio);
 	B_CustomGame.setPosition(SizeWindow.x / 2, SizeWindow.y / 2 + 300 * Ratio);
-	SetOriginCenter(&T_CustomGame);
-	SetOriginCenter(&B_CustomGame);
 
 	while (sceneManager->CurentFrame == GameEnum::GameFrame::GameSelection)
 	{
@@ -59,11 +68,11 @@ bool GameSelect(SceneManager* sceneManager) {
 		{
 			// Logica butoanelor
 			if (Mouse::isButtonPressed(sf::Mouse::Left)) {
-				if (isHover(B_NewGame, mouse))
+				if (isHover(B_NewGame, mouse)) // get lvl by random from storage
 					sceneManager->CurentFrame = GameEnum::GameFrame::Game;
-				if (isHover(B_ContinueGame, mouse))
+				if (isHover(B_ContinueGame, mouse)) // swich on lvl selector 
 					sceneManager->CurentFrame = GameEnum::GameFrame::Game;
-				if (isHover(B_CustomGame, mouse))
+				if (isHover(B_CustomGame, mouse)) // frame:: enter seed
 					sceneManager->CurentFrame = GameEnum::GameFrame::Game;
 			}
 

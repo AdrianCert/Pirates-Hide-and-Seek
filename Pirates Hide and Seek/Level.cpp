@@ -39,6 +39,8 @@ namespace lvl {
 
 	bool LoadLevel(int requested_lvl, Level* played_lvl) {
 		int Request = GetRequest(requested_lvl);
+		if (Request == -1)
+			return false;
 		int Solution[] = { 0,0,0,0 };
 		llvl::DecodeRequest(Request, played_lvl->Request);
 		llvl::DecodeSolution(Request, Solution);
@@ -65,7 +67,7 @@ namespace lvl {
 	int GetRequest(int var) {
 		int StorageLVL[] = {	33,	16388,	258,	67108868	};
 		int CountLVL = (int) sizeof(StorageLVL)/sizeof(int);
-		if (var > CountLVL)
+		if (var > CountLVL || var == 0)
 			return -1;
 		return StorageLVL[var - 1];
 	}

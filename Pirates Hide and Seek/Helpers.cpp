@@ -63,7 +63,10 @@ void SetOriginCenter(sf::Sprite* sprite) {
 }
 
 void SetOriginCenter(sf::Text* text) {
-		text->setOrigin(text->getGlobalBounds().width / 2, text->getGlobalBounds().height / 2);
+	text->setOrigin(
+		text->getGlobalBounds().left + text->getGlobalBounds().width / 2,
+		text->getGlobalBounds().top + text->getGlobalBounds().height / 2);
+	//text->setOrigin(text->getGlobalBounds().left + text->getGlobalBounds().width / 2, text->getGlobalBounds().top + text->getGlobalBounds().height / 2);
 }
 
 void SetOriginCenter(sf::RectangleShape* shape) {

@@ -83,7 +83,6 @@ bool Game(SceneManager* sceneManager) {
 	RequestBoard.setFillColor( Color(92,194,208));
 	RequestBoard.setOrigin(0, RequestBoard.getSize().y/2);
 	RequestBoard.setPosition(0, size_window.y / 2);
-	
 	Request[RequestIndex]->setTexture(FigureTextures[0]);
 	Request[RequestIndex]->setOrigin(50,50);
 	Request[RequestIndex]->setRotation(90 * CurentLevel->Request[0]);
@@ -129,6 +128,8 @@ bool Game(SceneManager* sceneManager) {
 				}
 			}
 		}
+		// stash; mutarile;
+		//if (ifCompleted(LVL));
 		sceneManager->RenderWindow->clear(Color(255, 204, 102));
 		sceneManager->RenderWindow->draw(MainBoard);
 		sceneManager->RenderWindow->draw(RequestBoard);
