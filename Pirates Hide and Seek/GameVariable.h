@@ -8,6 +8,7 @@ namespace GameEnum {
 	enum GameFrame {
 		Intro,
 		Menu,
+		GameSelection,
 		Game,
 		Option,
 		Exit,

@@ -48,22 +48,47 @@ namespace llvl {
 }
 
 namespace lvl {
+	bool GetIslaceMath(int Islace, int V[][3]) {
+		switch (Islace%4)
+		{
+		case 0:
+				V[0 ][0] = 1; V[0][1] = 1; V[0][2] = 1;
+				V[1 ][0] = 1; V[1][1] = 0; V[1][2] = 1;
+				V[2 ][0] = 1; V[2][1] = 0; V[2][2] = 1;
+			break;
+		default:
+			break;
+		}
+		int MatIslace_B[3][3] = {
+			1, 1, 1,
+			1, 0, 1,
+			1, 0, 1
+		};
 
+	}
 	struct Islace {
 		bool Relevant;
 		int Position : 2;
 		int Rotation : 2;
-		int Indetification;
+		int M[3][3];
+	};
+	struct State {
+		Islace A;
+		Islace B;
+		Islace C;
+		Islace D;
 	};
 	struct Level
 	{
 		int Request[9];
-		Islace Solution[4];
-		Islace State[4];
+		State Solution;
+		State Stash;
 	};
 
 	bool LoadLevel(int requested_lvl, Level* played_lvl);
 	int GetRequest(int var);
+	// Graphish Helper Funtion
+	int GetCountDrowedFigures(Level* curentLVL);
 }
 
 #endif // !LEVEL_H

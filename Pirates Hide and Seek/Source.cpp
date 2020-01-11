@@ -15,10 +15,16 @@ int main()
 	if (!GetParm(configuration, "gameWidth", gameWidth)
 		|| !GetParm(configuration, "gameHeight", gameHeight)
 		|| !GetParm(configuration, "gameName", gameName)
-		|| !GetParm(configuration, "gameSSyle", gameSSyle))
+		|| !GetParm(configuration, "gameSSyle", gameSSyle)
+		)
 		return EXIT_FAILURE;
 
-	RenderWindow window(VideoMode(gameWidth, gameHeight), gameName, gameSSyle);
+	sf::ContextSettings settings;
+	settings.antialiasingLevel = 8;
+
+	
+	
+	RenderWindow window(VideoMode(gameWidth, gameHeight), gameName, gameSSyle, settings);
 
 	SceneManager* sceneManager = new SceneManager();
 	sceneManager->RenderWindow = &window;
@@ -32,6 +38,9 @@ int main()
 		{
 		case GameEnum::GameFrame::Intro:
 			gameContinue = Intro(sceneManager);
+			break;
+		case GameEnum::GameFrame::GameSelection:
+			gameContinue = GameSelect(sceneManager);
 			break;
 		case GameEnum::GameFrame::Menu:
 			gameContinue = Menu(sceneManager);
@@ -48,7 +57,10 @@ int main()
 			break;
 		}
 		if(!gameContinue) sceneManager->CurentFrame = GameEnum::GameFrame::Exit;
+		
 	}
+
+	
 
 	return EXIT_SUCCESS;
 }
