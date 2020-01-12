@@ -72,3 +72,31 @@ void SetOriginCenter(sf::Text* text) {
 void SetOriginCenter(sf::RectangleShape* shape) {
 		shape->setOrigin(shape->getGlobalBounds().width / 2, shape->getGlobalBounds().height / 2);
 }
+
+void RandOrder(int* n) {
+	srand((unsigned)time(NULL));
+	int frec[] = { 0, 0 , 0 ,0 };
+	int k = rand() % 1000;
+	if (k < 100) k = rand() % 1000 + 100;
+	while (k != 0)
+	{
+		frec[rand() % 4]++;
+		k--;
+	}
+	k = 4;
+	int max = 0;
+	int poz_max = -1;
+	while (k != 0) {
+		max = 0;
+		for (int i = 0; i < 4; i++) {
+			if (frec[i] > max) {
+				max = frec[i];
+				poz_max = i;
+			}
+		}
+		n[4-k] = poz_max;
+		frec[poz_max] = 0;
+		k--;
+		poz_max = -1;
+	}
+}

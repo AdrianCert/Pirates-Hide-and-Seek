@@ -48,12 +48,10 @@ namespace llvl {
 }
 
 namespace lvl {
-	
 	struct Islace {
 		bool Relevant;
-		int Position : 2;
-		int Rotation : 2;
-		
+		int Position;
+		int Rotation;
 	};
 	struct State {
 		Islace A;
@@ -69,8 +67,13 @@ namespace lvl {
 	};
 
 	bool LoadLevel(int requested_lvl, Level* played_lvl);
+	bool LoadLevelGenerated(Level* played_lvl, bool useMarkHint = true);
 	int GetRequest(int var);
-	// Graphish Helper Funtion
+	int GetSolution(int var);
+	int GetStorageLVL(int* v, int box);
+	///////////////////////////////////////////////////////////////////////////////////////////////////
+	/// Funtion dedicated for drow request lvl                                                      ///
+	///////////////////////////////////////////////////////////////////////////////////////////////////
 	int GetCountDrowedFigures(Level* curentLVL);
 }
 

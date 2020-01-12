@@ -58,6 +58,15 @@ bool Game(SceneManager* sceneManager) {
 	MainBoard.setOrigin(MainBoard.getSize().x/2, MainBoard.getSize().y / 2);
 	MainBoard.setPosition(sceneManager->RenderWindow->getSize().x/2, sceneManager->RenderWindow->getSize().y/2);
 	MainBoard.setTexture(&t_Board);
+	
+	Islace_A.setTexture(&t_Islace_A);
+	SetOriginCenter(&Islace_A);
+	Islace_B.setTexture(&t_Islace_B);
+	SetOriginCenter(&Islace_B);
+	Islace_C.setTexture(&t_Islace_C);
+	SetOriginCenter(&Islace_C);
+	Islace_D.setTexture(&t_Islace_D);
+	SetOriginCenter(&Islace_D);
 
 	Text_Back.setFont(font);
 	Text_Back.setString("back");
@@ -66,9 +75,8 @@ bool Game(SceneManager* sceneManager) {
 	Text_Back.setPosition(10, 10);
 
 	lvl::Level* CurentLevel = new lvl::Level();
-	if (!lvl::LoadLevel(3, CurentLevel)) {
-		// Generate a new lvl
-		// or send home for chalange
+	if (!lvl::LoadLevel(sceneManager->LevelState, CurentLevel)) {
+		lvl::LoadLevelGenerated(CurentLevel,true);
 	}
 
 	int RequestCount = lvl::GetCountDrowedFigures(CurentLevel);
@@ -85,7 +93,7 @@ bool Game(SceneManager* sceneManager) {
 	RequestBoard.setPosition(0, size_window.y / 2);
 	Request[RequestIndex]->setTexture(FigureTextures[0]);
 	Request[RequestIndex]->setOrigin(50,50);
-	Request[RequestIndex]->setRotation(90 * CurentLevel->Request[0]);
+	Request[RequestIndex]->setRotation(90 * (CurentLevel->Request[0] - 1));
 	for (int i = 1; i < 9; i++) {
 		int tmp = CurentLevel->Request[i];
 		while (tmp !=0)

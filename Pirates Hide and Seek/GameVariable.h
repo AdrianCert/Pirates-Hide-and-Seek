@@ -32,6 +32,7 @@ namespace GameEnum {
 struct SceneManager
 {
 	int CurentFrame = GameEnum::GameFrame::Intro;
+	int LevelState = 0;
 	sf::RenderWindow* RenderWindow = 0;
 	cfg::dictionaty* Configurator = 0;
 };
