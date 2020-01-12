@@ -1,4 +1,5 @@
 #include "GameVariable.h"
+#include "Helpers.h"
 #ifndef LEVEL_H
 #define LEVEL_H
 
@@ -48,7 +49,7 @@ namespace llvl {
 }
 
 namespace lvl {
-	bool GetIslaceMath(int Islace, int V[][3]) {
+	/*bool GetIslaceMath(int Islace, int V[][3]) {
 		switch (Islace%4)
 		{
 		case 0:
@@ -65,12 +66,11 @@ namespace lvl {
 			1, 0, 1
 		};
 
-	}
+	}*/
 	struct Islace {
 		bool Relevant;
 		int Position : 2;
 		int Rotation : 2;
-		int M[3][3];
 	};
 	struct State {
 		Islace A;
@@ -86,8 +86,13 @@ namespace lvl {
 	};
 
 	bool LoadLevel(int requested_lvl, Level* played_lvl);
+	bool LoadLevelSeed(int seed, Level* played_lvl);
 	int GetRequest(int var);
-	// Graphish Helper Funtion
+	int GetSolution(int var);
+	int GetStorageLVL(int* v, int box);
+	///////////////////////////////////////////////////////////////////////////////////////////////////
+	/// Funtion dedicated for drow request lvl                                                      ///
+	///////////////////////////////////////////////////////////////////////////////////////////////////
 	int GetCountDrowedFigures(Level* curentLVL);
 }
 

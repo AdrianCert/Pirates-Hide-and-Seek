@@ -5,9 +5,11 @@ using namespace sf;
 
 int main()
 {
-	int v[9] = { 4,0,0,0,0,0,0,0,4 };
-	int x = llvl::CodingRequest(v);
-	llvl::DecodeRequest(lvl::GetRequest(1), v);
+	//int v[9] = { 4,0,0,0,0,0,0,0,4 };
+	//int x = llvl::CodingRequest(v);
+	//llvl::DecodeRequest(lvl::GetRequest(1), v);
+	int n[4] = {0, 0, 0, 0};
+	RandOrder(n);
 	int gameWidth, gameHeight, gameSSyle;
 	std::string gameName;
 	cfg::dictionaty* configuration = new cfg::dictionaty();
@@ -30,7 +32,8 @@ int main()
 	sceneManager->RenderWindow = &window;
 	sceneManager->CurentFrame = GameEnum::GameFrame::Intro;
 	sceneManager->Configurator = configuration;
-	
+	sceneManager->LevelState = 1;
+
 	while (window.isOpen())
 	{
 		bool gameContinue = false;

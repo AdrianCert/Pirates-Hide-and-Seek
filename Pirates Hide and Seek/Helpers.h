@@ -14,6 +14,6 @@ void resOriginText(sf::Text& text);
 bool isHover(sf::Sprite& sprite, sf::Mouse& mouse);
 bool isHover(sf::RectangleShape& shape, sf::Mouse& mouse);
 bool isHover(sf::Text& text, sf::Mouse& mouse);
-
+void RandOrder(int* n);
 
 #endif // !HELPERS_H

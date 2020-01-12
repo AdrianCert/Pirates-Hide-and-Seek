@@ -66,7 +66,7 @@ bool Game(SceneManager* sceneManager) {
 	Text_Back.setPosition(10, 10);
 
 	lvl::Level* CurentLevel = new lvl::Level();
-	if (!lvl::LoadLevel(3, CurentLevel)) {
+	if (!lvl::LoadLevel(sceneManager->LevelState, CurentLevel)) {
 		// Generate a new lvl
 		// or send home for chalange
 	}

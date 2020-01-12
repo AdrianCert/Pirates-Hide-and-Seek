@@ -39,9 +39,10 @@ namespace lvl {
 
 	bool LoadLevel(int requested_lvl, Level* played_lvl) {
 		int Request = GetRequest(requested_lvl);
+		int Solution_ENCODED = GetSolution(requested_lvl);
 		if (Request == -1)
 			return false;
-		int Solution[] = { 0,0,0,0 };
+		int Solution[] = { 0, 0, 0, 0 };
 		llvl::DecodeRequest(Request, played_lvl->Request);
 		llvl::DecodeSolution(Request, Solution);
 		played_lvl->Solution.A.Relevant = (bool)Solution[0] & 32;
@@ -61,27 +62,72 @@ namespace lvl {
 		played_lvl->Solution.D.Rotation = Solution[0] & 3;
 		return true;
 	}
-	bool LoadLevelSeed(int seed, int* n) {
+
+	bool LoadLevelSeed(int seed, Level* played_lvl) {
+		int Order[4];
+		State* GeneratedSolution = new State();
+		GeneratedSolution->A.Relevant = true;
+		GeneratedSolution->B.Relevant = true;
+		GeneratedSolution->C.Relevant = true;
+		GeneratedSolution->D.Relevant = true;
+		RandOrder(Order);
+		GeneratedSolution->A.Position  = Order[0];
+		GeneratedSolution->B.Position  = Order[1];
+		GeneratedSolution->C.Position  = Order[2];
+		GeneratedSolution->D.Position  = Order[3];
+
+		GeneratedSolution->A.Rotation  = Order[0];
+		GeneratedSolution->B.Rotation  = Order[0];
+		GeneratedSolution->C.Rotation  = Order[0];
+		GeneratedSolution->D.Rotation  = Order[0];
+
 		return true;
 	}
+
 	int GetRequest(int var) {
-		int StorageLVL[] = {	33,	16388,	258,	67108868	};
-		int CountLVL = (int) sizeof(StorageLVL)/sizeof(int);
-		if (var > CountLVL || var == 0)
+		int capacity = GetStorageLVL(NULL, 0);
+		if (var > capacity)
 			return -1;
-		return StorageLVL[var - 1];
+		int* v = new int[capacity];
+		GetStorageLVL(v, 0);
+		return v[var - 1];
 	}
-	// temporary storage
-	int GetSolutuon(int var) {
-		int StorageLVL[] = { 33,	16388,	258,	67108868 };
+
+	int GetSolution(int var) {
+		int capacity = GetStorageLVL(NULL,1);
+		if (var > capacity)
+			return -1;
+		int *v = new int[capacity];
+		GetStorageLVL(v,1);
+		return v[var - 1];
+	}
+
+	int GetStorageLVL(int* v, int box) {
+		int StorageLVL[] ={ 33,	16388,	258,	67108868 };
+		int StorageSOL[] = { 33,	16388,	258,	67108868 };
 		int CountLVL = (int) sizeof(StorageLVL) / sizeof(int);
-		if (var > CountLVL)
-			return -1;
-		return StorageLVL[var - 1];
+		int CountSOL = (int) sizeof(StorageSOL) / sizeof(int);
+		switch (box)
+		{
+		case 0:
+			if (v != NULL) {
+				for (int i = 0; i < CountLVL; i++) {
+					v[i] = StorageLVL[i];
+				}
+			}
+			return CountLVL;
+			break;
+		case 1:
+			if (v != NULL) {
+				for (int i = 0; i < CountLVL; i++) {
+					v[i] = StorageLVL[i];
+				}
+			}
+			return CountSOL;
+			break;
+		}
 	}
-	///////////////////////////////////////////////////////////////////////////////////////////////////
-	/// Funtion dedicated for drow request lvl                                                      ///
-	///////////////////////////////////////////////////////////////////////////////////////////////////
+
 	int GetCountDrowedFigures(Level* curentLVL) {
 		int suma = curentLVL->Request[0] == 0 ? 0 : 1;
 		for (int i = 1; i < 9; i++) {
