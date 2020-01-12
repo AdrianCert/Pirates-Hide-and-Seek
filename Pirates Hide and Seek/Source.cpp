@@ -1,10 +1,11 @@
 #include "Source.h"
 #include "Level.h"
-
+#include "GameMatrix.h"
 using namespace sf;
 
 int main()
 {
+	afisareMatrice();
 	int v[9] = { 4,0,0,0,0,0,0,0,4 };
 	int x = llvl::CodingRequest(v);
 	llvl::DecodeRequest(lvl::GetRequest(1), v);
