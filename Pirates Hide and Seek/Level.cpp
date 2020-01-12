@@ -75,11 +75,12 @@ namespace lvl {
 		GeneratedSolution->B.Position  = Order[1];
 		GeneratedSolution->C.Position  = Order[2];
 		GeneratedSolution->D.Position  = Order[3];
-
-		GeneratedSolution->A.Rotation  = Order[0];
-		GeneratedSolution->B.Rotation  = Order[0];
-		GeneratedSolution->C.Rotation  = Order[0];
-		GeneratedSolution->D.Rotation  = Order[0];
+		
+		srand((unsigned)time(NULL));
+		GeneratedSolution->A.Rotation  = rand() % 4;
+		GeneratedSolution->B.Rotation  = rand() % 4;
+		GeneratedSolution->C.Rotation  = rand() % 4;
+		GeneratedSolution->D.Rotation  = rand() % 4;
 
 		return true;
 	}

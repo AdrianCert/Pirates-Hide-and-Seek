@@ -74,7 +74,7 @@ void SetOriginCenter(sf::RectangleShape* shape) {
 }
 
 void RandOrder(int* n) {
-	//sf::Randomizer::SetSeed(10);
+	srand((unsigned)time(NULL));
 	int frec[] = { 0, 0 , 0 ,0 };
 	int k = rand() % 1000;
 	if (k < 100) k = rand() % 1000 + 100;
