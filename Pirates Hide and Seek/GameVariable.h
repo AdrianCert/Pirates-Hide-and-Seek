@@ -16,14 +16,14 @@ namespace GameEnum {
 	};
 
 	enum Figures {
-		LandMark,
-		PirateShip,
-		ExploratorShip,
-		RobbedShip,
-		Treasure,
-		Island,
-		Castle,
-		Octoped,
+		LandMark,			//0
+		PirateShip,			//1
+		ExploratorShip,		//2
+		RobbedShip,			//3
+		Treasure,			//4
+		Island,				//5
+		Castle,				//6
+		Octoped,			//7
 		Shipwrecked,//Naufragiat
 		COUNT
 	};

@@ -6,9 +6,9 @@ using namespace sf;
 int main()
 {
 	afisareMatrice();
-	int v[9] = { 4,0,0,0,0,0,0,0,4 };
+	/*int v[9] = { 0,0,1,0,2,0,1,0,0 };		
 	int x = llvl::CodingRequest(v);
-	llvl::DecodeRequest(lvl::GetRequest(1), v);
+	llvl::DecodeRequest(lvl::GetRequest(1), v);*/
 	int gameWidth, gameHeight, gameSSyle;
 	std::string gameName;
 	cfg::dictionaty* configuration = new cfg::dictionaty();
