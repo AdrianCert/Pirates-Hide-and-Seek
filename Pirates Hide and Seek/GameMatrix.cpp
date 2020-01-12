@@ -87,14 +87,14 @@ void GetIslaceMat(int Islace, int v[3][3]) {
 		v[2][0] = GameEnum::Octoped;			v[2][1] = GameEnum::PirateShip;		v[2][2] = 0;
 		break;
 	case 2:
-		v[3][0] = GameEnum::Shipwrecked;		v[0][1] = GameEnum::RobbedShip;		v[0][2] = GameEnum::PirateShip;
-		v[4][0] = GameEnum::ExploratorShip;		v[1][1] = GameEnum::Treasure;		v[1][2] = 0;
-		v[5][0] = GameEnum::PirateShip;			v[2][1] = GameEnum::Castle;			v[2][2] = GameEnum::Island;
+		v[0][0] = GameEnum::Shipwrecked;		v[0][1] = GameEnum::RobbedShip;		v[0][2] = GameEnum::PirateShip;
+		v[1][0] = GameEnum::ExploratorShip;		v[1][1] = GameEnum::Treasure;		v[1][2] = 0;
+		v[2][0] = GameEnum::PirateShip;			v[2][1] = GameEnum::Castle;			v[2][2] = GameEnum::Island;
 		break;
 	case 3:
-		v[3][0] = 0;							v[0][1] = 0;						v[0][2] = 0;
-		v[4][0] = GameEnum::Castle;				v[1][1] = GameEnum::Shipwrecked;	v[1][2] = GameEnum::Island;
-		v[5][0] = GameEnum::ExploratorShip;		v[2][1] = GameEnum::PirateShip;		v[2][2] = GameEnum::Treasure;
+		v[0][0] = 0;							v[0][1] = 0;						v[0][2] = 0;
+		v[1][0] = GameEnum::Castle;				v[1][1] = GameEnum::Shipwrecked;	v[1][2] = GameEnum::Island;
+		v[2][0] = GameEnum::ExploratorShip;		v[2][1] = GameEnum::PirateShip;		v[2][2] = GameEnum::Treasure;
 		break;
 
 	default:
@@ -136,11 +136,14 @@ void CompareCadran(int piesa[3][3], int cadran[3][3], int s[2])
 
 void GetUncoveredItems(lvl::State* x, int* v)
 {
-	int count = 0, pieseCadran[2], piesa[3][3], cadran[3][3];
 	
+	int count = 0;
 	//Piesa A
 	if (x->A.Relevant)
 	{
+		int pieseCadran[2];
+		int piesa[3][3];
+		int cadran[3][3];
 		GetIslaceMat(0, piesa);
 		setRotation(piesa, x->A.Rotation);
 		GetCadran(x->A.Position, cadran);
@@ -155,6 +158,9 @@ void GetUncoveredItems(lvl::State* x, int* v)
 	//Piesa B
 	if (x->B.Relevant)
 	{
+		int pieseCadran[2];
+		int piesa[3][3];
+		int cadran[3][3];
 		GetIslaceMat(0, piesa);
 		setRotation(piesa, x->B.Rotation);
 		GetCadran(x->B.Position, cadran);
@@ -169,6 +175,9 @@ void GetUncoveredItems(lvl::State* x, int* v)
 	//Piesa C
 	if (x->C.Relevant)
 	{
+		int pieseCadran[2];
+		int piesa[3][3];
+		int cadran[3][3];
 		GetIslaceMat(0, piesa);
 		setRotation(piesa, x->C.Rotation);
 		GetCadran(x->C.Position, cadran);
@@ -183,6 +192,9 @@ void GetUncoveredItems(lvl::State* x, int* v)
 	//Piesa D
 	if (x->D.Relevant)
 	{
+		int pieseCadran[2];
+		int piesa[3][3];
+		int cadran[3][3];
 		GetIslaceMat(0, piesa);
 		setRotation(piesa, x->D.Rotation);
 		GetCadran(x->D.Position, cadran);

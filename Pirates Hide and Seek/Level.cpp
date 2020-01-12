@@ -1,4 +1,6 @@
 #include "Level.h"
+#include "Helpers.h"
+#include "GameMatrix.h"
 
 namespace llvl {
 	
@@ -39,13 +41,12 @@ namespace lvl {
 
 	bool LoadLevel(int requested_lvl, Level* played_lvl) {
 		int Request = GetRequest(requested_lvl);
+		if (Request == -1) return false;
 		int Solution_ENCODED = GetSolution(requested_lvl);
-		if (Request == -1)
-			return false;
 		int Solution[] = { 0, 0, 0, 0 };
 		llvl::DecodeRequest(Request, played_lvl->Request);
 		llvl::DecodeSolution(Request, Solution);
-		played_lvl->Solution.A.Relevant = (bool)Solution[0] & 32;
+		played_lvl->Solution.A.Relevant = Solution[0] & 32;
 		played_lvl->Solution.A.Position = Solution[0] & 12;
 		played_lvl->Solution.A.Rotation = Solution[0] & 3;
 
@@ -63,7 +64,7 @@ namespace lvl {
 		return true;
 	}
 
-	bool LoadLevelSeed(int seed, Level* played_lvl) {
+	bool LoadLevelGenerated(Level* played_lvl, bool useMarkHint) {
 		int Order[4];
 		State* GeneratedSolution = new State();
 		GeneratedSolution->A.Relevant = true;
@@ -77,17 +78,27 @@ namespace lvl {
 		GeneratedSolution->D.Position  = Order[3];
 		
 		srand((unsigned)time(NULL));
-		GeneratedSolution->A.Rotation  = rand() % 4;
-		GeneratedSolution->B.Rotation  = rand() % 4;
-		GeneratedSolution->C.Rotation  = rand() % 4;
-		GeneratedSolution->D.Rotation  = rand() % 4;
+		GeneratedSolution->A.Rotation  = abs( rand() % 4);
+		GeneratedSolution->B.Rotation  = abs( rand() % 4);
+		GeneratedSolution->C.Rotation  = abs( rand() % 4);
+		GeneratedSolution->D.Rotation  = abs( rand() % 4);
+
+		int DescovededP[] = { 0, 0, 0 , 0, 0, 0, 0, 0 };
+		GetUncoveredItems(GeneratedSolution, DescovededP);
+		for (int i = 0; i < 9; i++)
+			played_lvl->Request[i] = 0;
+		for (int i = 0; i < 8; i++)
+			played_lvl->Request[DescovededP[i]]++;
+		if(useMarkHint) played_lvl->Request[0] = GeneratedSolution->A.Rotation + 1;
+
+		played_lvl->Solution = *GeneratedSolution;
 
 		return true;
 	}
 
 	int GetRequest(int var) {
 		int capacity = GetStorageLVL(NULL, 0);
-		if (var > capacity)
+		if (var > capacity || var <= 0)
 			return -1;
 		int* v = new int[capacity];
 		GetStorageLVL(v, 0);
@@ -96,7 +107,7 @@ namespace lvl {
 
 	int GetSolution(int var) {
 		int capacity = GetStorageLVL(NULL,1);
-		if (var > capacity)
+		if (var > capacity || var <= 0)
 			return -1;
 		int *v = new int[capacity];
 		GetStorageLVL(v,1);
@@ -127,6 +138,7 @@ namespace lvl {
 			return CountSOL;
 			break;
 		}
+		return 0;
 	}
 
 	int GetCountDrowedFigures(Level* curentLVL) {

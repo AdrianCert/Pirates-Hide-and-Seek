@@ -1,5 +1,4 @@
 #include "GameVariable.h"
-#include "Helpers.h"
 #ifndef LEVEL_H
 #define LEVEL_H
 
@@ -49,28 +48,10 @@ namespace llvl {
 }
 
 namespace lvl {
-	/*bool GetIslaceMath(int Islace, int V[][3]) {
-		switch (Islace%4)
-		{
-		case 0:
-				V[0 ][0] = 1; V[0][1] = 1; V[0][2] = 1;
-				V[1 ][0] = 1; V[1][1] = 0; V[1][2] = 1;
-				V[2 ][0] = 1; V[2][1] = 0; V[2][2] = 1;
-			break;
-		default:
-			break;
-		}
-		int MatIslace_B[3][3] = {
-			1, 1, 1,
-			1, 0, 1,
-			1, 0, 1
-		};
-
-	}*/
 	struct Islace {
 		bool Relevant;
-		int Position : 2;
-		int Rotation : 2;
+		int Position;
+		int Rotation;
 	};
 	struct State {
 		Islace A;
@@ -86,7 +67,7 @@ namespace lvl {
 	};
 
 	bool LoadLevel(int requested_lvl, Level* played_lvl);
-	bool LoadLevelSeed(int seed, Level* played_lvl);
+	bool LoadLevelGenerated(Level* played_lvl, bool useMarkHint = true);
 	int GetRequest(int var);
 	int GetSolution(int var);
 	int GetStorageLVL(int* v, int box);
