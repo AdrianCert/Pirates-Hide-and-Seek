@@ -1,4 +1,3 @@
-// struct/hardcoder map 6x6 m
 #include "GameMatrix.h"
 
 void getMatriceTabla(int v[6][6])
