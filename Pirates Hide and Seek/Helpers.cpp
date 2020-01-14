@@ -218,7 +218,7 @@ int GetPosition(sf::Vector2u* size_window, sf::Mouse* mouse, int precision) {
 	return -1;
 }
 
-int UInterogationWindowForConfirm(sf::RenderWindow* window, std::string question) {
+int UInterogationWindowForConfirm(sf::RenderWindow* window, std::string question, bool ExpectAnswer) {
 	Text Question;
 	Text Yes;
 	Text No;
@@ -266,11 +266,13 @@ int UInterogationWindowForConfirm(sf::RenderWindow* window, std::string question
 		while (window->pollEvent(event)) {
 
 			if (Mouse::isButtonPressed(Mouse::Left)) {
-				if (isHover(Yes, mouse)) {
-					return 1;
-				}
-				if (isHover(No, mouse)) {
-					return 0;
+				if (ExpectAnswer) {
+					if (isHover(Yes, mouse)) {
+						return 1;
+					}
+					if (isHover(No, mouse)) {
+						return 0;
+					}
 				}
 				if (isHover(Cancel, mouse)) {
 					return -1;
@@ -287,8 +289,10 @@ int UInterogationWindowForConfirm(sf::RenderWindow* window, std::string question
 		window->draw(Frame);
 		window->draw(Cancel);
 		window->draw(Question);
-		window->draw(Yes);
-		window->draw(No);
+		if (ExpectAnswer) {
+			window->draw(Yes);
+			window->draw(No);
+		}
 		window->display();
 	}
 

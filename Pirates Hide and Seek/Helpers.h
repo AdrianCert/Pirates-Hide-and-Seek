@@ -25,6 +25,6 @@ sf::Vector2f GetIslaceDefaultDimension(sf::Vector2u size_window);
 int GetHoverObject(sf::RectangleShape* object[], int n, sf::Mouse* mouse);
 void SetPostionForState(sf::Vector2u* size_window, lvl::State* state, sf::RectangleShape** shapes, int skip);
 int GetPosition(sf::Vector2u* size_window, sf::Mouse* mouse, int precision);
-int UInterogationWindowForConfirm(sf::RenderWindow* window, std::string question);
+int UInterogationWindowForConfirm(sf::RenderWindow* window, std::string question, bool ExpectAnswer);
 
 #endif // !HELPERS_H

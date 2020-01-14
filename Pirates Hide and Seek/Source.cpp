@@ -26,7 +26,7 @@ int main()
 	sceneManager->RenderWindow = &window;
 	sceneManager->CurentFrame = GameEnum::GameFrame::Intro;
 	sceneManager->Configurator = configuration;
-	sceneManager->LevelState = 1;
+	sceneManager->LevelState = 0;
 
 	while (window.isOpen())
 	{
