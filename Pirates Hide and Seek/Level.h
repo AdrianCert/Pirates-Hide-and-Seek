@@ -77,7 +77,7 @@ namespace lvl {
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 	int GetCountDrowedFigures(Level* curentLVL);
 	sf::RectangleShape** SetUpRequestLVL(sf::Vector2u* size_window, lvl::Level* CurentLevel, int& RequestCount, sf::Texture* FigureTextures[]);
-
+	bool GameComplete(int* Request, State* State);
 }
 
 #endif // !LEVEL_H

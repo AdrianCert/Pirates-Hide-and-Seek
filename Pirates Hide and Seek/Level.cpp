@@ -221,4 +221,22 @@ namespace lvl {
 
 		return Request;
 	}
+
+	bool GameComplete(int* Request, State* State) {
+		int DescovededP[] = { 0, 0, 0 , 0, 0, 0, 0, 0 };
+		int Solution[] = { 0, 0, 0 , 0, 0, 0, 0, 0, 0 };
+		GetUncoveredItems(State, DescovededP);
+		for (int i = 0; i < 9; i++) {
+			Solution[i] = 0;
+		}
+		for (int i = 0; i < 8; i++) {
+			Solution[DescovededP[i]]++;
+		}
+		for (int i = 1; i < 9; i++) {
+			if (Solution[i] != Request[i]) {
+				return false;
+			}
+		}
+		return true;
+	}
 }

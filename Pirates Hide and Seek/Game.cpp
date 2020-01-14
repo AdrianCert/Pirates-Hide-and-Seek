@@ -3,29 +3,7 @@
 #include "Level.h"
 using namespace sf;
 
-struct HistoryGame {
-	lvl::State* State = 0;
-	HistoryGame* Undo = 0;
-	int UndoLVL = 0;
-};
 
-void RecordState(HistoryGame* &CurentHistory, lvl::State* NewMove) {
-	HistoryGame* HistoryRecord = new HistoryGame();
-	HistoryRecord->State = NewMove;
-	HistoryRecord->Undo = CurentHistory;
-	HistoryRecord->UndoLVL = CurentHistory->UndoLVL + 1;
-	CurentHistory = HistoryRecord;
-}
-
-void UndoGame(HistoryGame* &CurentHistory) {
-	if (CurentHistory->Undo != NULL) {
-		HistoryGame* NOW = CurentHistory;
-		HistoryGame* NEW = CurentHistory->Undo;
-		free(NOW->State);
-		free(NOW);
-		CurentHistory = NEW;
-	}
-}
 
 bool Game(SceneManager* sceneManager) {
 	Text T_Menu, T_Undo, T_Hint;
@@ -164,7 +142,7 @@ bool Game(SceneManager* sceneManager) {
 					GetMove(DragOgjectIdentificator, NewPosition, NewMove);
 					if(!CompareState(NewMove,CurentHistory->State)) {
 						RecordState(CurentHistory, NewMove);
-						if (CompareState(&CurentLevel->Solution, CurentHistory->State)) {
+						if (GameComplete(CurentLevel->Request, CurentHistory->State)) {
 							sceneManager->CurentFrame = GameEnum::GameFrame::Menu;
 							GameFinish = true;
 						}
@@ -207,7 +185,7 @@ bool Game(SceneManager* sceneManager) {
 			RotationObjectIndentificator = -1;
 			if (!CompareState(NewMove, CurentHistory->State)) {
 				RecordState(CurentHistory, NewMove);
-				if (CompareState(&CurentLevel->Solution, CurentHistory->State)) {
+				if (GameComplete(CurentLevel->Request, CurentHistory->State)) {
 					sceneManager->CurentFrame = GameEnum::GameFrame::Menu;
 					GameFinish = true;
 				}
@@ -236,4 +214,22 @@ bool Game(SceneManager* sceneManager) {
 	// pop window .. you ar sure u wont to exit
 	//Saving before game leave
 	return true;
+}
+
+void RecordState(HistoryGame*& CurentHistory, lvl::State* NewMove) {
+	HistoryGame* HistoryRecord = new HistoryGame();
+	HistoryRecord->State = NewMove;
+	HistoryRecord->Undo = CurentHistory;
+	HistoryRecord->UndoLVL = CurentHistory->UndoLVL + 1;
+	CurentHistory = HistoryRecord;
+}
+
+void UndoGame(HistoryGame*& CurentHistory) {
+	if (CurentHistory->Undo != NULL) {
+		HistoryGame* NOW = CurentHistory;
+		HistoryGame* NEW = CurentHistory->Undo;
+		free(NOW->State);
+		free(NOW);
+		CurentHistory = NEW;
+	}
 }
