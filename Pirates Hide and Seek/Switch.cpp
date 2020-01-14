@@ -415,4 +415,3 @@ void GetRotation(int islace, lvl::State* state)
 		break;
 	}
 }
-
