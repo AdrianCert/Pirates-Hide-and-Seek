@@ -4,16 +4,31 @@
 using namespace sf;
 
 struct HistoryGame {
-	lvl::State* State;
-	HistoryGame* Undo;
+	lvl::State* State = 0;
+	HistoryGame* Undo = 0;
+	int UndoLVL = 0;
 };
 
-void RecordState(HistoryGame* History, lvl::State State) {
+void RecordState(HistoryGame* &CurentHistory, lvl::State* NewMove) {
+	HistoryGame* HistoryRecord = new HistoryGame();
+	HistoryRecord->State = NewMove;
+	HistoryRecord->Undo = CurentHistory;
+	HistoryRecord->UndoLVL = CurentHistory->UndoLVL + 1;
+	CurentHistory = HistoryRecord;
+}
 
+void UndoGame(HistoryGame* &CurentHistory) {
+	if (CurentHistory->Undo != NULL) {
+		HistoryGame* NOW = CurentHistory;
+		HistoryGame* NEW = CurentHistory->Undo;
+		free(NOW->State);
+		free(NOW);
+		CurentHistory = NEW;
+	}
 }
 
 bool Game(SceneManager* sceneManager) {
-	Text Text_Back;
+	Text T_Menu, T_Undo, T_Hint;
 	Font font;
 	Clock time;
 	Mouse mouse;
@@ -54,7 +69,15 @@ bool Game(SceneManager* sceneManager) {
 
 	lvl::Level* CurentLevel = new lvl::Level();
 	if (!lvl::LoadLevel(sceneManager->LevelState, CurentLevel)) {
-		lvl::LoadLevelGenerated(CurentLevel,true);
+		int userAnswer = UInterogationWindowForConfirm(sceneManager->RenderWindow,"Do you wont mark hint?");
+		if (userAnswer == -1) {
+			sceneManager->CurentFrame = GameEnum::GameFrame::Menu;
+			return true;
+		}
+		if(userAnswer == 0)
+			lvl::LoadLevelGenerated(CurentLevel,false);
+		if(userAnswer == 1)
+			lvl::LoadLevelGenerated(CurentLevel,true);
 	}
 
 	lvl::State* CurentState = new lvl::State();
@@ -89,21 +112,37 @@ bool Game(SceneManager* sceneManager) {
 	Islace_D.setTexture(&t_Islace_D);
 	SetOriginCenter(&Islace_D);
 
-	Text_Back.setFont(font);
-	Text_Back.setString("back");
-	Text_Back.setCharacterSize(50);
-	Text_Back.setFillColor(sf::Color::Black);
-	Text_Back.setPosition(10, 10);
+	T_Menu.setFont(font);
+	T_Menu.setString("menu");
+	T_Menu.setCharacterSize(40);
+	T_Menu.setFillColor(sf::Color::Black);
+	T_Menu.setPosition(sceneManager->RenderWindow->getSize().x/2 - 350, sceneManager->RenderWindow->getSize().y - 50);
+
+	T_Undo.setFont(font);
+	T_Undo.setString("undo");
+	T_Undo.setCharacterSize(40);
+	T_Undo.setFillColor(sf::Color::Black);
+	T_Undo.setPosition(sceneManager->RenderWindow->getSize().x / 2, sceneManager->RenderWindow->getSize().y - 50);
+
+	T_Hint.setFont(font);
+	T_Hint.setString("hint");
+	T_Hint.setCharacterSize(40);
+	T_Hint.setFillColor(sf::Color::Black);
+	T_Hint.setPosition(sceneManager->RenderWindow->getSize().x / 2 + 350, sceneManager->RenderWindow->getSize().y -50);
 
 	int DragOgjectIdentificator = -1;
 	bool DragState = false;
+	lvl::State* NewMove;
 	while (sceneManager->CurentFrame == GameEnum::GameFrame::Game) {
 		Event event;
 		while (sceneManager->RenderWindow->pollEvent(event)) {
 			
 			if (Mouse::isButtonPressed(Mouse::Left)) {
-				if (isHover(Text_Back, mouse)) {
+				if (isHover(T_Menu, mouse)) {
 					sceneManager->CurentFrame = GameEnum::GameFrame::GameSelection;
+				}
+				if (isHover(T_Undo, mouse)) {
+					UndoGame(CurentHistory);
 				}
 				if (!DragState) {
 					DragOgjectIdentificator = GetHoverObject(Islace, 4,&mouse);
@@ -111,23 +150,19 @@ bool Game(SceneManager* sceneManager) {
 						DragState = true;
 					}
 				}
+				else {
+					Islace[DragOgjectIdentificator]->setPosition(mouse.getPosition().x, mouse.getPosition().y);
+				}
 			}
 			else {
 				if(DragOgjectIdentificator != -1) {
-					int NewPosition = GetPosition(&size_window, &mouse, 50);
-					// Call make move
-					//lvl::State* cacat;
-					//if (NewPosition != -1) {
-						lvl::State* NewMove = lvl::CopyState(CurentHistory->State);
-						GetMove(DragOgjectIdentificator, NewPosition, NewMove);
-						HistoryGame* HistoryRecord = new HistoryGame();
-						HistoryRecord->State = NewMove;
-						HistoryRecord->Undo = CurentHistory;
-						CurentHistory = HistoryRecord;
+					int NewPosition = GetPosition(&size_window, &mouse, 70);
+					NewMove = lvl::CopyState(CurentHistory->State);
+					GetMove(DragOgjectIdentificator, NewPosition, NewMove);
+					//if(Conmparestate) // apel funtie care compara staturile
+					//{
+					RecordState(CurentHistory, NewMove);
 					//}
-					std::cout << DragOgjectIdentificator << " on " << NewPosition<<std::endl;
-					// set new state ;
-					// Add in HistoryGame
 				}
 				DragOgjectIdentificator = -1;
 				DragState = false;
@@ -151,8 +186,9 @@ bool Game(SceneManager* sceneManager) {
 				}
 			}
 		}
-		if (DragOgjectIdentificator != -1) Islace[DragOgjectIdentificator]->setPosition(mouse.getPosition().x, mouse.getPosition().y);
+
 		SetPostionForState(&size_window, CurentHistory->State, Islace, DragOgjectIdentificator);
+		
 		// Daca elemenut dragibil exista 
 		// urmareste pozitia mouseulului
 		// scaleaza la marimea lui
@@ -167,7 +203,9 @@ bool Game(SceneManager* sceneManager) {
 		//if (ifCompleted(LVL));
 		sceneManager->RenderWindow->clear(Color(255, 204, 102));
 		sceneManager->RenderWindow->draw(MainBoard);
-		sceneManager->RenderWindow->draw(Text_Back);
+		sceneManager->RenderWindow->draw(T_Menu);
+		sceneManager->RenderWindow->draw(T_Undo);
+		sceneManager->RenderWindow->draw(T_Hint);
 		DrowVector(sceneManager, Request, RequestCount);
 		DrowVector(sceneManager, Islace, 4);
 		sceneManager->RenderWindow->display();

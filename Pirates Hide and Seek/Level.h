@@ -50,8 +50,8 @@ namespace llvl {
 namespace lvl {
 	struct Islace {
 		bool Relevant = false;
-		int Position;
-		int Rotation;
+		int Position = 0;
+		int Rotation = 0;
 	};
 	struct State {
 		Islace A;
@@ -61,7 +61,7 @@ namespace lvl {
 	};
 	struct Level
 	{
-		int Request[9];
+		int Request[9] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 		State Solution;
 		State Stash;
 	};
