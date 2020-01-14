@@ -46,7 +46,7 @@ bool Game(SceneManager* sceneManager) {
 
 	lvl::Level* CurentLevel = new lvl::Level();
 	if (!lvl::LoadLevel(sceneManager->LevelState, CurentLevel)) {
-		int userAnswer = UInterogationWindowForConfirm(sceneManager->RenderWindow,"Do you wont mark hint?");
+		int userAnswer = UInterogationWindowForConfirm(sceneManager->RenderWindow,"Do you wont mark hint?", true);
 		if (userAnswer == -1) {
 			sceneManager->CurentFrame = GameEnum::GameFrame::Menu;
 			return true;
@@ -55,6 +55,7 @@ bool Game(SceneManager* sceneManager) {
 			lvl::LoadLevelGenerated(CurentLevel,false);
 		if(userAnswer == 1)
 			lvl::LoadLevelGenerated(CurentLevel,true);
+		sceneManager->LevelState = 0;
 	}
 
 	lvl::State* CurentState = new lvl::State();
@@ -126,6 +127,29 @@ bool Game(SceneManager* sceneManager) {
 					if (isHover(T_Undo, mouse)) {
 						UndoGame(CurentHistory);
 					}
+					if (isHover(T_Hint, mouse) && CurentLevel->Request[0] == 0) {
+						std::string mes;
+						switch (CurentLevel->Solution.A.Rotation)
+						{
+						case 0:
+							mes = "Your hint is N";
+							if (CurentLevel->Solution.A.Relevant == 0)
+								mes = "No hint available";
+							break;
+						case 1:
+							mes = "Your hint is E";
+							break;
+						case 2:
+							mes = "Your hint is S";
+							break;
+						case 3:
+							mes = "Your hint is W";
+							break;
+						default:
+							break;
+						}
+						UInterogationWindowForConfirm(sceneManager->RenderWindow, mes,false);
+					}
 					DragOgjectIdentificator = GetHoverObject(Islace, 4,&mouse);
 					if (DragOgjectIdentificator != -1) {
 						DragState = true;
@@ -170,7 +194,7 @@ bool Game(SceneManager* sceneManager) {
 					break;
 				case Keyboard::W:
 					if (event.key.shift) {
-						CurentHistory->State = &CurentLevel->Solution;
+						RecordState(CurentHistory, &CurentLevel->Solution);
 					}
 					break;
 				default:
@@ -198,7 +222,8 @@ bool Game(SceneManager* sceneManager) {
 		sceneManager->RenderWindow->draw(MainBoard);
 		sceneManager->RenderWindow->draw(T_Menu);
 		sceneManager->RenderWindow->draw(T_Undo);
-		sceneManager->RenderWindow->draw(T_Hint);
+		if(CurentLevel->Request[0] == 0)
+			sceneManager->RenderWindow->draw(T_Hint);
 		DrowVector(sceneManager, Request, RequestCount);
 		DrowVector(sceneManager, Islace, 4);
 		sceneManager->RenderWindow->display();
@@ -208,11 +233,15 @@ bool Game(SceneManager* sceneManager) {
 		int TotalTime = t_.asSeconds();
 		int TotalMinutes = TotalTime / 60;
 		int TotalSeconds = TotalTime % 60;
-		std::string WinMessage = "Congratulation!\nYou finished in " + std::to_string(TotalMinutes) + "minutes and " + std::to_string(TotalSeconds) + " seconds\ncontinue" ;
-		int userAnswer = UInterogationWindowForConfirm(sceneManager->RenderWindow, WinMessage);
+		std::string WinMessage = "You finished in " + std::to_string(TotalMinutes) + ":" + std::to_string(TotalSeconds) + " minutes\n\n\t\tDo you continue?" ;
+		if(TotalMinutes < 1)
+			WinMessage = "You finished in " + std::to_string(TotalSeconds) + " seconds\n\n\t\tDo you continue?" ;
+		int userAnswer = UInterogationWindowForConfirm(sceneManager->RenderWindow, WinMessage,true);
 		if (userAnswer == 1)
 		{
-			sceneManager->LevelState++;
+			if (sceneManager->LevelState != 0) {
+				sceneManager->LevelState++;
+			}
 			sceneManager->CurentFrame = GameEnum::Game;
 		}
 	}

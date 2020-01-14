@@ -100,49 +100,21 @@ namespace lvl {
 	}
 
 	int GetRequest(int var) {
-		int capacity = GetStorageLVL(NULL, 0);
+		int StorageLVL[] = { 33, 16388, 258, 67108868, 705, 2097347, 33817601, 262339, 154,	263297,	37748803, 20975627, 40964, 50397186, 2392580, 274434, 4104, 50331656, 32896, 33620032, 2105352,	8216, 2102288, 267392, 2098264, 37120, 274448, 2359312, 2106376, 4312, 50335768, 18874456, 16810000, 2130632, 2363400, 17301528, 18944576, 2101376, 2629760, 33587224, 33562624, 32912, 2392584, 2634240, 2363408, 528512, 17302016, 34079296, 144, 266368, 35652104, 17043456, 295040, 19136584, 36175888, 18911232, 532496, 18911744, 19136528, 270400 };
+		int capacity = (int) sizeof(StorageLVL) / sizeof(int);
 		if (var > capacity || var <= 0)
 			return -1;
-		int* v = new int[capacity];
-		GetStorageLVL(v, 0);
-		return v[var - 1];
+		return StorageLVL[var - 1];
 	}
 
 	int GetSolution(int var) {
-		int capacity = GetStorageLVL(NULL,1);
+		int StorageSOL[] = { 33,	16388,	258,	67108868 };
+		int capacity = (int) sizeof(StorageSOL) / sizeof(int);
 		if (var > capacity || var <= 0)
 			return -1;
-		int *v = new int[capacity];
-		GetStorageLVL(v,1);
-		return v[var - 1];
+		return StorageSOL[var - 1];
 	}
 
-	int GetStorageLVL(int* v, int box) {
-		int StorageLVL[] ={ 33,	16388,	258,	67108868 };
-		int StorageSOL[] = { 33,	16388,	258,	67108868 };
-		int CountLVL = (int) sizeof(StorageLVL) / sizeof(int);
-		int CountSOL = (int) sizeof(StorageSOL) / sizeof(int);
-		switch (box)
-		{
-		case 0:
-			if (v != NULL) {
-				for (int i = 0; i < CountLVL; i++) {
-					v[i] = StorageLVL[i];
-				}
-			}
-			return CountLVL;
-			break;
-		case 1:
-			if (v != NULL) {
-				for (int i = 0; i < CountLVL; i++) {
-					v[i] = StorageLVL[i];
-				}
-			}
-			return CountSOL;
-			break;
-		}
-		return 0;
-	}
 	State* CopyState(State* A) {
 		State* B = new State();
 		B->A.Position = A->A.Position;
@@ -237,6 +209,11 @@ namespace lvl {
 				return false;
 			}
 		}
+		if (!State->A.Relevant ||
+			!State->B.Relevant ||
+			!State->C.Relevant ||
+			!State->D.Relevant )
+			return false;
 		return true;
 	}
 }

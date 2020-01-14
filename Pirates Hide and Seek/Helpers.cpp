@@ -218,7 +218,7 @@ int GetPosition(sf::Vector2u* size_window, sf::Mouse* mouse, int precision) {
 	return -1;
 }
 
-int UInterogationWindowForConfirm(sf::RenderWindow* window, std::string question) {
+int UInterogationWindowForConfirm(sf::RenderWindow* window, std::string question, bool ExpectAnswer) {
 	Text Question;
 	Text Yes;
 	Text No;
@@ -237,15 +237,15 @@ int UInterogationWindowForConfirm(sf::RenderWindow* window, std::string question
 	Question.setString(question);
 	Question.setCharacterSize(50);
 	Question.setFillColor(sf::Color::Black);
-	resOriginText(No);
-	Question.setPosition(Frame.getGlobalBounds().left + 50, Frame.getGlobalBounds().top + 100);
+	resOriginText(Question);
+	Question.setPosition(Frame.getGlobalBounds().left + (Frame.getGlobalBounds().width / 2), Frame.getGlobalBounds().top + 100);
 
 	Cancel.setFont(font);
 	Cancel.setString("x");
 	Cancel.setCharacterSize(40);
 	Cancel.setFillColor(sf::Color::Black);
-	resOriginText(Yes);
-	Cancel.setPosition(Frame.getGlobalBounds().left + Frame.getGlobalBounds().width - 50, Frame.getGlobalBounds().top + 10);
+	resOriginText(Cancel);
+	Cancel.setPosition(Frame.getGlobalBounds().left + Frame.getGlobalBounds().width - 30, Frame.getGlobalBounds().top + 30);
 
 	Yes.setFont(font);
 	Yes.setString("yes");
@@ -266,11 +266,13 @@ int UInterogationWindowForConfirm(sf::RenderWindow* window, std::string question
 		while (window->pollEvent(event)) {
 
 			if (Mouse::isButtonPressed(Mouse::Left)) {
-				if (isHover(Yes, mouse)) {
-					return 1;
-				}
-				if (isHover(No, mouse)) {
-					return 0;
+				if (ExpectAnswer) {
+					if (isHover(Yes, mouse)) {
+						return 1;
+					}
+					if (isHover(No, mouse)) {
+						return 0;
+					}
 				}
 				if (isHover(Cancel, mouse)) {
 					return -1;
@@ -287,8 +289,10 @@ int UInterogationWindowForConfirm(sf::RenderWindow* window, std::string question
 		window->draw(Frame);
 		window->draw(Cancel);
 		window->draw(Question);
-		window->draw(Yes);
-		window->draw(No);
+		if (ExpectAnswer) {
+			window->draw(Yes);
+			window->draw(No);
+		}
 		window->display();
 	}
 

@@ -70,7 +70,6 @@ namespace lvl {
 	bool LoadLevelGenerated(Level* played_lvl, bool useMarkHint = true);
 	int GetRequest(int var);
 	int GetSolution(int var);
-	int GetStorageLVL(int* v, int box);
 	State* CopyState(State* A);
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 	/// Funtion dedicated for drow request lvl                                                      ///
