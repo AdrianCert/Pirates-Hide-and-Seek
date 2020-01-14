@@ -138,7 +138,13 @@ int GetHoverObject(sf::RectangleShape* object[], int n, sf::Mouse* mouse) {
 }
 
 void SetPostionForState(sf::Vector2u* size_window, lvl::State* state, sf::RectangleShape** shapes, int skip) {
-	Vector2f** SpacesForIslace = GetSpacesForIslace(*size_window, shapes[0]->getSize().x);
+	float dimension(shapes[0]->getSize().x);
+	if (!state->A.Relevant) dimension = shapes[0]->getSize().x;
+	if (!state->B.Relevant) dimension = shapes[1]->getSize().x;
+	if (!state->C.Relevant) dimension = shapes[2]->getSize().x;
+	if (!state->D.Relevant) dimension = shapes[3]->getSize().x;
+
+	Vector2f** SpacesForIslace = GetSpacesForIslace(*size_window, dimension);
 	Vector2f** PositionForIslaceOnBoard = GetPositionForIslaceOnBoard(*size_window);
 	int Oder[] = { 2, 1, 0, 3 };
 	int FreeSpace = 0;
@@ -239,7 +245,7 @@ int UInterogationWindowForConfirm(sf::RenderWindow* window, std::string question
 	Cancel.setCharacterSize(40);
 	Cancel.setFillColor(sf::Color::Black);
 	resOriginText(Yes);
-	Cancel.setPosition(Frame.getGlobalBounds().left + Frame.getGlobalBounds().width - 30, Frame.getGlobalBounds().top + 10);
+	Cancel.setPosition(Frame.getGlobalBounds().left + Frame.getGlobalBounds().width - 50, Frame.getGlobalBounds().top + 10);
 
 	Yes.setFont(font);
 	Yes.setString("yes");

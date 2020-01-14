@@ -118,44 +118,19 @@ bool Game(SceneManager* sceneManager) {
 						DragState = true;
 					}
 				}
+				else {
+					Islace[DragOgjectIdentificator]->setPosition(mouse.getPosition().x, mouse.getPosition().y);
+				}
 			}
 			else {
 				if(DragOgjectIdentificator != -1) {
-					int NewPosition = GetPosition(&size_window, &mouse, 50);
-					// Call make move
-					//lvl::State* cacat;
-					//if (NewPosition != -1) {
-						lvl::State* NewMove = lvl::CopyState(CurentHistory->State);
-						GetMove(DragOgjectIdentificator, NewPosition, NewMove);
-						/*switch (DragOgjectIdentificator)
-						{
-						case 0:
-							NewMove->A.Position = NewPosition;
-							NewMove->A.Relevant = true;
-							break;
-						case 1:
-							NewMove->B.Position = NewPosition;
-							NewMove->D.Relevant = true;
-							break;
-						case 2:
-							NewMove->C.Position = NewPosition;
-							NewMove->D.Relevant = true;
-							break;
-						case 3:
-							NewMove->D.Position = NewPosition;
-							NewMove->D.Relevant = true;
-							break;
-						default:
-							break;
-						}*/
-						HistoryGame* HistoryRecord = new HistoryGame();
-						HistoryRecord->State = NewMove;
-						HistoryRecord->Undo = CurentHistory;
-						CurentHistory = HistoryRecord;
-					//}
-					std::cout << DragOgjectIdentificator << " on " << NewPosition<<std::endl;
-					// set new state ;
-					// Add in HistoryGame
+					int NewPosition = GetPosition(&size_window, &mouse, 70);
+					lvl::State* NewMove = lvl::CopyState(CurentHistory->State);
+					GetMove(DragOgjectIdentificator, NewPosition, NewMove);
+					HistoryGame* HistoryRecord = new HistoryGame();
+					HistoryRecord->State = NewMove;
+					HistoryRecord->Undo = CurentHistory;
+					CurentHistory = HistoryRecord;
 				}
 				DragOgjectIdentificator = -1;
 				DragState = false;
@@ -179,8 +154,8 @@ bool Game(SceneManager* sceneManager) {
 				}
 			}
 		}
-		if (DragOgjectIdentificator != -1) Islace[DragOgjectIdentificator]->setPosition(mouse.getPosition().x, mouse.getPosition().y);
 		SetPostionForState(&size_window, CurentHistory->State, Islace, DragOgjectIdentificator);
+		
 		// Daca elemenut dragibil exista 
 		// urmareste pozitia mouseulului
 		// scaleaza la marimea lui
