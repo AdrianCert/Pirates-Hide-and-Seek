@@ -22,22 +22,6 @@ void getMatriceTabla(int v[6][6])
 	
 }
 
-void afisareMatrice()
-{
-	//int v[6][6];
-	int c[3][3];
-	//getMatriceTabla(v);
-	GetIslaceMat(1,c);
-	setRotation(c,2);
-	for (int i = 0; i < 3; i++)
-	{
-		for (int j = 0; j < 3; j++)
- 			std::cout << c[i][j] << ' ';
-		std::cout << std::endl;
-	}
-	
-}
-
 void GetIslaceMat(int Islace, int v[3][3]) {
 	
 	switch (Islace % 4)
@@ -87,14 +71,14 @@ void GetIslaceMat(int Islace, int v[3][3]) {
 		v[2][0] = GameEnum::Octoped;			v[2][1] = GameEnum::PirateShip;		v[2][2] = 0;
 		break;
 	case 2:
-		v[3][0] = GameEnum::Shipwrecked;		v[0][1] = GameEnum::RobbedShip;		v[0][2] = GameEnum::PirateShip;
-		v[4][0] = GameEnum::ExploratorShip;		v[1][1] = GameEnum::Treasure;		v[1][2] = 0;
-		v[5][0] = GameEnum::PirateShip;			v[2][1] = GameEnum::Castle;			v[2][2] = GameEnum::Island;
+		v[0][0] = GameEnum::Shipwrecked;		v[0][1] = GameEnum::RobbedShip;		v[0][2] = GameEnum::PirateShip;
+		v[1][0] = GameEnum::ExploratorShip;		v[1][1] = GameEnum::Treasure;		v[1][2] = 0;
+		v[2][0] = GameEnum::PirateShip;			v[2][1] = GameEnum::Castle;			v[2][2] = GameEnum::Island;
 		break;
 	case 3:
-		v[3][0] = 0;							v[0][1] = 0;						v[0][2] = 0;
-		v[4][0] = GameEnum::Castle;				v[1][1] = GameEnum::Shipwrecked;	v[1][2] = GameEnum::Island;
-		v[5][0] = GameEnum::ExploratorShip;		v[2][1] = GameEnum::PirateShip;		v[2][2] = GameEnum::Treasure;
+		v[0][0] = 0;							v[0][1] = 0;						v[0][2] = 0;
+		v[1][0] = GameEnum::Castle;				v[1][1] = GameEnum::Shipwrecked;	v[1][2] = GameEnum::Island;
+		v[2][0] = GameEnum::ExploratorShip;		v[2][1] = GameEnum::PirateShip;		v[2][2] = GameEnum::Treasure;
 		break;
 
 	default:
@@ -107,19 +91,15 @@ void setRotation(int v[3][3], int r)
 	r = r % 4;
 	int aux;
 	if (r == 0)
-		return;	
-	for (int i = 0; i < 3; i++)
-	{
+		return;
+	int rez[3][3];
+	for (int i = 0; i < 3; ++i)
 		for (int j = 0; j < 3; j++)
-		{
-			if (j > i)
-			{
-				aux = v[i][3-j-1];
-				v[i][3-j-1] = v[j][i];
-				v[j][i] = aux;
-			}
-		}
-	}	
+			rez[i][j] = v[2 - j][i];
+	for (int i = 0; i < 3; ++i)
+		for (int j = 0; j < 3; j++)
+			v[i][j] = rez[i][j];
+	
 	setRotation(v, r-1);
 	
 }
@@ -136,61 +116,65 @@ void CompareCadran(int piesa[3][3], int cadran[3][3], int s[2])
 
 void GetUncoveredItems(lvl::State* x, int* v)
 {
-	int count = 0, pieseCadran[2], piesa[3][3], cadran[3][3];
 	
+	int count = 0;
 	//Piesa A
 	if (x->A.Relevant)
 	{
+		int pieseCadran[2];
+		int piesa[3][3];
+		int cadran[3][3];
 		GetIslaceMat(0, piesa);
 		setRotation(piesa, x->A.Rotation);
 		GetCadran(x->A.Position, cadran);
 		CompareCadran(piesa, cadran, pieseCadran);
-		if (pieseCadran[0] != 0)
-			v[count++] = pieseCadran[0];
-		if (pieseCadran[1] != 0)
-			v[count++] = pieseCadran[1];
+		v[0] = pieseCadran[0];
+		v[1] = pieseCadran[1];
 
 	}
 
 	//Piesa B
 	if (x->B.Relevant)
 	{
-		GetIslaceMat(0, piesa);
+		int pieseCadran[2];
+		int piesa[3][3];
+		int cadran[3][3];
+		GetIslaceMat(1, piesa);
 		setRotation(piesa, x->B.Rotation);
 		GetCadran(x->B.Position, cadran);
 		CompareCadran(piesa, cadran, pieseCadran);
-		if (pieseCadran[0] != 0)
-			v[count++] = pieseCadran[0];
-		if (pieseCadran[1] != 0)
-			v[count++] = pieseCadran[1];
+		v[2] = pieseCadran[0];
+		v[3] = pieseCadran[1];
 
 	}
 
 	//Piesa C
 	if (x->C.Relevant)
 	{
-		GetIslaceMat(0, piesa);
+		int pieseCadran[2];
+		int piesa[3][3];
+		int cadran[3][3];
+		GetIslaceMat(2, piesa);
 		setRotation(piesa, x->C.Rotation);
 		GetCadran(x->C.Position, cadran);
 		CompareCadran(piesa, cadran, pieseCadran);
-		if (pieseCadran[0] != 0)
-			v[count++] = pieseCadran[0];
-		if (pieseCadran[1] != 0)
-			v[count++] = pieseCadran[1];
+		v[4] = pieseCadran[0];
+		v[5] = pieseCadran[1];
 
 	}
 
 	//Piesa D
 	if (x->D.Relevant)
 	{
-		GetIslaceMat(0, piesa);
+		int pieseCadran[2];
+		int piesa[3][3];
+		int cadran[3][3];
+		GetIslaceMat(3, piesa);
 		setRotation(piesa, x->D.Rotation);
 		GetCadran(x->D.Position, cadran);
 		CompareCadran(piesa, cadran, pieseCadran);
-		if (pieseCadran[0] != 0)
-			v[count++] = pieseCadran[0];
-		if (pieseCadran[1] != 0)
-			v[count++] = pieseCadran[1];
+		v[6] = pieseCadran[0];
+		v[7] = pieseCadran[1];
 
 	}
 }

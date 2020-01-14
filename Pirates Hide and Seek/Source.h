@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <sstream>
 #include "Configuration.h"
 #include "Menu.h"
@@ -7,3 +8,4 @@
 #include "GameVariable.h"
 #include "GameSelect.h"
 #include "GameMatrix.h"
+#include "Switch.h"
