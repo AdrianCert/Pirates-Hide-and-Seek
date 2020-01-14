@@ -237,15 +237,15 @@ int UInterogationWindowForConfirm(sf::RenderWindow* window, std::string question
 	Question.setString(question);
 	Question.setCharacterSize(50);
 	Question.setFillColor(sf::Color::Black);
-	resOriginText(No);
-	Question.setPosition(Frame.getGlobalBounds().left + 50, Frame.getGlobalBounds().top + 100);
+	resOriginText(Question);
+	Question.setPosition(Frame.getGlobalBounds().left + (Frame.getGlobalBounds().width / 2), Frame.getGlobalBounds().top + 100);
 
 	Cancel.setFont(font);
 	Cancel.setString("x");
 	Cancel.setCharacterSize(40);
 	Cancel.setFillColor(sf::Color::Black);
-	resOriginText(Yes);
-	Cancel.setPosition(Frame.getGlobalBounds().left + Frame.getGlobalBounds().width - 50, Frame.getGlobalBounds().top + 10);
+	resOriginText(Cancel);
+	Cancel.setPosition(Frame.getGlobalBounds().left + Frame.getGlobalBounds().width - 30, Frame.getGlobalBounds().top + 30);
 
 	Yes.setFont(font);
 	Yes.setString("yes");

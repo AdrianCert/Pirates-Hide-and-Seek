@@ -208,7 +208,9 @@ bool Game(SceneManager* sceneManager) {
 		int TotalTime = t_.asSeconds();
 		int TotalMinutes = TotalTime / 60;
 		int TotalSeconds = TotalTime % 60;
-		std::string WinMessage = "Congratulation!\nYou finished in " + std::to_string(TotalMinutes) + "minutes and " + std::to_string(TotalSeconds) + " seconds\ncontinue" ;
+		std::string WinMessage = "You finished in " + std::to_string(TotalMinutes) + ":" + std::to_string(TotalSeconds) + " minutes\n\n\t\tDo you continue?" ;
+		if(TotalMinutes < 1)
+			WinMessage = "You finished in " + std::to_string(TotalSeconds) + " seconds\n\n\t\tDo you continue?" ;
 		int userAnswer = UInterogationWindowForConfirm(sceneManager->RenderWindow, WinMessage);
 		if (userAnswer == 1)
 		{
