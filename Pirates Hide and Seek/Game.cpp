@@ -6,7 +6,7 @@ using namespace sf;
 
 
 bool Game(SceneManager* sceneManager) {
-	Text T_Menu, T_Undo, T_Hint;
+	Text T_Menu, T_Undo, T_Hint, T_Time, T_COUNTMISCARI;
 	Font font;
 	Mouse mouse;
 	Texture t_Board,
@@ -108,6 +108,20 @@ bool Game(SceneManager* sceneManager) {
 	T_Hint.setFillColor(sf::Color::Black);
 	T_Hint.setPosition(sceneManager->RenderWindow->getSize().x / 2 + 350, sceneManager->RenderWindow->getSize().y -50);
 
+	T_Time.setFont(font);
+	T_Time.setString("0:00");
+	T_Time.setCharacterSize(60);
+	T_Time.setFillColor(sf::Color::Black);
+	resOriginText(T_Time);
+	T_Time.setPosition(sceneManager->RenderWindow->getSize().x / 2, 30);
+
+	T_COUNTMISCARI.setFont(font);
+	T_COUNTMISCARI.setString("Moves: 00");
+	T_COUNTMISCARI.setCharacterSize(60);
+	T_COUNTMISCARI.setFillColor(sf::Color::Black);
+	T_COUNTMISCARI.setOrigin(T_COUNTMISCARI.getGlobalBounds().width, T_COUNTMISCARI.getGlobalBounds().top + T_COUNTMISCARI.getGlobalBounds().height / 2);
+	T_COUNTMISCARI.setPosition(sceneManager->RenderWindow->getSize().x - 5, 30);
+
 	bool GameFinish = false;
 	int RotationObjectIndentificator = -1;
 	int DragOgjectIdentificator = -1;
@@ -132,18 +146,18 @@ bool Game(SceneManager* sceneManager) {
 						switch (CurentLevel->Solution.A.Rotation)
 						{
 						case 0:
-							mes = "Your hint is N";
+							mes = "compass points north";
 							if (CurentLevel->Solution.A.Relevant == 0)
 								mes = "No hint available";
 							break;
 						case 1:
-							mes = "Your hint is E";
+							mes = "compass points east";
 							break;
 						case 2:
-							mes = "Your hint is S";
+							mes = "compass points south";
 							break;
 						case 3:
-							mes = "Your hint is W";
+							mes = "compass points west";
 							break;
 						default:
 							break;
@@ -218,10 +232,19 @@ bool Game(SceneManager* sceneManager) {
 
 		SetPostionForState(&size_window, CurentHistory->State, Islace, DragOgjectIdentificator);
 		
+		Time t_ = time.getElapsedTime();
+		int TotalTime = t_.asSeconds();
+		int TotalMinutes = TotalTime / 60;
+		int TotalSeconds = TotalTime % 60;
+		T_Time.setString(std::to_string(TotalMinutes) + ":" + std::to_string(TotalSeconds));
+		T_COUNTMISCARI.setString("Moves: " + std::to_string(CurentHistory->UndoLVL));
+
 		sceneManager->RenderWindow->clear(Color(255, 204, 102));
 		sceneManager->RenderWindow->draw(MainBoard);
 		sceneManager->RenderWindow->draw(T_Menu);
 		sceneManager->RenderWindow->draw(T_Undo);
+		sceneManager->RenderWindow->draw(T_Time);
+		sceneManager->RenderWindow->draw(T_COUNTMISCARI);
 		if(CurentLevel->Request[0] == 0)
 			sceneManager->RenderWindow->draw(T_Hint);
 		DrowVector(sceneManager, Request, RequestCount);
