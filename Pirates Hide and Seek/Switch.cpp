@@ -397,25 +397,29 @@ void GetMove(int islace, int newPoz, lvl::State* state)
 void GetRotation(int islace, lvl::State* state)
 {
 	//lvl::State* state;
+	int rotation;
 	switch (islace)
 	{
 	case 0:
-		state->A.Rotation = state->A.Rotation % 4;
-		state->A.Rotation++;
+		rotation = (state->A.Rotation + 1) % 4;
+		state->A.Rotation = rotation;
+		break;
 	case 1:
-		state->A.Rotation = state->A.Rotation % 4;
-		state->B.Rotation++;
+		rotation = (state->B.Rotation + 1) % 4;
+		state->B.Rotation = rotation;
+		break;
 	case 2:
-		state->A.Rotation = state->A.Rotation % 4;
-		state->C.Rotation++;
+		rotation = (state->C.Rotation + 1) % 4;
+		state->C.Rotation = rotation;
+		break;
 	case 3:
-		state->A.Rotation = state->A.Rotation % 4;
-		state->D.Rotation++;
+		rotation = (state->D.Rotation + 1) % 4;
+		state->D.Rotation = rotation;
+		break;
 	default:
 		break;
 	}
 }
-
 bool CompareState(lvl::State* a, lvl::State* b)
 {
 	if (a->A.Position != b->A.Position)

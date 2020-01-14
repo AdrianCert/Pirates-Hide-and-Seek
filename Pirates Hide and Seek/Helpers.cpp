@@ -159,7 +159,7 @@ void SetPostionForState(sf::Vector2u* size_window, lvl::State* state, sf::Rectan
 			shapes[0]->setSize(GetIslaceDefaultDimension(*size_window));
 			SetOriginCenter(shapes[0]);
 			shapes[0]->setPosition(*SpacesForIslace[FreeSpace++]);
-			shapes[0]->setRotation(0);
+			shapes[0]->setRotation(state->A.Rotation * 90);
 		}
 	}
 	if (skip != 1) {
@@ -173,7 +173,7 @@ void SetPostionForState(sf::Vector2u* size_window, lvl::State* state, sf::Rectan
 			shapes[1]->setSize(GetIslaceDefaultDimension(*size_window));
 			SetOriginCenter(shapes[1]);
 			shapes[1]->setPosition(*SpacesForIslace[FreeSpace++]);
-			shapes[1]->setRotation(0);
+			shapes[1]->setRotation(state->B.Rotation * 90);
 		}
 	}
 	if (skip != 2) {
@@ -187,7 +187,7 @@ void SetPostionForState(sf::Vector2u* size_window, lvl::State* state, sf::Rectan
 			shapes[2]->setSize(GetIslaceDefaultDimension(*size_window));
 			SetOriginCenter(shapes[2]);
 			shapes[2]->setPosition(*SpacesForIslace[FreeSpace++]);
-			shapes[2]->setRotation(0);
+			shapes[2]->setRotation(state->C.Rotation * 90);
 		}
 	}
 	if (skip != 3) {
@@ -201,7 +201,7 @@ void SetPostionForState(sf::Vector2u* size_window, lvl::State* state, sf::Rectan
 			shapes[3]->setSize(GetIslaceDefaultDimension(*size_window));
 			SetOriginCenter(shapes[3]);
 			shapes[3]->setPosition(*SpacesForIslace[FreeSpace++]);
-			shapes[3]->setRotation(0);
+			shapes[3]->setRotation(state->D.Rotation * 90);
 		}
 	}
 }
