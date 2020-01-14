@@ -75,7 +75,8 @@ bool Menu(SceneManager* sceneManager) {
 	t_settings.setPosition(latimew / 2, inaltimew / 2);
 	t_exit.setPosition(latimew / 2, inaltimew / 2 + 300 * raportRez);
 
-
+	sceneManager->djValy[0]->play();
+	sceneManager->djValy[0]->setLoop(true);
 	
 	
 	//fereastra meniu este deschisa

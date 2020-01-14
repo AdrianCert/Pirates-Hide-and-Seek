@@ -2,3 +2,4 @@ gameWidth 1920
 gameHeight 1080
 gameName Connect-The-Temple
 gameSSyle 8
+player_progress 2

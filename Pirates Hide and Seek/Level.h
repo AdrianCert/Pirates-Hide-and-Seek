@@ -49,9 +49,9 @@ namespace llvl {
 
 namespace lvl {
 	struct Islace {
-		bool Relevant;
-		int Position;
-		int Rotation;
+		bool Relevant = false;
+		int Position = 0;
+		int Rotation = 0;
 	};
 	struct State {
 		Islace A;
@@ -61,7 +61,7 @@ namespace lvl {
 	};
 	struct Level
 	{
-		int Request[9];
+		int Request[9] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 		State Solution;
 		State Stash;
 	};
@@ -70,11 +70,13 @@ namespace lvl {
 	bool LoadLevelGenerated(Level* played_lvl, bool useMarkHint = true);
 	int GetRequest(int var);
 	int GetSolution(int var);
-	int GetStorageLVL(int* v, int box);
+	State* CopyState(State* A);
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 	/// Funtion dedicated for drow request lvl                                                      ///
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 	int GetCountDrowedFigures(Level* curentLVL);
+	sf::RectangleShape** SetUpRequestLVL(sf::Vector2u* size_window, lvl::Level* CurentLevel, int& RequestCount, sf::Texture* FigureTextures[]);
+	bool GameComplete(int* Request, State* State);
 }
 
 #endif // !LEVEL_H
