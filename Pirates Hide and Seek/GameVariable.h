@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "Configuration.h"
 #ifndef GAME_VAR_H
 #define GAME_VAR_H
@@ -35,6 +36,7 @@ struct SceneManager
 	int LevelState = 0;
 	sf::RenderWindow* RenderWindow = 0;
 	cfg::dictionaty* Configurator = 0;
+	sf::Music** djValy;
 };
 
 #endif

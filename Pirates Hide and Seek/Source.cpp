@@ -18,7 +18,16 @@ int main()
 
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 8;
-		
+	sf::Music music1, music2, music3, music4;
+	if (!music1.openFromFile("Resource/song1.ogg") ||
+		!music2.openFromFile("Resource/song2.ogg") ||
+		!music3.openFromFile("Resource/song3.ogg") ||
+		!music4.openFromFile("Resource/song4.ogg") )
+		return EXIT_FAILURE; // error
+	
+
+	sf::Music* music[4] = {&music1, &music2, &music3, &music4 };
+	
 	RenderWindow window(VideoMode(gameWidth, gameHeight), gameName, gameSSyle, settings);
 	window.setFramerateLimit(120);
 
@@ -27,7 +36,8 @@ int main()
 	sceneManager->CurentFrame = GameEnum::GameFrame::Intro;
 	sceneManager->Configurator = configuration;
 	sceneManager->LevelState = 0;
-
+	sceneManager->djValy = music;
+	
 	while (window.isOpen())
 	{
 		bool gameContinue = false;

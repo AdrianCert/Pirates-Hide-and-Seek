@@ -1,6 +1,6 @@
 #include "Intro.h"
-#include "Source.h"
 #include "menu.h"
+
 
 void resPozText(sf::Text &text)
 {
@@ -10,6 +10,8 @@ void resPozText(sf::Text &text)
 }
 
 bool Intro(SceneManager* sceneManager) {
+
+	sf::SoundBuffer buffer;
 	
 	sceneManager->RenderWindow->setMouseCursorVisible(false);
 	float angle(0.f);
@@ -18,12 +20,17 @@ bool Intro(SceneManager* sceneManager) {
 	sf::Vector2f scalable = sf::Vector2f(1,1);
 
 	sf::Font font;
-	if (!font.loadFromFile("Resource/fontTitlu.ttf"))
+	if (!font.loadFromFile("Resource/fontTitlu.ttf")	||
+		!buffer.loadFromFile("Resource/introsound.wav"))
 		EXIT_FAILURE;
 
+	sf::Sound intro;
+	intro.setBuffer(buffer);
+	intro.play();
 	while (time.getElapsedTime() <= sf::seconds(6))
 	{
 		//Titlu Joc
+		
 		sf::Text titlu;
 		titlu.setFont(font);
 		titlu.setString("PIRATES HIDE N' SEEK");
@@ -74,6 +81,7 @@ bool Intro(SceneManager* sceneManager) {
 	}
 	//Afiseaza cursorul inainte de a se termina intro
 	sceneManager->RenderWindow->setMouseCursorVisible(true);
+
 	sceneManager->CurentFrame = GameEnum::GameFrame::Menu;
 	
 	return true;

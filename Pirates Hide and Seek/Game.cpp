@@ -25,8 +25,10 @@ bool Game(SceneManager* sceneManager) {
 			t_Islace_C,
 			t_Islace_D;
 
-	if (!t_Board.loadFromFile(			"Resource/t_board.png")		||
-		!t_LandMark.loadFromFile(		"Resource/t_board_mark.png")||
+	SoundBuffer bufferclick, bufferfinish;
+
+	if (!t_Board.loadFromFile(			"Resource/t_board.png")										||
+		!t_LandMark.loadFromFile(		"Resource/t_board_mark.png")								||
 		!t_PirateShip.loadFromFile(		"Resource/t_board_items.png", IntRect(0,0,130,130))			||				 
 		!t_ExploratorShip.loadFromFile(	"Resource/t_board_items.png", IntRect(0,130,130,130))		||				 
 		!t_Octoped.loadFromFile(		"Resource/t_board_items.png", IntRect(0,260,130,130))		||				 
@@ -39,10 +41,16 @@ bool Game(SceneManager* sceneManager) {
 		!t_Islace_B.loadFromFile(		"Resource/t_board_islace.png", IntRect(500,0,500,500))		||
 		!t_Islace_C.loadFromFile(		"Resource/t_board_islace.png", IntRect(0,500,500,500))		||
 		!t_Islace_D.loadFromFile(		"Resource/t_board_islace.png", IntRect(500,500,500,500))	||				 
-		!font.loadFromFile(				"Resource/fontTitlu.ttf"))
+		!font.loadFromFile(				"Resource/fontTitlu.ttf")									||
+		!bufferclick.loadFromFile(		"Resource/clicksound.wav")									||
+		!bufferfinish.loadFromFile(		"Resource/levelfinish.wav"))
 		return false;
 	
 	Texture* FigureTextures[9] = { &t_LandMark, &t_PirateShip, &t_ExploratorShip, &t_RobbedShip, &t_Treasure, &t_Island, &t_Castle, &t_Octoped, &t_Shipwrecked };
+
+	Sound s_click, s_finish;
+	s_click.setBuffer(bufferclick);
+	s_finish.setBuffer(bufferfinish);
 
 	lvl::Level* CurentLevel = new lvl::Level();
 	if (!lvl::LoadLevel(sceneManager->LevelState, CurentLevel)) {
@@ -133,12 +141,12 @@ bool Game(SceneManager* sceneManager) {
 		Event event;
 		while (sceneManager->RenderWindow->pollEvent(event)) {
 
-			if (Mouse::isButtonPressed(Mouse::Left)) {
-				if (!DragState) {
-					if (isHover(T_Menu, mouse)) {
+			if (Mouse::isButtonPressed(Mouse::Left)) {				
+				if (!DragState) {					
+					if (isHover(T_Menu, mouse)) {						
 						sceneManager->CurentFrame = GameEnum::GameFrame::GameSelection;
 					}
-					if (isHover(T_Undo, mouse)) {
+					if (isHover(T_Undo, mouse)) {						
 						UndoGame(CurentHistory);
 					}
 					if (isHover(T_Hint, mouse) && CurentLevel->Request[0] == 0) {
@@ -163,9 +171,11 @@ bool Game(SceneManager* sceneManager) {
 							break;
 						}
 						UInterogationWindowForConfirm(sceneManager->RenderWindow, mes,false);
+						
 					}
 					DragOgjectIdentificator = GetHoverObject(Islace, 4,&mouse);
 					if (DragOgjectIdentificator != -1) {
+						s_click.play();
 						DragState = true;
 					}
 				}
@@ -174,7 +184,9 @@ bool Game(SceneManager* sceneManager) {
 				}
 			}
 			else {
+				
 				if(DragOgjectIdentificator != -1) {
+					s_click.play();
 					int NewPosition = GetPosition(&size_window, &mouse, 70);
 					NewMove = lvl::CopyState(CurentHistory->State);
 					GetMove(DragOgjectIdentificator, NewPosition, NewMove);
@@ -186,11 +198,13 @@ bool Game(SceneManager* sceneManager) {
 						}
 					}
 				}
+				
 				DragOgjectIdentificator = -1;
 				DragState = false;
 			}
 
 			if (Mouse::isButtonPressed(Mouse::Right)) {
+				s_click.play();
 				RotationObjectIndentificator = GetHoverObject(Islace, 4, &mouse);
 				std::cout << "Rotation " << RotationObjectIndentificator <<std::endl;
 			}
@@ -214,6 +228,9 @@ bool Game(SceneManager* sceneManager) {
 				default:
 					break;
 				}
+			case Event::MouseButtonPressed:
+				s_click.play();
+				break;
 			}
 		}
 		if (RotationObjectIndentificator != -1) {
@@ -256,6 +273,7 @@ bool Game(SceneManager* sceneManager) {
 		int TotalTime = t_.asSeconds();
 		int TotalMinutes = TotalTime / 60;
 		int TotalSeconds = TotalTime % 60;
+		s_finish.play();
 		std::string WinMessage = "You finished in " + std::to_string(TotalMinutes) + ":" + std::to_string(TotalSeconds) + " minutes\n\n\t\tDo you continue?" ;
 		if(TotalMinutes < 1)
 			WinMessage = "You finished in " + std::to_string(TotalSeconds) + " seconds\n\n\t\tDo you continue?" ;
