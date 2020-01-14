@@ -119,13 +119,13 @@ bool Game(SceneManager* sceneManager) {
 		while (sceneManager->RenderWindow->pollEvent(event)) {
 
 			if (Mouse::isButtonPressed(Mouse::Left)) {
-				if (isHover(T_Menu, mouse)) {
-					sceneManager->CurentFrame = GameEnum::GameFrame::GameSelection;
-				}
-				if (isHover(T_Undo, mouse)) {
-					UndoGame(CurentHistory);
-				}
 				if (!DragState) {
+					if (isHover(T_Menu, mouse)) {
+						sceneManager->CurentFrame = GameEnum::GameFrame::GameSelection;
+					}
+					if (isHover(T_Undo, mouse)) {
+						UndoGame(CurentHistory);
+					}
 					DragOgjectIdentificator = GetHoverObject(Islace, 4,&mouse);
 					if (DragOgjectIdentificator != -1) {
 						DragState = true;
