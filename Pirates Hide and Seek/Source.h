@@ -7,3 +7,4 @@
 #include "GameVariable.h"
 #include "GameSelect.h"
 #include "GameMatrix.h"
+#include "Switch.h"
