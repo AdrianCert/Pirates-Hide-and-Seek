@@ -8,6 +8,7 @@ int main()
 	//int v[9] = { 4,0,0,0,0,0,0,0,4 };
 	//int x = llvl::CodingRequest(v);
 	//llvl::DecodeRequest(lvl::GetRequest(1), v);
+	afisareMatrice();
 	int n[4] = {0, 0, 0, 0};
 	RandOrder(n);
 	int gameWidth, gameHeight, gameSSyle;

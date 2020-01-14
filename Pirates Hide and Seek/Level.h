@@ -49,7 +49,7 @@ namespace llvl {
 
 namespace lvl {
 	struct Islace {
-		bool Relevant;
+		bool Relevant = false;
 		int Position;
 		int Rotation;
 	};
@@ -71,10 +71,13 @@ namespace lvl {
 	int GetRequest(int var);
 	int GetSolution(int var);
 	int GetStorageLVL(int* v, int box);
+	State* CopyState(State* A);
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 	/// Funtion dedicated for drow request lvl                                                      ///
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 	int GetCountDrowedFigures(Level* curentLVL);
+	sf::RectangleShape** SetUpRequestLVL(sf::Vector2u* size_window, lvl::Level* CurentLevel, int& RequestCount, sf::Texture* FigureTextures[]);
+
 }
 
 #endif // !LEVEL_H

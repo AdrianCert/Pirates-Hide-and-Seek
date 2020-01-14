@@ -85,10 +85,13 @@ namespace lvl {
 
 		int DescovededP[] = { 0, 0, 0 , 0, 0, 0, 0, 0 };
 		GetUncoveredItems(GeneratedSolution, DescovededP);
-		for (int i = 0; i < 9; i++)
+		for (int i = 0; i < 9; i++) {
 			played_lvl->Request[i] = 0;
-		for (int i = 0; i < 8; i++)
+		}
+		for (int i = 0; i < 8; i++) {
 			played_lvl->Request[DescovededP[i]]++;
+		}
+		played_lvl->Request[0] = 0;
 		if(useMarkHint) played_lvl->Request[0] = GeneratedSolution->A.Rotation + 1;
 
 		played_lvl->Solution = *GeneratedSolution;
@@ -140,6 +143,25 @@ namespace lvl {
 		}
 		return 0;
 	}
+	State* CopyState(State* A) {
+		State* B = new State();
+		B->A.Position = A->A.Position;
+		B->B.Position = A->B.Position;
+		B->C.Position = A->C.Position;
+		B->D.Position = A->D.Position;
+
+		B->A.Relevant = A->A.Relevant;
+		B->B.Relevant = A->B.Relevant;
+		B->C.Relevant = A->C.Relevant;
+		B->D.Relevant = A->D.Relevant;
+
+		B->A.Rotation = A->A.Rotation;
+		B->B.Rotation = A->B.Rotation;
+		B->C.Rotation = A->C.Rotation;
+		B->D.Rotation = A->D.Rotation;
+
+		return B;
+	}
 
 	int GetCountDrowedFigures(Level* curentLVL) {
 		int suma = curentLVL->Request[0] == 0 ? 0 : 1;
@@ -147,5 +169,55 @@ namespace lvl {
 			suma += curentLVL->Request[i];
 		}
 		return suma;
+	}
+	
+	sf::RectangleShape** SetUpRequestLVL(sf::Vector2u* size_window, lvl::Level* CurentLevel, int& RequestCount, sf::Texture* FigureTextures[]) {
+		RequestCount = lvl::GetCountDrowedFigures(CurentLevel) + 1;
+		int size_item = 100;
+		sf::RectangleShape** Request = new sf::RectangleShape * [RequestCount];
+
+		// Crearea de Rectangle shapeuri
+		Request[0] = new sf::RectangleShape(sf::Vector2f(127, (RequestCount - 1)* size_item + RequestCount * 10));
+		for (int i = 1; i < RequestCount; i++) {
+			Request[i] = new sf::RectangleShape(sf::Vector2f(100, 100));
+		}
+
+		// Umplerea cu texturi corespunzatoare
+		int RequestIndex = 1;
+		for (int i = 0; i < 9; i++) {
+			if (i == 0) {
+				if (CurentLevel->Request[0] != 0) {
+					if (RequestIndex < RequestCount) {
+						Request[RequestIndex]->setTexture(FigureTextures[0]);
+						Request[RequestIndex]->setRotation(90 * (CurentLevel->Request[0] - 1));
+						Request[RequestIndex]->setOrigin(50, 50);
+						RequestIndex++;
+					}
+				}
+			}
+			else {
+				int tmp = CurentLevel->Request[i];
+				while (tmp != 0) {
+					// urmatorul if acopera un worning care ne atentioneza cu o posibila depasire
+					if (RequestIndex < RequestCount) {
+						Request[RequestIndex]->setTexture(FigureTextures[i]);
+						Request[RequestIndex]->setOrigin(50, 50);
+					}
+					RequestIndex++;
+					tmp--;
+				}
+			}
+		}
+
+		// Pozitionarea Elementelor din vector
+		int poz_X = 60, poz_Y = (*size_window).y / 2 - RequestIndex / 2 * 110;
+		Request[0]->setFillColor(sf::Color(92, 194, 208));
+		Request[0]->setPosition(poz_X - 60, poz_Y - 60);
+		for (int i = 1; i < RequestCount; i++) {
+			Request[i]->setPosition(sf::Vector2f(poz_X, poz_Y));
+			poz_Y += size_item + 10;
+		}
+
+		return Request;
 	}
 }

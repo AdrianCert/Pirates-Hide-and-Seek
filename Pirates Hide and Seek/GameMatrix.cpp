@@ -28,7 +28,13 @@ void afisareMatrice()
 	int c[3][3];
 	//getMatriceTabla(v);
 	GetIslaceMat(1,c);
-	setRotation(c,2);
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+			std::cout << c[i][j] << ' ';
+		std::cout << std::endl;
+	}
+	setRotation(c,1);
 	for (int i = 0; i < 3; i++)
 	{
 		for (int j = 0; j < 3; j++)
@@ -137,7 +143,6 @@ void CompareCadran(int piesa[3][3], int cadran[3][3], int s[2])
 void GetUncoveredItems(lvl::State* x, int* v)
 {
 	
-	int count = 0;
 	//Piesa A
 	if (x->A.Relevant)
 	{
@@ -148,10 +153,8 @@ void GetUncoveredItems(lvl::State* x, int* v)
 		setRotation(piesa, x->A.Rotation);
 		GetCadran(x->A.Position, cadran);
 		CompareCadran(piesa, cadran, pieseCadran);
-		if (pieseCadran[0] != 0)
-			v[count++] = pieseCadran[0];
-		if (pieseCadran[1] != 0)
-			v[count++] = pieseCadran[1];
+		v[0] = pieseCadran[0];
+		v[1] = pieseCadran[1];
 
 	}
 
@@ -161,14 +164,12 @@ void GetUncoveredItems(lvl::State* x, int* v)
 		int pieseCadran[2];
 		int piesa[3][3];
 		int cadran[3][3];
-		GetIslaceMat(0, piesa);
+		GetIslaceMat(1, piesa);
 		setRotation(piesa, x->B.Rotation);
 		GetCadran(x->B.Position, cadran);
 		CompareCadran(piesa, cadran, pieseCadran);
-		if (pieseCadran[0] != 0)
-			v[count++] = pieseCadran[0];
-		if (pieseCadran[1] != 0)
-			v[count++] = pieseCadran[1];
+		v[2] = pieseCadran[0];
+		v[3] = pieseCadran[1];
 
 	}
 
@@ -178,14 +179,12 @@ void GetUncoveredItems(lvl::State* x, int* v)
 		int pieseCadran[2];
 		int piesa[3][3];
 		int cadran[3][3];
-		GetIslaceMat(0, piesa);
+		GetIslaceMat(2, piesa);
 		setRotation(piesa, x->C.Rotation);
 		GetCadran(x->C.Position, cadran);
 		CompareCadran(piesa, cadran, pieseCadran);
-		if (pieseCadran[0] != 0)
-			v[count++] = pieseCadran[0];
-		if (pieseCadran[1] != 0)
-			v[count++] = pieseCadran[1];
+		v[4] = pieseCadran[0];
+		v[5] = pieseCadran[1];
 
 	}
 
@@ -195,14 +194,12 @@ void GetUncoveredItems(lvl::State* x, int* v)
 		int pieseCadran[2];
 		int piesa[3][3];
 		int cadran[3][3];
-		GetIslaceMat(0, piesa);
+		GetIslaceMat(3, piesa);
 		setRotation(piesa, x->D.Rotation);
 		GetCadran(x->D.Position, cadran);
 		CompareCadran(piesa, cadran, pieseCadran);
-		if (pieseCadran[0] != 0)
-			v[count++] = pieseCadran[0];
-		if (pieseCadran[1] != 0)
-			v[count++] = pieseCadran[1];
+		v[6] = pieseCadran[0];
+		v[7] = pieseCadran[1];
 
 	}
 }

@@ -45,9 +45,7 @@ bool isHover(sf::RectangleShape& shape, sf::Mouse& mouse)
 //verifica daca mouse-ul este peste un text
 bool isHover(sf::Text& text, sf::Mouse& mouse)
 {
-	Vector2f mousePos;
-	mousePos.x = mouse.getPosition().x;
-	mousePos.y = mouse.getPosition().y;
+	Vector2f mousePos(mouse.getPosition().x, mouse.getPosition().y);
 	if (text.getGlobalBounds().contains(mousePos))
 		return true;
 	return false;
@@ -99,4 +97,117 @@ void RandOrder(int* n) {
 		k--;
 		poz_max = -1;
 	}
+}
+
+sf::Vector2f** GetSpacesForIslace(sf::Vector2u size_window, int size_islace) {
+	Vector2f** v = new Vector2f * [4];
+	int poz_X = size_window.x - size_islace - 40, poz_Y = size_window.y / 2 - size_islace * 1.5 - 15;
+	for (int i = 0; i < 4; i++) {
+		v[i] = new Vector2f(poz_X, poz_Y);
+		poz_Y += size_islace + 10;
+	}
+	return v;
+}
+sf::Vector2f** GetPositionForIslaceOnBoard(sf::Vector2u size_window) {
+	Vector2f** v = new Vector2f * [4];
+	Vector2f CentralRef = Vector2f(size_window.x / 2, size_window.y / 2);
+	float disp = 0.8 * 210 * size_window.y / 1024;
+	v[0] = new Vector2f(size_window.x / 2 - disp, size_window.y / 2 - disp);
+	v[1] = new Vector2f(size_window.x / 2 + disp, size_window.y / 2 - disp);
+	v[2] = new Vector2f(size_window.x / 2 - disp, size_window.y / 2 + disp);
+	v[3] = new Vector2f(size_window.x / 2 + disp, size_window.y / 2 + disp);
+	return v;
+}
+
+sf::Vector2f GetIslaceOnBordDimension(sf::Vector2u size_window) {
+	return Vector2f(size_window.y * 320 / 1024, size_window.y * 320 / 1024);
+}
+
+sf::Vector2f GetIslaceDefaultDimension(sf::Vector2u size_window) {
+	return Vector2f(size_window.y * 0.2, size_window.y * 0.2);
+}
+
+int GetHoverObject(sf::RectangleShape* object[], int n, sf::Mouse* mouse) {
+	Vector2f mousePos(mouse->getPosition().x, mouse->getPosition().y);
+	for (int i = 0; i < n; i++) {
+		if (object[i]->getGlobalBounds().contains(mousePos)) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+void SetPostionForState(sf::Vector2u* size_window, lvl::State* state, sf::RectangleShape** shapes, int skip) {
+	Vector2f** SpacesForIslace = GetSpacesForIslace(*size_window, shapes[0]->getSize().x);
+	Vector2f** PositionForIslaceOnBoard = GetPositionForIslaceOnBoard(*size_window);
+	int Oder[] = { 1, 2, 0, 3 };
+	int FreeSpace = 0;
+	if (skip != 0) {
+		if (state->A.Relevant) {
+			shapes[0]->setSize(GetIslaceOnBordDimension(*size_window));
+			SetOriginCenter(shapes[0]);
+			shapes[0]->setPosition(*PositionForIslaceOnBoard[state->A.Position]);
+			shapes[0]->setRotation(state->A.Rotation * 90);
+		}
+		else {
+			shapes[0]->setSize(GetIslaceDefaultDimension(*size_window));
+			SetOriginCenter(shapes[0]);
+			shapes[0]->setPosition(*SpacesForIslace[FreeSpace++]);
+			shapes[0]->setRotation(0);
+		}
+	}
+	if (skip != 1) {
+		if (state->B.Relevant) {
+			shapes[1]->setSize(GetIslaceOnBordDimension(*size_window));
+			SetOriginCenter(shapes[1]);
+			shapes[1]->setPosition(*PositionForIslaceOnBoard[state->B.Position]);
+			shapes[1]->setRotation(state->B.Rotation * 90);
+		}
+		else {
+			shapes[1]->setSize(GetIslaceDefaultDimension(*size_window));
+			SetOriginCenter(shapes[1]);
+			shapes[1]->setPosition(*SpacesForIslace[FreeSpace++]);
+			shapes[1]->setRotation(0);
+		}
+	}
+	if (skip != 2) {
+		if (state->C.Relevant) {
+			shapes[2]->setSize(GetIslaceOnBordDimension(*size_window));
+			SetOriginCenter(shapes[2]);
+			shapes[2]->setPosition(*PositionForIslaceOnBoard[state->C.Position]);
+			shapes[2]->setRotation(state->C.Rotation * 90);
+		}
+		else {
+			shapes[2]->setSize(GetIslaceDefaultDimension(*size_window));
+			SetOriginCenter(shapes[2]);
+			shapes[2]->setPosition(*SpacesForIslace[FreeSpace++]);
+			shapes[2]->setRotation(0);
+		}
+	}
+	if (skip != 3) {
+		if (state->D.Relevant) {
+			shapes[3]->setSize(GetIslaceOnBordDimension(*size_window));
+			SetOriginCenter(shapes[3]);
+			shapes[3]->setPosition(*PositionForIslaceOnBoard[state->D.Position]);
+			shapes[3]->setRotation(state->D.Rotation * 90);
+		}
+		else {
+			shapes[3]->setSize(GetIslaceDefaultDimension(*size_window));
+			SetOriginCenter(shapes[3]);
+			shapes[3]->setPosition(*SpacesForIslace[FreeSpace++]);
+			shapes[3]->setRotation(0);
+		}
+	}
+}
+
+int GetPosition(sf::Vector2u* size_window, sf::Mouse* mouse, int precision) {
+	Vector2f** PositionForIslaceOnBoard = GetPositionForIslaceOnBoard(*size_window);
+	int X_point = mouse->getPosition().x;
+	int Y_point = mouse->getPosition().y;
+	for (int i = 0; i < 4; i++) {
+		if (abs(PositionForIslaceOnBoard[i]->x - X_point) < precision
+			&& abs(PositionForIslaceOnBoard[i]->y - Y_point) < precision)
+			return i;
+	}
+	return -1;
 }

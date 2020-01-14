@@ -3,6 +3,15 @@
 #include "Level.h"
 using namespace sf;
 
+struct HistoryGame {
+	lvl::State* State;
+	HistoryGame* Undo;
+};
+
+void RecordState(HistoryGame* History, lvl::State State) {
+
+}
+
 bool Game(SceneManager* sceneManager) {
 	Text Text_Back;
 	Font font;
@@ -23,6 +32,7 @@ bool Game(SceneManager* sceneManager) {
 			t_Islace_B,
 			t_Islace_C,
 			t_Islace_D;
+
 	if (!t_Board.loadFromFile(			"Resource/t_board.png")		||
 		!t_LandMark.loadFromFile(		"Resource/t_board_mark.png")||
 		!t_PirateShip.loadFromFile(		"Resource/t_board_items.png", IntRect(0,0,130,130))			||				 
@@ -39,21 +49,32 @@ bool Game(SceneManager* sceneManager) {
 		!t_Islace_D.loadFromFile(		"Resource/t_board_islace.png", IntRect(500,500,500,500))	||				 
 		!font.loadFromFile(				"Resource/fontTitlu.ttf"))
 		return false;
+	
+	Texture* FigureTextures[9] = { &t_LandMark, &t_PirateShip, &t_ExploratorShip, &t_RobbedShip, &t_Treasure, &t_Island, &t_Castle, &t_Octoped, &t_Shipwrecked };
+
+	lvl::Level* CurentLevel = new lvl::Level();
+	if (!lvl::LoadLevel(sceneManager->LevelState, CurentLevel)) {
+		lvl::LoadLevelGenerated(CurentLevel,true);
+	}
+
+	lvl::State* CurentState = new lvl::State();
+	HistoryGame* CurentHistory = new HistoryGame();
+	CurentHistory->State = CurentState;
+	CurentHistory->Undo = NULL;
 
 	Vector2u size_window = sceneManager->RenderWindow->getSize();
 	Vector2f size_islace = Vector2f(sceneManager->RenderWindow->getSize().y * 0.2, sceneManager->RenderWindow->getSize().y * 0.2);
 	Vector2f size_items = Vector2f(100, 100);
+	int RequestCount = 0;
 	
-	Texture* FigureTextures[9] = { &t_LandMark, &t_PirateShip, &t_ExploratorShip, &t_RobbedShip, &t_Treasure, &t_Island, &t_Castle, &t_Octoped, &t_Shipwrecked };
 
 	RectangleShape MainBoard(Vector2f(size_window.y * 0.8, size_window.y * 0.8));
-	
 	RectangleShape Islace_A(size_islace);
 	RectangleShape Islace_B(size_islace);
 	RectangleShape Islace_C(size_islace);
 	RectangleShape Islace_D(size_islace);
-
 	RectangleShape* Islace[4] = { &Islace_A, &Islace_B, &Islace_C, &Islace_D };
+	sf::RectangleShape** Request = lvl::SetUpRequestLVL(&size_window, CurentLevel, RequestCount, FigureTextures);
 
 	MainBoard.setOrigin(MainBoard.getSize().x/2, MainBoard.getSize().y / 2);
 	MainBoard.setPosition(sceneManager->RenderWindow->getSize().x/2, sceneManager->RenderWindow->getSize().y/2);
@@ -74,52 +95,62 @@ bool Game(SceneManager* sceneManager) {
 	Text_Back.setFillColor(sf::Color::Black);
 	Text_Back.setPosition(10, 10);
 
-	lvl::Level* CurentLevel = new lvl::Level();
-	if (!lvl::LoadLevel(sceneManager->LevelState, CurentLevel)) {
-		lvl::LoadLevelGenerated(CurentLevel,true);
-	}
-
-	int RequestCount = lvl::GetCountDrowedFigures(CurentLevel);
-	int RequestIndex = 0;
-
-	RectangleShape** Request = new RectangleShape*[RequestCount];
-	RectangleShape RequestBoard = RectangleShape(Vector2f(127,RequestCount*127));
-
-	for (int i = 0; i < RequestCount; i++) {
-		Request[i] = new RectangleShape(size_items);
-	}
-	RequestBoard.setFillColor( Color(92,194,208));
-	RequestBoard.setOrigin(0, RequestBoard.getSize().y/2);
-	RequestBoard.setPosition(0, size_window.y / 2);
-	Request[RequestIndex]->setTexture(FigureTextures[0]);
-	Request[RequestIndex]->setOrigin(50,50);
-	Request[RequestIndex]->setRotation(90 * (CurentLevel->Request[0] - 1));
-	for (int i = 1; i < 9; i++) {
-		int tmp = CurentLevel->Request[i];
-		while (tmp !=0)
-		{
-			RequestIndex++;
-			Request[RequestIndex]->setTexture(FigureTextures[i]);
-			Request[RequestIndex]->setOrigin(50,50);
-			tmp--;
-		}
-	}
-	int poz_X = 60, poz_Y = size_window.y/2 - RequestIndex/2 * 110 ;
-	for (int i = 0; i < RequestCount; i++) {
-		Request[i]->setPosition(Vector2f(poz_X,poz_Y));
-		poz_Y += 120;
-	}
-	int xx = 0;
+	int DragOgjectIdentificator = -1;
+	bool DragState = false;
 	while (sceneManager->CurentFrame == GameEnum::GameFrame::Game) {
 		Event event;
 		while (sceneManager->RenderWindow->pollEvent(event)) {
-				
+			
 			if (Mouse::isButtonPressed(Mouse::Left)) {
 				if (isHover(Text_Back, mouse)) {
 					sceneManager->CurentFrame = GameEnum::GameFrame::Menu;
 				}
+				if (!DragState) {
+					DragOgjectIdentificator = GetHoverObject(Islace, 4,&mouse);
+					if (DragOgjectIdentificator != -1) {
+						DragState = true;
+					}
+				}
 			}
-
+			else {
+				if(DragOgjectIdentificator != -1) {
+					int NewPosition = GetPosition(&size_window, &mouse, 50);
+					// Call make move
+					/*if (NewPosition != -1) {
+						lvl::State* NewMove = lvl::CopyState(CurentHistory->State);
+						switch (DragOgjectIdentificator)
+						{
+						case 0:
+							NewMove->A.Position = NewPosition;
+							NewMove->A.Relevant = true;
+							break;
+						case 1:
+							NewMove->B.Position = NewPosition;
+							NewMove->D.Relevant = true;
+							break;
+						case 2:
+							NewMove->C.Position = NewPosition;
+							NewMove->D.Relevant = true;
+							break;
+						case 3:
+							NewMove->D.Position = NewPosition;
+							NewMove->D.Relevant = true;
+							break;
+						default:
+							break;
+						}
+						HistoryGame* HistoryRecord = new HistoryGame();
+						HistoryRecord->State = NewMove;
+						HistoryRecord->Undo = CurentHistory;
+						CurentHistory = HistoryRecord;
+					}*/
+					std::cout << DragOgjectIdentificator << " on " << NewPosition<<std::endl;
+					// set new state ;
+					// Add in HistoryGame
+				}
+				DragOgjectIdentificator = -1;
+				DragState = false;
+			}
 			switch (event.type)
 			{
 			case Event::Closed:
@@ -131,20 +162,36 @@ bool Game(SceneManager* sceneManager) {
 				case Keyboard::Escape:
 					sceneManager->CurentFrame = GameEnum::GameFrame::Menu;
 					break;
+				case Keyboard::W:
+					CurentHistory->State = &CurentLevel->Solution;
+					break;
 				default:
 					break;
 				}
 			}
 		}
+		if (DragOgjectIdentificator != -1) Islace[DragOgjectIdentificator]->setPosition(mouse.getPosition().x, mouse.getPosition().y);
+		SetPostionForState(&size_window, CurentHistory->State, Islace, DragOgjectIdentificator);
+		// Daca elemenut dragibil exista 
+		// urmareste pozitia mouseulului
+		// scaleaza la marimea lui
+		// animatie de scalare
+
+		// funtie de tranzitie pentru a duce obiecte intr-un punc sau altul
+		// from curent 0,0 10,20 in time x seconds
+
+		// deseneaza folosind state obiectele cu exceptia celui care este drag and drop
+
 		// stash; mutarile;
 		//if (ifCompleted(LVL));
 		sceneManager->RenderWindow->clear(Color(255, 204, 102));
 		sceneManager->RenderWindow->draw(MainBoard);
-		sceneManager->RenderWindow->draw(RequestBoard);
 		sceneManager->RenderWindow->draw(Text_Back);
 		DrowVector(sceneManager, Request, RequestCount);
+		DrowVector(sceneManager, Islace, 4);
 		sceneManager->RenderWindow->display();
 	}
+	// pop window .. you ar sure u wont to exit
 	//Saving before game leave
 	return true;
 }
