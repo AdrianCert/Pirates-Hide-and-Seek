@@ -5,12 +5,6 @@ using namespace sf;
 
 int main()
 {
-	//int v[9] = { 4,0,0,0,0,0,0,0,4 };
-	//int x = llvl::CodingRequest(v);
-	//llvl::DecodeRequest(lvl::GetRequest(1), v);
-	afisareMatrice();
-	int n[4] = {0, 0, 0, 0};
-	RandOrder(n);
 	int gameWidth, gameHeight, gameSSyle;
 	std::string gameName;
 	cfg::dictionaty* configuration = new cfg::dictionaty();
@@ -24,10 +18,9 @@ int main()
 
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 8;
-
-	
-	
+		
 	RenderWindow window(VideoMode(gameWidth, gameHeight), gameName, gameSSyle, settings);
+	window.setFramerateLimit(120);
 
 	SceneManager* sceneManager = new SceneManager();
 	sceneManager->RenderWindow = &window;
