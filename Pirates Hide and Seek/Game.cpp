@@ -120,27 +120,6 @@ bool Game(SceneManager* sceneManager) {
 					//if (NewPosition != -1) {
 						lvl::State* NewMove = lvl::CopyState(CurentHistory->State);
 						GetMove(DragOgjectIdentificator, NewPosition, NewMove);
-						/*switch (DragOgjectIdentificator)
-						{
-						case 0:
-							NewMove->A.Position = NewPosition;
-							NewMove->A.Relevant = true;
-							break;
-						case 1:
-							NewMove->B.Position = NewPosition;
-							NewMove->D.Relevant = true;
-							break;
-						case 2:
-							NewMove->C.Position = NewPosition;
-							NewMove->D.Relevant = true;
-							break;
-						case 3:
-							NewMove->D.Position = NewPosition;
-							NewMove->D.Relevant = true;
-							break;
-						default:
-							break;
-						}*/
 						HistoryGame* HistoryRecord = new HistoryGame();
 						HistoryRecord->State = NewMove;
 						HistoryRecord->Undo = CurentHistory;
