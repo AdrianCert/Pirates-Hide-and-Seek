@@ -42,63 +42,42 @@ void GetMove(int islace, int newPoz, lvl::State* state)
 	bool relevance; //retine daca piesa este sau nu pe tabla
 	relevance = isRelevant(islace, state);
 
+
 	//piesa afara pozitionata afara
-	switch (islace)
+	if (newPoz == -1)
 	{
-	case 0:
-		if (isRelevant(islace, state) == false && newPoz == -1)
-			return ;
-		break;
-	case 1:
-		if (isRelevant(islace, state) == false && newPoz == -1)
-			return ;
-		break;
-	case 2:
-		if (isRelevant(islace, state) == false && newPoz == -1)
-			return ;
-		break;
-	case 3:
-		if (isRelevant(islace, state) == false && newPoz == -1)
-			return ;
-		break;
 
-	default:
-		break;
-	}
-
-	//piesa pe tabla pozitionata afara
-	switch (islace)
-	{
-	case 0:
-		if (isRelevant(islace, state) == true && newPoz == -1)
+		switch (islace)
 		{
+		case 0:
+			if (isRelevant(islace, state) == false)
+				return ;
 			state->A.Position = newPoz;
 			state->A.Relevant = false;
-		}
-		break;
-	case 1:
-		if (isRelevant(islace, state) == true && newPoz == -1)
-		{
+			break;
+		case 1:
+			if (isRelevant(islace, state) == false)
+				return ;
 			state->B.Position = newPoz;
 			state->B.Relevant = false;
-		}
-		break;
-	case 2:
-		if (isRelevant(islace, state) == true && newPoz == -1)
-		{
+			break;
+		case 2:
+			if (isRelevant(islace, state) == false)
+				return ;
 			state->C.Position = newPoz;
-			state->C.Relevant = false;			
-		}
-		break;
-	case 3:
-		if (isRelevant(islace, state) == true && newPoz == -1)
-		{
+			state->C.Relevant = false;
+			break;
+		case 3:
+			if (isRelevant(islace, state) == false)
+				return ;
 			state->D.Position = newPoz;
 			state->D.Relevant = false;
+			break;
+
+		default:
+			break;
 		}
-		break;
-	default:
-		break;
+
 	}
 
 	//piesa afara pozitionata pe tabla

@@ -117,7 +117,7 @@ bool Game(SceneManager* sceneManager) {
 					int NewPosition = GetPosition(&size_window, &mouse, 50);
 					// Call make move
 					//lvl::State* cacat;
-					if (NewPosition != -1) {
+					//if (NewPosition != -1) {
 						lvl::State* NewMove = lvl::CopyState(CurentHistory->State);
 						GetMove(DragOgjectIdentificator, NewPosition, NewMove);
 						/*switch (DragOgjectIdentificator)
@@ -145,7 +145,7 @@ bool Game(SceneManager* sceneManager) {
 						HistoryRecord->State = NewMove;
 						HistoryRecord->Undo = CurentHistory;
 						CurentHistory = HistoryRecord;
-					}
+					//}
 					std::cout << DragOgjectIdentificator << " on " << NewPosition<<std::endl;
 					// set new state ;
 					// Add in HistoryGame
