@@ -104,9 +104,7 @@ namespace lvl {
 		int capacity = (int) sizeof(StorageLVL) / sizeof(int);
 		if (var > capacity || var <= 0)
 			return -1;
-		int* v = new int[capacity];
-		GetStorageLVL(v, 0);
-		return v[var - 1];
+		return StorageLVL[var - 1];
 	}
 
 	int GetSolution(int var) {
