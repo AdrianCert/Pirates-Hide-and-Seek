@@ -277,17 +277,22 @@ bool Game(SceneManager* sceneManager) {
 		std::string WinMessage = "You finished in " + std::to_string(TotalMinutes) + ":" + std::to_string(TotalSeconds) + " minutes\n\n\t\tDo you continue?" ;
 		if(TotalMinutes < 1)
 			WinMessage = "You finished in " + std::to_string(TotalSeconds) + " seconds\n\n\t\tDo you continue?" ;
+		if (sceneManager->LevelState != 0) {
+			cfg::SetParm(sceneManager->Configurator, "player_progress", sceneManager->LevelState + 1);
+			cfg::WriteConfiguration(sceneManager->Configurator, "Resource/ConfigureFile.txt");
+		}
+		
+		sceneManager->CurentFrame = GameEnum::GameSelection;
 		int userAnswer = UInterogationWindowForConfirm(sceneManager->RenderWindow, WinMessage,true);
 		if (userAnswer == 1)
 		{
 			if (sceneManager->LevelState != 0) {
 				sceneManager->LevelState++;
+
 			}
 			sceneManager->CurentFrame = GameEnum::Game;
 		}
 	}
-	// pop window .. you ar sure u wont to exit
-	//Saving before game leave
 	return true;
 }
 
