@@ -103,7 +103,7 @@ bool Game(SceneManager* sceneManager) {
 			
 			if (Mouse::isButtonPressed(Mouse::Left)) {
 				if (isHover(Text_Back, mouse)) {
-					sceneManager->CurentFrame = GameEnum::GameFrame::Menu;
+					sceneManager->CurentFrame = GameEnum::GameFrame::GameSelection;
 				}
 				if (!DragState) {
 					DragOgjectIdentificator = GetHoverObject(Islace, 4,&mouse);
@@ -162,7 +162,7 @@ bool Game(SceneManager* sceneManager) {
 				switch (event.key.code)
 				{
 				case Keyboard::Escape:
-					sceneManager->CurentFrame = GameEnum::GameFrame::Menu;
+					sceneManager->CurentFrame = GameEnum::GameFrame::GameSelection;
 					break;
 				case Keyboard::W:
 					CurentHistory->State = &CurentLevel->Solution;

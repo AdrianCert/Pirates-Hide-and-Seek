@@ -42,59 +42,31 @@ void GetMove(int islace, int newPoz, lvl::State* state)
 	bool relevance; //retine daca piesa este sau nu pe tabla
 	relevance = isRelevant(islace, state);
 
+	//piesa afara pozitionata afara
 	switch (islace)
 	{
 	case 0:
 		if (isRelevant(islace, state) == false && newPoz == -1)
 			return ;
+		break;
 	case 1:
 		if (isRelevant(islace, state) == false && newPoz == -1)
 			return ;
+		break;
 	case 2:
 		if (isRelevant(islace, state) == false && newPoz == -1)
 			return ;
+		break;
 	case 3:
 		if (isRelevant(islace, state) == false && newPoz == -1)
 			return ;
+		break;
 
 	default:
 		break;
 	}
 
-	switch (islace)
-	{
-	case 0:
-		if (isRelevant(islace, state) == false && newPoz != -1 && isPosition == -1)
-		{
-			state->A.Position = newPoz;
-			state->A.Relevant = true;
-			
-		}
-	case 1:
-		if (isRelevant(islace, state) == false && newPoz != -1 && isPosition == -1)
-		{
-			state->B.Position = newPoz;
-			state->B.Relevant = true;
-			
-		}
-	case 2:
-		if (isRelevant(islace, state) == false && newPoz != -1 && isPosition == -1)
-		{
-			state->C.Position = newPoz;
-			state->C.Relevant = true;
-			
-		}
-	case 3:
-		if (isRelevant(islace, state) == false && newPoz != -1 && isPosition == -1)
-		{
-			state->D.Position = newPoz;
-			state->D.Relevant = true;
-			
-		}
-	default:
-		break;
-	}
-
+	//piesa pe tabla pozitionata afara
 	switch (islace)
 	{
 	case 0:
@@ -102,32 +74,322 @@ void GetMove(int islace, int newPoz, lvl::State* state)
 		{
 			state->A.Position = newPoz;
 			state->A.Relevant = false;
-
 		}
+		break;
 	case 1:
 		if (isRelevant(islace, state) == true && newPoz == -1)
 		{
 			state->B.Position = newPoz;
 			state->B.Relevant = false;
-
 		}
+		break;
 	case 2:
 		if (isRelevant(islace, state) == true && newPoz == -1)
 		{
 			state->C.Position = newPoz;
-			state->C.Relevant = false;
-
+			state->C.Relevant = false;			
 		}
+		break;
 	case 3:
 		if (isRelevant(islace, state) == true && newPoz == -1)
 		{
 			state->D.Position = newPoz;
 			state->D.Relevant = false;
-
 		}
+		break;
 	default:
 		break;
 	}
+
+	//piesa afara pozitionata pe tabla
+	//loc liber
+	switch (islace)
+	{
+	case 0:
+		if (isRelevant(islace, state) == false && newPoz != -1 && isPosition == -1)
+		{
+			state->A.Position = newPoz;
+			state->A.Relevant = true;			
+		}
+		break;
+	case 1:
+		if (isRelevant(islace, state) == false && newPoz != -1 && isPosition == -1)
+		{
+			state->B.Position = newPoz;
+			state->B.Relevant = true;			
+		}
+		break;
+	case 2:
+		if (isRelevant(islace, state) == false && newPoz != -1 && isPosition == -1)
+		{
+			state->C.Position = newPoz;
+			state->C.Relevant = true;
+		}
+		break;
+	case 3:
+		if (isRelevant(islace, state) == false && newPoz != -1 && isPosition == -1)
+		{
+			state->D.Position = newPoz;
+			state->D.Relevant = true;			
+		}
+		break;
+	default:
+		break;
+	}
+	
+	//piesa pe tabla pozitionata pe tabla 
+	//loc liber
+	switch (islace)
+	{
+	case 0:
+		if (isRelevant(islace, state) == true && newPoz != -1 && isPosition == -1)
+		{
+			state->A.Relevant = false;
+			state->A.Position = newPoz;
+			state->A.Relevant = true;
+
+		}
+		break;
+	case 1:
+		if (isRelevant(islace, state) == true && newPoz != -1 && isPosition == -1)
+		{
+			state->B.Relevant = false;
+			state->B.Position = newPoz;
+			state->B.Relevant = true;
+
+		}
+		break;
+	case 2:
+		if (isRelevant(islace, state) == true && newPoz != -1 && isPosition == -1)
+		{
+			state->C.Relevant = false;
+			state->C.Position = newPoz;
+			state->C.Relevant = true;
+
+		}
+		break;
+	case 3:
+		if (isRelevant(islace, state) == true && newPoz != -1 && isPosition == -1)
+		{
+			state->D .Relevant = false;
+			state->D.Position = newPoz;
+			state->D.Relevant = true;
+
+		}
+		break;
+	default:
+		break;
+	}
+
+	//piesa pe tabla pozitionata pe tabla
+	//loc ocupat
+	switch (islace)
+	{
+	case 0:
+		if (isRelevant(islace, state) == true && newPoz != -1 && isPosition != -1)
+		{
+			switch (isPosition)
+			{
+			case 1:
+				state->B.Position = state->A.Position;
+				state->B.Relevant = true;
+				break;
+			case 2:
+				state->C.Position = state->A.Position;
+				state->C.Relevant = true;
+				break;
+			case 3:
+				state->D.Position = state->A.Position;
+				state->D.Relevant = true;
+				break;
+			default:
+				break;
+			}
+			state->A.Position = newPoz;
+			state->A.Relevant = true;
+		}
+		break;
+	case 1:
+		if (isRelevant(islace, state) == true && newPoz != -1 && isPosition != -1)
+		{
+			switch (isPosition)
+			{
+			case 0:
+				state->A.Position = state->B.Position;
+				state->A.Relevant = true;
+				break;
+			case 2:
+				state->C.Position = state->B.Position;
+				state->C.Relevant = true;
+				break;
+			case 3:
+				state->D.Position = state->B.Position;
+				state->D.Relevant = true;
+				break;
+			default:
+				break;
+			}
+			state->B.Position = newPoz;
+			state->B.Relevant = true;
+		}
+		break;
+	case 2:
+		if (isRelevant(islace, state) == true && newPoz != -1 && isPosition != -1)
+		{
+			switch (isPosition)
+			{
+			case 0:
+				state->A.Position = state->C.Position;
+				state->A.Relevant = true;
+				break;
+			case 1:
+				state->B.Position = state->C.Position;
+				state->B.Relevant = true;
+				break;
+			case 3:
+				state->D.Position = state->C.Position;
+				state->D.Relevant = true;
+				break;
+			default:
+				break;
+			}
+			state->C.Position = newPoz;
+			state->C.Relevant = true;
+		}
+		break;
+	case 3:
+		if (isRelevant(islace, state) == true && newPoz != -1 && isPosition != -1)
+		{
+			switch (isPosition)
+			{
+			case 0:
+				state->A.Position = state->D.Position;
+				state->A.Relevant = true;
+				break;
+			case 1:
+				state->B.Position = state->D.Position;
+				state->B.Relevant = true;
+				break;
+			case 2:
+				state->C.Position = state->D.Position;
+				state->C.Relevant = true;
+				break;
+			default:
+				break;
+			}
+			state->D.Position = newPoz;
+			state->D.Relevant = true;
+		}
+		break;
+	default:
+		break;
+	}
+
+	//piesa afara pozitionata pe tabla
+	//loc ocupat
+	switch (islace)
+	{
+	case 0:
+		if (isRelevant(islace, state) == false && newPoz != -1 && isPosition != -1)
+		{
+			switch (isPosition)
+			{
+			case 1:
+				state->B.Position = state->A.Position;
+				state->B.Relevant = false;
+				break;
+			case 2:
+				state->C.Position = state->A.Position;
+				state->C.Relevant = false;
+				break;
+			case 3:
+				state->D.Position = state->A.Position;
+				state->D.Relevant = false;
+				break;
+			default:
+				break;
+			}
+			state->A.Position = newPoz;
+			state->A.Relevant = true;
+		}
+		break;
+	case 1:
+		if (isRelevant(islace, state) == false && newPoz != -1 && isPosition != -1)
+		{
+			switch (isPosition)
+			{
+			case 0:
+				state->A.Position = state->B.Position;
+				state->A.Relevant = false;
+				break;
+			case 2:
+				state->C.Position = state->B.Position;
+				state->C.Relevant = false;
+				break;
+			case 3:
+				state->D.Position = state->B.Position;
+				state->D.Relevant = false;
+				break;
+			default:
+			break;
+			}
+			state->B.Position = newPoz;
+			state->B.Relevant = true;
+		}
+		break;
+	case 2:
+		if (isRelevant(islace, state) == false && newPoz != -1 && isPosition != -1)
+		{
+			switch (isPosition)
+			{
+			case 0:
+				state->A.Position = state->C.Position;
+				state->A.Relevant = false;
+				break;
+			case 1:
+				state->B.Position = state->C.Position;
+				state->B.Relevant = false;
+				break;
+			case 3:
+				state->D.Position = state->C.Position;
+				state->D.Relevant = false;
+				break;
+			default:
+				break;
+			}
+			state->C.Position = newPoz;
+			state->C.Relevant = true;
+		}
+		break;
+	case 3:
+		if (isRelevant(islace, state) == false && newPoz != -1 && isPosition != -1)
+		{
+			switch (isPosition)
+			{
+			case 0:
+				state->A.Position = state->D.Position;
+				state->A.Relevant = false;
+				break;
+			case 1:
+				state->B.Position = state->D.Position;
+				state->B.Relevant = false;
+				break;
+			case 2:
+				state->C.Position = state->D.Position;
+				state->C.Relevant = false;
+				break;
+			default:
+				break;
+			}
+			state->D.Position = newPoz;
+			state->D.Relevant = true;
+		}
+		break;
+	default:
+		break;
+	}
+
+	
 
 	///////////////////////////////////////////////////////////////////////
 	//																     //
