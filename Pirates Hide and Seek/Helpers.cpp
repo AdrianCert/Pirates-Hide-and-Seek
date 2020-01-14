@@ -138,9 +138,15 @@ int GetHoverObject(sf::RectangleShape* object[], int n, sf::Mouse* mouse) {
 }
 
 void SetPostionForState(sf::Vector2u* size_window, lvl::State* state, sf::RectangleShape** shapes, int skip) {
-	Vector2f** SpacesForIslace = GetSpacesForIslace(*size_window, shapes[0]->getSize().x);
+	float dimension(shapes[0]->getSize().x);
+	if (!state->A.Relevant) dimension = shapes[0]->getSize().x;
+	if (!state->B.Relevant) dimension = shapes[1]->getSize().x;
+	if (!state->C.Relevant) dimension = shapes[2]->getSize().x;
+	if (!state->D.Relevant) dimension = shapes[3]->getSize().x;
+
+	Vector2f** SpacesForIslace = GetSpacesForIslace(*size_window, dimension);
 	Vector2f** PositionForIslaceOnBoard = GetPositionForIslaceOnBoard(*size_window);
-	int Oder[] = { 1, 2, 0, 3 };
+	int Oder[] = { 2, 1, 0, 3 };
 	int FreeSpace = 0;
 	if (skip != 0) {
 		if (state->A.Relevant) {
@@ -210,4 +216,80 @@ int GetPosition(sf::Vector2u* size_window, sf::Mouse* mouse, int precision) {
 			return i;
 	}
 	return -1;
+}
+
+int UInterogationWindowForConfirm(sf::RenderWindow* window, std::string question) {
+	Text Question;
+	Text Yes;
+	Text No;
+	Text Cancel;
+	RectangleShape Frame;
+	Font font;
+	Mouse mouse;
+	if (!font.loadFromFile("Resource/fontTitlu.ttf")) return -1;
+
+	Frame.setFillColor(sf::Color(92, 194, 208));
+	Frame.setSize(Vector2f(window->getSize().x / 2, window->getSize().y / 3));
+	SetOriginCenter(&Frame);
+	Frame.setPosition(Vector2f(window->getSize().x / 2, window->getSize().y / 2));
+
+	Question.setFont(font);
+	Question.setString(question);
+	Question.setCharacterSize(50);
+	Question.setFillColor(sf::Color::Black);
+	resOriginText(No);
+	Question.setPosition(Frame.getGlobalBounds().left + 50, Frame.getGlobalBounds().top + 100);
+
+	Cancel.setFont(font);
+	Cancel.setString("x");
+	Cancel.setCharacterSize(40);
+	Cancel.setFillColor(sf::Color::Black);
+	resOriginText(Yes);
+	Cancel.setPosition(Frame.getGlobalBounds().left + Frame.getGlobalBounds().width - 50, Frame.getGlobalBounds().top + 10);
+
+	Yes.setFont(font);
+	Yes.setString("yes");
+	Yes.setCharacterSize(50);
+	Yes.setFillColor(sf::Color::Black);
+	resOriginText(Yes);
+	Yes.setPosition(window->getSize().x / 2 - Frame.getGlobalBounds().width / 3, Frame.getGlobalBounds().top + Frame.getGlobalBounds().height - 50);
+
+	No.setFont(font);
+	No.setString("no");
+	No.setCharacterSize(50);
+	No.setFillColor(sf::Color::Black);
+	resOriginText(No);
+	No.setPosition(window->getSize().x / 2 + Frame.getGlobalBounds().width / 3, Frame.getGlobalBounds().top + Frame.getGlobalBounds().height - 50);
+
+	while (1) {
+		Event event;
+		while (window->pollEvent(event)) {
+
+			if (Mouse::isButtonPressed(Mouse::Left)) {
+				if (isHover(Yes, mouse)) {
+					return 1;
+				}
+				if (isHover(No, mouse)) {
+					return 0;
+				}
+				if (isHover(Cancel, mouse)) {
+					return -1;
+				}
+				if (!isHover(Frame, mouse)) {
+					return -1;
+				}
+			}
+			if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape) {
+				return -1;
+			}
+		}
+		window->clear(Color(255, 204, 102));
+		window->draw(Frame);
+		window->draw(Cancel);
+		window->draw(Question);
+		window->draw(Yes);
+		window->draw(No);
+		window->display();
+	}
+
 }
