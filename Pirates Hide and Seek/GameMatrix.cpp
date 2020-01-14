@@ -22,28 +22,6 @@ void getMatriceTabla(int v[6][6])
 	
 }
 
-void afisareMatrice()
-{
-	//int v[6][6];
-	int c[3][3];
-	//getMatriceTabla(v);
-	GetIslaceMat(1,c);
-	for (int i = 0; i < 3; i++)
-	{
-		for (int j = 0; j < 3; j++)
-			std::cout << c[i][j] << ' ';
-		std::cout << std::endl;
-	}
-	setRotation(c,1);
-	for (int i = 0; i < 3; i++)
-	{
-		for (int j = 0; j < 3; j++)
- 			std::cout << c[i][j] << ' ';
-		std::cout << std::endl;
-	}
-	
-}
-
 void GetIslaceMat(int Islace, int v[3][3]) {
 	
 	switch (Islace % 4)
@@ -113,19 +91,15 @@ void setRotation(int v[3][3], int r)
 	r = r % 4;
 	int aux;
 	if (r == 0)
-		return;	
-	for (int i = 0; i < 3; i++)
-	{
+		return;
+	int rez[3][3];
+	for (int i = 0; i < 3; ++i)
 		for (int j = 0; j < 3; j++)
-		{
-			if (j > i)
-			{
-				aux = v[i][3-j-1];
-				v[i][3-j-1] = v[j][i];
-				v[j][i] = aux;
-			}
-		}
-	}	
+			rez[i][j] = v[2 - j][i];
+	for (int i = 0; i < 3; ++i)
+		for (int j = 0; j < 3; j++)
+			v[i][j] = rez[i][j];
+	
 	setRotation(v, r-1);
 	
 }
