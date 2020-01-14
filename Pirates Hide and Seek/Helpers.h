@@ -17,7 +17,6 @@ bool isHover(sf::RectangleShape& shape, sf::Mouse& mouse);
 bool isHover(sf::Text& text, sf::Mouse& mouse);
 void RandOrder(int* n);
 
-
 sf::Vector2f** GetSpacesForIslace(sf::Vector2u size_window, int size_islace);
 sf::Vector2f** GetPositionForIslaceOnBoard(sf::Vector2u size_window);
 sf::Vector2f GetIslaceOnBordDimension(sf::Vector2u size_window);

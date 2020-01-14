@@ -37,8 +37,8 @@ int main()
 	sceneManager->Configurator = configuration;
 	sceneManager->LevelState = 0;
 	sceneManager->djValy = music;
-	
-	while (window.isOpen())
+
+  while (window.isOpen())
 	{
 		bool gameContinue = false;
 		switch (sceneManager->CurentFrame)

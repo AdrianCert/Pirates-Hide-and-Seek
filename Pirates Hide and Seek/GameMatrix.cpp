@@ -117,6 +117,7 @@ void CompareCadran(int piesa[3][3], int cadran[3][3], int s[2])
 void GetUncoveredItems(lvl::State* x, int* v)
 {
 	
+	int count = 0;
 	//Piesa A
 	if (x->A.Relevant)
 	{

@@ -297,3 +297,4 @@ int UInterogationWindowForConfirm(sf::RenderWindow* window, std::string question
 	}
 
 }
+
