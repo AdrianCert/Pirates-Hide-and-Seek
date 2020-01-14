@@ -208,8 +208,13 @@ bool Game(SceneManager* sceneManager) {
 		int TotalTime = t_.asSeconds();
 		int TotalMinutes = TotalTime / 60;
 		int TotalSeconds = TotalTime % 60;
-		std::string WinMessage = "Congratulation!\n You finished in " + std::to_string(TotalMinutes) + ":" + std::to_string(TotalSeconds);
+		std::string WinMessage = "Congratulation!\nYou finished in " + std::to_string(TotalMinutes) + "minutes and " + std::to_string(TotalSeconds) + " seconds\ncontinue" ;
 		int userAnswer = UInterogationWindowForConfirm(sceneManager->RenderWindow, WinMessage);
+		if (userAnswer == 1)
+		{
+			sceneManager->LevelState++;
+			sceneManager->CurentFrame = GameEnum::Game;
+		}
 	}
 	// pop window .. you ar sure u wont to exit
 	//Saving before game leave
