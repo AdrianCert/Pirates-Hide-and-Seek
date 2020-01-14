@@ -394,5 +394,24 @@ void GetMove(int islace, int newPoz, lvl::State* state)
 	///////////////////////////////////////////////////////////////////////
 }
 
-
-
+void GetRotation(int islace, lvl::State* state)
+{
+	//lvl::State* state;
+	switch (islace)
+	{
+	case 0:
+		state->A.Rotation = state->A.Rotation % 4;
+		state->A.Rotation++;
+	case 1:
+		state->A.Rotation = state->A.Rotation % 4;
+		state->B.Rotation++;
+	case 2:
+		state->A.Rotation = state->A.Rotation % 4;
+		state->C.Rotation++;
+	case 3:
+		state->A.Rotation = state->A.Rotation % 4;
+		state->D.Rotation++;
+	default:
+		break;
+	}
+}

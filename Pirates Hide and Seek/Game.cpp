@@ -163,7 +163,6 @@ bool Game(SceneManager* sceneManager) {
 					//{
 					RecordState(CurentHistory, NewMove);
 					//}
-					
 				}
 				DragOgjectIdentificator = -1;
 				DragState = false;

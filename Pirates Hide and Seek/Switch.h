@@ -7,5 +7,5 @@
 int VerPoz(int newPoz, lvl::State* state);
 bool isRelevant(int islace, lvl::State* state);
 void GetMove(int islace, int newPoz, lvl::State* state);
-
+void GetRotation(int islace, lvl::State* state);
 #endif // !SWITCH_H
