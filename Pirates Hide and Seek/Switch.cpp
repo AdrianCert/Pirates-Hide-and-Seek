@@ -415,3 +415,35 @@ void GetRotation(int islace, lvl::State* state)
 		break;
 	}
 }
+
+bool CompareState(lvl::State* a, lvl::State* b)
+{
+	if (a->A.Position != b->A.Position)
+		return false;
+	if (a->B.Position != b->B.Position)
+		return false;
+	if (a->C.Position != b->C.Position)
+		return false;
+	if (a->D.Position != b->D.Position)
+		return false;
+
+	if (a->A.Relevant != b->A.Relevant)
+		return false;
+	if (a->B.Relevant != b->B.Relevant)
+		return false;
+	if (a->C.Relevant != b->C.Relevant)
+		return false;
+	if (a->D.Relevant != b->D.Relevant)
+		return false;
+
+	if (a->A.Rotation != b->A.Rotation)
+		return false;
+	if (a->B.Rotation != b->B.Rotation)
+		return false;
+	if (a->C.Rotation != b->C.Rotation)
+		return false;
+	if (a->D.Rotation != b->D.Rotation)
+		return false;
+
+	return true;
+}
