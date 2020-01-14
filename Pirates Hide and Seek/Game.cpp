@@ -11,7 +11,6 @@ struct HistoryGame {
 void RecordState(HistoryGame* History, lvl::State State) {
 
 }
-
 bool Game(SceneManager* sceneManager) {
 	Text Text_Back;
 	Font font;
@@ -54,7 +53,15 @@ bool Game(SceneManager* sceneManager) {
 
 	lvl::Level* CurentLevel = new lvl::Level();
 	if (!lvl::LoadLevel(sceneManager->LevelState, CurentLevel)) {
-		lvl::LoadLevelGenerated(CurentLevel,true);
+		int userAnswer = UInterogationWindowForConfirm(sceneManager->RenderWindow,"Do you wont mark hint?");
+		if (userAnswer == -1) {
+			sceneManager->CurentFrame = GameEnum::GameFrame::Menu;
+			return true;
+		}
+		if(userAnswer == 0)
+			lvl::LoadLevelGenerated(CurentLevel,false);
+		if(userAnswer == 1)
+			lvl::LoadLevelGenerated(CurentLevel,true);
 	}
 
 	lvl::State* CurentState = new lvl::State();

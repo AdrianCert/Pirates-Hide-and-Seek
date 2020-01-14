@@ -211,6 +211,7 @@ namespace lvl {
 
 		// Pozitionarea Elementelor din vector
 		int poz_X = 60, poz_Y = (*size_window).y / 2 - RequestIndex / 2 * 110;
+		if (poz_Y < (*size_window).y * 0.2) poz_Y = (*size_window).y * 0.2;
 		Request[0]->setFillColor(sf::Color(92, 194, 208));
 		Request[0]->setPosition(poz_X - 60, poz_Y - 60);
 		for (int i = 1; i < RequestCount; i++) {
