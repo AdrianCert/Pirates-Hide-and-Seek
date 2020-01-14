@@ -134,9 +134,9 @@ bool Game(SceneManager* sceneManager) {
 	bool DragState = false;
 	lvl::State* NewMove;
 	while (sceneManager->CurentFrame == GameEnum::GameFrame::Game) {
+		int RotationObjectIndentificator = -1;
 		Event event;
 		while (sceneManager->RenderWindow->pollEvent(event)) {
-			
 			if (Mouse::isButtonPressed(Mouse::Left)) {
 				if (isHover(T_Menu, mouse)) {
 					sceneManager->CurentFrame = GameEnum::GameFrame::GameSelection;
@@ -167,6 +167,10 @@ bool Game(SceneManager* sceneManager) {
 				DragOgjectIdentificator = -1;
 				DragState = false;
 			}
+			if (Mouse::isButtonPressed(Mouse::Right)) {
+				RotationObjectIndentificator = GetHoverObject(Islace, 4, &mouse);
+				std::cout << "Rotation " << RotationObjectIndentificator <<std::endl;
+			}
 			switch (event.type)
 			{
 			case Event::Closed:
@@ -186,7 +190,13 @@ bool Game(SceneManager* sceneManager) {
 				}
 			}
 		}
-
+		if (RotationObjectIndentificator != -1) {
+			std::cout << "Rotation for " << RotationObjectIndentificator << std::endl;
+			NewMove = lvl::CopyState(CurentHistory->State);
+			GetRotation(RotationObjectIndentificator, NewMove);
+			RecordState(CurentHistory, NewMove);
+			RotationObjectIndentificator = -1;
+		}
 		SetPostionForState(&size_window, CurentHistory->State, Islace, DragOgjectIdentificator);
 		
 		// Daca elemenut dragibil exista 
