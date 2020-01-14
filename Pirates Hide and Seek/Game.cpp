@@ -30,7 +30,6 @@ void UndoGame(HistoryGame* &CurentHistory) {
 bool Game(SceneManager* sceneManager) {
 	Text T_Menu, T_Undo, T_Hint;
 	Font font;
-	Clock time;
 	Mouse mouse;
 	Texture t_Board,
 			t_BoardEmpty,
@@ -130,13 +129,17 @@ bool Game(SceneManager* sceneManager) {
 	T_Hint.setFillColor(sf::Color::Black);
 	T_Hint.setPosition(sceneManager->RenderWindow->getSize().x / 2 + 350, sceneManager->RenderWindow->getSize().y -50);
 
+	bool GameFinish = false;
+	int RotationObjectIndentificator = -1;
 	int DragOgjectIdentificator = -1;
 	bool DragState = false;
 	lvl::State* NewMove;
+
+	Clock time;
 	while (sceneManager->CurentFrame == GameEnum::GameFrame::Game) {
-		int RotationObjectIndentificator = -1;
 		Event event;
 		while (sceneManager->RenderWindow->pollEvent(event)) {
+
 			if (Mouse::isButtonPressed(Mouse::Left)) {
 				if (isHover(T_Menu, mouse)) {
 					sceneManager->CurentFrame = GameEnum::GameFrame::GameSelection;
@@ -159,18 +162,23 @@ bool Game(SceneManager* sceneManager) {
 					int NewPosition = GetPosition(&size_window, &mouse, 70);
 					NewMove = lvl::CopyState(CurentHistory->State);
 					GetMove(DragOgjectIdentificator, NewPosition, NewMove);
-					//if(Conmparestate) // apel funtie care compara staturile
-					//{
-					RecordState(CurentHistory, NewMove);
-					//}
+					if(!CompareState(NewMove,CurentHistory->State)) {
+						RecordState(CurentHistory, NewMove);
+						if (CompareState(&CurentLevel->Solution, CurentHistory->State)) {
+							sceneManager->CurentFrame = GameEnum::GameFrame::Menu;
+							GameFinish = true;
+						}
+					}
 				}
 				DragOgjectIdentificator = -1;
 				DragState = false;
 			}
+
 			if (Mouse::isButtonPressed(Mouse::Right)) {
 				RotationObjectIndentificator = GetHoverObject(Islace, 4, &mouse);
 				std::cout << "Rotation " << RotationObjectIndentificator <<std::endl;
 			}
+
 			switch (event.type)
 			{
 			case Event::Closed:
@@ -183,7 +191,9 @@ bool Game(SceneManager* sceneManager) {
 					sceneManager->CurentFrame = GameEnum::GameFrame::GameSelection;
 					break;
 				case Keyboard::W:
-					CurentHistory->State = &CurentLevel->Solution;
+					if (event.key.shift) {
+						CurentHistory->State = &CurentLevel->Solution;
+					}
 					break;
 				default:
 					break;
@@ -194,23 +204,18 @@ bool Game(SceneManager* sceneManager) {
 			std::cout << "Rotation for " << RotationObjectIndentificator << std::endl;
 			NewMove = lvl::CopyState(CurentHistory->State);
 			GetRotation(RotationObjectIndentificator, NewMove);
-			RecordState(CurentHistory, NewMove);
 			RotationObjectIndentificator = -1;
+			if (!CompareState(NewMove, CurentHistory->State)) {
+				RecordState(CurentHistory, NewMove);
+				if (CompareState(&CurentLevel->Solution, CurentHistory->State)) {
+					sceneManager->CurentFrame = GameEnum::GameFrame::Menu;
+					GameFinish = true;
+				}
+			}
 		}
+
 		SetPostionForState(&size_window, CurentHistory->State, Islace, DragOgjectIdentificator);
 		
-		// Daca elemenut dragibil exista 
-		// urmareste pozitia mouseulului
-		// scaleaza la marimea lui
-		// animatie de scalare
-
-		// funtie de tranzitie pentru a duce obiecte intr-un punc sau altul
-		// from curent 0,0 10,20 in time x seconds
-
-		// deseneaza folosind state obiectele cu exceptia celui care este drag and drop
-
-		// stash; mutarile;
-		//if (ifCompleted(LVL));
 		sceneManager->RenderWindow->clear(Color(255, 204, 102));
 		sceneManager->RenderWindow->draw(MainBoard);
 		sceneManager->RenderWindow->draw(T_Menu);
@@ -219,6 +224,14 @@ bool Game(SceneManager* sceneManager) {
 		DrowVector(sceneManager, Request, RequestCount);
 		DrowVector(sceneManager, Islace, 4);
 		sceneManager->RenderWindow->display();
+	}
+	if (GameFinish) {
+		Time t_ = time.getElapsedTime();
+		int TotalTime = t_.asSeconds();
+		int TotalMinutes = TotalTime / 60;
+		int TotalSeconds = TotalTime % 60;
+		std::string WinMessage = "Congratulation!\n You finished in " + std::to_string(TotalMinutes) + ":" + std::to_string(TotalSeconds);
+		int userAnswer = UInterogationWindowForConfirm(sceneManager->RenderWindow, WinMessage);
 	}
 	// pop window .. you ar sure u wont to exit
 	//Saving before game leave
