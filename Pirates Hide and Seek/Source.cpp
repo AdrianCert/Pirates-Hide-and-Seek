@@ -33,7 +33,7 @@ int main()
 	GetParm(configuration, "sfx", user_settings[GameEnum::OptionField::SFX]);
 	
 	RenderWindow window(VideoMode(gameWidth, gameHeight), gameName, gameSSyle, settings);
-	window.setFramerateLimit(120);
+	window.setFramerateLimit(140);
 
 	SceneManager* sceneManager = new SceneManager();
 	sceneManager->RenderWindow = &window;
