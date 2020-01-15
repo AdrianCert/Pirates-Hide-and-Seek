@@ -77,7 +77,7 @@ bool Option(SceneManager* sceneManager) {
 	int new_music;
 	int userAnswer;
 	int save_sfx = sceneManager->Settings[GameEnum::OptionField::SFX];
-	int save_music = sceneManager->Settings[GameEnum::OptionField::Music];
+	int save_music = sceneManager->Settings[GameEnum::OptionField::Music] == 0 ? 0 : 1;
 	while (sceneManager->CurentFrame == GameEnum::GameFrame::Option)
 	{
 		new_music = -1;
