@@ -6,6 +6,7 @@ using namespace sf;
 int main()
 {
 	int gameWidth, gameHeight, gameSSyle;
+
 	std::string gameName;
 	cfg::dictionaty* configuration = new cfg::dictionaty();
 	if (!ReadConfiguration(configuration, "Resource/ConfigureFile.txt")) return EXIT_FAILURE;
@@ -27,6 +28,9 @@ int main()
 	
 
 	sf::Music* music[4] = {&music1, &music2, &music3, &music4 };
+	int* user_settings = new int[GameEnum::OptionField::OptionFieldCount];
+	GetParm(configuration, "music", user_settings[GameEnum::OptionField::Music]);
+	GetParm(configuration, "sfx", user_settings[GameEnum::OptionField::SFX]);
 	
 	RenderWindow window(VideoMode(gameWidth, gameHeight), gameName, gameSSyle, settings);
 	window.setFramerateLimit(120);

@@ -3,3 +3,5 @@ gameHeight 1080
 gameName Connect-The-Temple
 gameSSyle 8
 player_progress 2
+sfx 1
+music 0

@@ -28,6 +28,13 @@ namespace GameEnum {
 		Shipwrecked,//Naufragiat
 		COUNT
 	};
+
+	enum OptionField {
+		Music,
+		SFX,
+
+		OptionFieldCount
+	};
 }
 
 struct SceneManager
@@ -37,6 +44,7 @@ struct SceneManager
 	sf::RenderWindow* RenderWindow = 0;
 	cfg::dictionaty* Configurator = 0;
 	sf::Music** djValy;
+	int* Settings;
 };
 
 #endif

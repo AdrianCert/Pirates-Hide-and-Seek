@@ -51,6 +51,10 @@ bool Game(SceneManager* sceneManager) {
 	Sound s_click, s_finish;
 	s_click.setBuffer(bufferclick);
 	s_finish.setBuffer(bufferfinish);
+	if (sceneManager->Settings[GameEnum::OptionField::SFX]) {
+		s_click.setVolume(0);
+		s_finish.setVolume(0);
+	}
 
 	lvl::Level* CurentLevel = new lvl::Level();
 	if (!lvl::LoadLevel(sceneManager->LevelState, CurentLevel)) {
