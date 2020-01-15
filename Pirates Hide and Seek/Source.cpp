@@ -61,6 +61,7 @@ int main()
 			gameContinue = Game(sceneManager);
 			break;
 		case GameEnum::GameFrame::Option:
+			gameContinue = Option(sceneManager);
 			break;
 		case GameEnum::GameFrame::Exit:
 			window.close();

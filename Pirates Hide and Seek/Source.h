@@ -9,3 +9,4 @@
 #include "GameSelect.h"
 #include "GameMatrix.h"
 #include "Switch.h"
+#include "Option.h"
