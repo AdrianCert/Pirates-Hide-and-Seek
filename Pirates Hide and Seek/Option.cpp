@@ -77,7 +77,7 @@ bool Option(SceneManager* sceneManager) {
 	int new_music;
 	int userAnswer;
 	int save_sfx = sceneManager->Settings[GameEnum::OptionField::SFX];
-	int save_music = sceneManager->Settings[GameEnum::OptionField::Music] == 0 ? 0 : 1;
+	int save_music = sceneManager->Settings[GameEnum::OptionField::Music];
 	while (sceneManager->CurentFrame == GameEnum::GameFrame::Option)
 	{
 		new_music = -1;
@@ -204,7 +204,7 @@ bool Option(SceneManager* sceneManager) {
 		sceneManager->RenderWindow->display();
 
 	}
-	cfg::SetParm(sceneManager->Configurator, "music", sceneManager->Settings[GameEnum::OptionField::Music]);
+	cfg::SetParm(sceneManager->Configurator, "music", sceneManager->Settings[GameEnum::OptionField::Music] == 0 ? 0 : 1);
 	cfg::SetParm(sceneManager->Configurator, "sfx", sceneManager->Settings[GameEnum::OptionField::SFX]);
 	cfg::WriteConfiguration(sceneManager->Configurator, "Resource/ConfigureFile.txt");
 	return true;
