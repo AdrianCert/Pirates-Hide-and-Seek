@@ -11,6 +11,7 @@ namespace GameEnum {
 		Menu,
 		GameSelection,
 		Game,
+		HowToPlay,
 		Option,
 		Exit,
 		MaxFrame

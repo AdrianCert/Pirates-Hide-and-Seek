@@ -135,6 +135,7 @@
     <ClCompile Include="GameMatrix.cpp" />
     <ClCompile Include="GameSelect.cpp" />
     <ClCompile Include="Helpers.cpp" />
+    <ClCompile Include="HowTo.cpp" />
     <ClCompile Include="Intro.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Menu.cpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="GameSelect.h" />
     <ClInclude Include="GameVariable.h" />
     <ClInclude Include="Helpers.h" />
+    <ClInclude Include="HowTo.h" />
     <ClInclude Include="Intro.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="Menu.h" />

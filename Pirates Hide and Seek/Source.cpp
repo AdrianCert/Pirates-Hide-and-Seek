@@ -66,6 +66,9 @@ int main()
 		case GameEnum::GameFrame::Exit:
 			window.close();
 			break;
+		case GameEnum::GameFrame::HowToPlay:
+			gameContinue = howto(sceneManager);
+			break;
 		default:
 			break;
 		}
