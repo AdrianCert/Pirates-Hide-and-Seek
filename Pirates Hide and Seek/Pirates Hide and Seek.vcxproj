@@ -139,6 +139,7 @@
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Option.cpp" />
     <ClCompile Include="Switch.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +152,7 @@
     <ClInclude Include="Intro.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="Option.h" />
     <ClInclude Include="Source.h" />
     <ClInclude Include="Switch.h" />
   </ItemGroup>
