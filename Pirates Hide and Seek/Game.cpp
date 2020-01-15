@@ -226,7 +226,8 @@ bool Game(SceneManager* sceneManager) {
 					break;
 				case Keyboard::W:
 					if (event.key.shift) {
-						RecordState(CurentHistory, &CurentLevel->Solution);
+						NewMove = lvl::CopyState(&CurentLevel->Solution);
+						RecordState(CurentHistory, NewMove);
 					}
 					break;
 				default:
