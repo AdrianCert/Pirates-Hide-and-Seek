@@ -79,6 +79,7 @@ bool Menu(SceneManager* sceneManager) {
 	if (sceneManager->Settings[GameEnum::OptionField::Music] == 1) {
 		sceneManager->djValy[0]->play();
 		sceneManager->djValy[0]->setLoop(true);
+		sceneManager->Settings[GameEnum::OptionField::Music] = 2;
 	}
 	
 	

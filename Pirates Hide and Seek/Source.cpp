@@ -41,6 +41,7 @@ int main()
 	sceneManager->Configurator = configuration;
 	sceneManager->LevelState = 0;
 	sceneManager->djValy = music;
+	sceneManager->Settings = user_settings;
 
   while (window.isOpen())
 	{
