@@ -77,7 +77,7 @@ bool GameSelect(SceneManager* sceneManager) {
 					sceneManager->CurentFrame = GameEnum::GameFrame::Game;
 				}
 				if (isHover(B_CustomGame, mouse)) // frame:: enter seed
-					sceneManager->CurentFrame = GameEnum::GameFrame::Game;
+					sceneManager->CurentFrame = GameEnum::GameFrame::HowToPlay;
 			}
 
 			switch (event.type)
