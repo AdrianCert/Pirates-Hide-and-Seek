@@ -81,6 +81,9 @@ bool Menu(SceneManager* sceneManager) {
 		sceneManager->djValy[0]->setLoop(true);
 		sceneManager->Settings[GameEnum::OptionField::Music] = 2;
 	}
+	else if (sceneManager->Settings[GameEnum::OptionField::Music] == 0) {
+		sceneManager->djValy[0]->stop();
+	}
 	
 	
 	//fereastra meniu este deschisa
