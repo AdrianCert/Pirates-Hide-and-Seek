@@ -19,7 +19,7 @@ bool howto(SceneManager* sceneManager)
 	sf::Text back;
 	back.setFont(font);
 	back.setString("x");
-	back.setCharacterSize(20);
+	back.setCharacterSize(30);
 	back.setFillColor(sf::Color::Black);
 	back.setPosition(5, 5);
 
@@ -49,6 +49,10 @@ bool howto(SceneManager* sceneManager)
 					return true;
 				}
 
+			}
+			if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
+				sceneManager->CurentFrame = GameEnum::GameFrame::Menu;
+				return true;
 			}
 		}
 		sceneManager->RenderWindow->clear(sf::Color(255, 204, 102));

@@ -260,12 +260,11 @@ int UInterogationWindowForConfirm(sf::RenderWindow* window, std::string question
 	No.setFillColor(sf::Color::Black);
 	resOriginText(No);
 	No.setPosition(window->getSize().x / 2 + Frame.getGlobalBounds().width / 3, Frame.getGlobalBounds().top + Frame.getGlobalBounds().height - 50);
-
 	while (1) {
 		Event event;
 		while (window->pollEvent(event)) {
 
-			if (Mouse::isButtonPressed(Mouse::Left)) {
+			if (event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left) {
 				if (ExpectAnswer) {
 					if (isHover(Yes, mouse)) {
 						return 1;

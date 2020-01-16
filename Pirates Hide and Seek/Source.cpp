@@ -3,6 +3,7 @@
 
 using namespace sf;
 
+
 int main()
 {
 	int gameWidth, gameHeight, gameSSyle;
