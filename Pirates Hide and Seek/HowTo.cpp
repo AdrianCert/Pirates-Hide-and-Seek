@@ -54,6 +54,10 @@ bool howto(SceneManager* sceneManager)
 				sceneManager->CurentFrame = GameEnum::GameFrame::Menu;
 				return true;
 			}
+			if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::I) {
+				sceneManager->CurentFrame = GameEnum::GameFrame::Intro;
+				return true;
+			}
 		}
 		sceneManager->RenderWindow->clear(sf::Color(255, 204, 102));
 		sceneManager->RenderWindow->draw(tutorial);
