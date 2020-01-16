@@ -56,13 +56,13 @@ bool Option(SceneManager* sceneManager) {
 	MUSIC_off.setPosition(align_right, 400);
 
 	RESET_progres.setFont(font);
-	RESET_progres.setString("reset proges");
+	RESET_progres.setString("reset progres");
 	RESET_progres.setFillColor(Color::Black);
 	RESET_progres.setCharacterSize(40);
 	RESET_progres.setPosition(align_center, 600);
 
 	RESET_settings.setFont(font);
-	RESET_settings.setString("reset settigs");
+	RESET_settings.setString("reset settings");
 	RESET_settings.setFillColor(Color::Black);
 	RESET_settings.setCharacterSize(40);
 	RESET_settings.setPosition(align_center, 800);
