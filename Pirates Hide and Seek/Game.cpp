@@ -141,11 +141,12 @@ bool Game(SceneManager* sceneManager) {
 	lvl::State* NewMove;
 
 	Clock time;
+	Clock cltim;
 	while (sceneManager->CurentFrame == GameEnum::GameFrame::Game) {
 		Event event;
 		while (sceneManager->RenderWindow->pollEvent(event)) {
 
-			if (Mouse::isButtonPressed(Mouse::Left)) {				
+			if (Mouse::isButtonPressed(Mouse::Left) && cltim.getElapsedTime().asMilliseconds() >= 10 ) {
 				if (!DragState) {					
 					if (isHover(T_Menu, mouse)) {						
 						sceneManager->CurentFrame = GameEnum::GameFrame::GameSelection;
@@ -188,7 +189,7 @@ bool Game(SceneManager* sceneManager) {
 				}
 			}
 			else {
-				
+				cltim.restart();
 				if(DragOgjectIdentificator != -1) {
 					s_click.play();
 					int NewPosition = GetPosition(&size_window, &mouse, 70);
@@ -207,11 +208,7 @@ bool Game(SceneManager* sceneManager) {
 				DragState = false;
 			}
 
-			if (Mouse::isButtonPressed(Mouse::Right)) {
-				s_click.play();
-				RotationObjectIndentificator = GetHoverObject(Islace, 4, &mouse);
-				std::cout << "Rotation " << RotationObjectIndentificator <<std::endl;
-			}
+			
 
 			switch (event.type)
 			{
@@ -234,6 +231,9 @@ bool Game(SceneManager* sceneManager) {
 					break;
 				}
 			case Event::MouseButtonPressed:
+				if (event.mouseButton.button == Mouse::Right) {
+					RotationObjectIndentificator = GetHoverObject(Islace, 4, &mouse);
+				}
 				s_click.play();
 				break;
 			}

@@ -104,7 +104,7 @@ bool Menu(SceneManager* sceneManager) {
 			{
 				//inchidere fereastra
 			case Event::Closed:
-				sceneManager->RenderWindow->close();
+				sceneManager->CurentFrame = GameEnum::GameFrame::Exit;
 				break;
 			
 			case Event::KeyPressed:
